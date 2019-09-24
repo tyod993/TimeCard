@@ -1,0 +1,5 @@
+<resources>
+    <string name="time_card">TimeCard</string>
+    <string name="this_week">This Week\'s Time</string>
+    <string name="weather">Weather</string>
+</resources>
