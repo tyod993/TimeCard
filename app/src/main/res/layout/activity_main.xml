@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainMenuActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,4 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftof="parent"
+        app:layout_constraintRight_toRightof="parent"
+        app:layout_constraintTop_toTopof="parent"
+        tools:itemCount="4"
+        tools:listitem="@layout/recycler_view_item">
+
+
+    </androdix.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

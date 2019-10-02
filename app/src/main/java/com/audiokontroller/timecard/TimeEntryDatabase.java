@@ -1,3 +1,18 @@
+/*
+This Database should only be used for saving TimeCard entries temporarily.
+When the data has been sent to the server this DataBase is deleted.
+Use this database as a data holder populated onCreate() to be sent to the UI.
+The Table Format:
+___________________________________________________________________________________________
+|id|submission_date_time|entry_date|entry_start_time|entry_end_time|job_location|job_notes|
+|int|     Calender      |String    |String          |String        |String      |String   |
+-------------------------------------------------------------------------------------------
+
+To Do:
+1.Implement Version control
+ */
+
+
 package com.audiokontroller.timecard;
 
 import android.content.Context;
@@ -12,12 +27,16 @@ public abstract class TimeEntryDatabase extends RoomDatabase {
 
     private static final String TAG = "TE_DB";
 
+    // Create an instance of the database to check against for temporary insertions.
     private static TimeEntryDatabase instance;
 
+    //This DAO is accessed in the Repository class.
     public abstract TimeEntityDao timeEntityDao();
 
+    //Called in the Repository class to retrieve the db or create one if null.
     public static synchronized TimeEntryDatabase getInstance(Context context){
         if(instance == null){
+            //If the db does'nt exist create one
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     TimeEntryDatabase.class, "time_entry_db")
                     .fallbackToDestructiveMigrationFrom()
