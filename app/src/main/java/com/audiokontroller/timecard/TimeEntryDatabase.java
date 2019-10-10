@@ -25,7 +25,7 @@ import androidx.room.RoomDatabase;
 @Database(entities = TimeEntry.class, version = 1)
 public abstract class TimeEntryDatabase extends RoomDatabase {
 
-    private static final String TAG = "TE_DB";
+    private static final String TAG = TimeEntryDatabase.class.getSimpleName();
 
     // Create an instance of the database to check against for temporary insertions.
     private static TimeEntryDatabase instance;

@@ -2,4 +2,7 @@
     <string name="time_card">TimeCard</string>
     <string name="this_week">This Week\'s Time</string>
     <string name="weather">Weather</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
