@@ -23,22 +23,22 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = TimeEntry.class, version = 1)
-public abstract class TimeEntryDatabase extends RoomDatabase {
+public abstract class TimeCardDatabase extends RoomDatabase {
 
-    private static final String TAG = TimeEntryDatabase.class.getSimpleName();
+    private static final String TAG = TimeCardDatabase.class.getSimpleName();
 
     // Create an instance of the database to check against for temporary insertions.
-    private static TimeEntryDatabase instance;
+    private static TimeCardDatabase instance;
 
     //This DAO is accessed in the Repository class.
     public abstract TimeEntityDao timeEntityDao();
 
     //Called in the Repository class to retrieve the db or create one if null.
-    public static synchronized TimeEntryDatabase getInstance(Context context){
+    public static synchronized TimeCardDatabase getInstance(Context context){
         if(instance == null){
             //If the db does'nt exist create one
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    TimeEntryDatabase.class, "time_entry_db")
+                    TimeCardDatabase.class, "time_entry_db")
                     .fallbackToDestructiveMigrationFrom()
                     .build();
             Log.d(TAG, ".build.ex");

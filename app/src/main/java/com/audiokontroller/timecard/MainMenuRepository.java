@@ -17,7 +17,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class TimeEntryRepository {
+public class MainMenuRepository {
 
     //This is set to the Dao of the local database if its being called.
     private TimeEntityDao mtimeEntryDao;
@@ -25,13 +25,13 @@ public class TimeEntryRepository {
     //holds the data for the weeks Times
     public LiveData<List<TimeEntry>> allTimeEntries;
 
-    public TimeEntryRepository(Context context){
-        TimeEntryDatabase database = TimeEntryDatabase.getInstance(context);
+    public MainMenuRepository(Context context){
+        TimeCardDatabase database = TimeCardDatabase.getInstance(context);
         mtimeEntryDao = database.timeEntityDao();
         allTimeEntries = mtimeEntryDao.getAllEntries();
     }
 
-    //This is used by the view model to retrieve the time periods times
+    //This is used by the view model to retrieve this time period's times
     LiveData<List<TimeEntry>> getAllEntries(){
         return allTimeEntries;
     }

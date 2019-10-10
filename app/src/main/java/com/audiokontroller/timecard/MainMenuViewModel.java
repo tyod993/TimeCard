@@ -9,13 +9,13 @@ import java.util.List;
 
 public class MainMenuViewModel extends AndroidViewModel {
 
-    private TimeEntryRepository mtimeEntryRepository;
+    private MainMenuRepository mtimeEntryRepository;
 
     private LiveData<List<TimeEntry>> allTimeEntries;
 
     public MainMenuViewModel(Application application){
         super(application);
-        mtimeEntryRepository = new TimeEntryRepository(application);
+        mtimeEntryRepository = new MainMenuRepository(application);
         allTimeEntries = mtimeEntryRepository.getAllEntries();
     }
 
