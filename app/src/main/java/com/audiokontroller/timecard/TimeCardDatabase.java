@@ -31,7 +31,7 @@ public abstract class TimeCardDatabase extends RoomDatabase {
     private static TimeCardDatabase instance;
 
     //This DAO is accessed in the Repository class.
-    public abstract TimeEntityDao timeEntityDao();
+    public abstract TimeCardDao timeCardDao();
 
     //Called in the Repository class to retrieve the db or create one if null.
     public static synchronized TimeCardDatabase getInstance(Context context){

@@ -20,15 +20,15 @@ import java.util.List;
 public class MainMenuRepository {
 
     //This is set to the Dao of the local database if its being called.
-    private TimeEntityDao mtimeEntryDao;
+    private TimeCardDao mtimeCardDao;
 
     //holds the data for the weeks Times
     public LiveData<List<TimeEntry>> allTimeEntries;
 
     public MainMenuRepository(Context context){
         TimeCardDatabase database = TimeCardDatabase.getInstance(context);
-        mtimeEntryDao = database.timeEntityDao();
-        allTimeEntries = mtimeEntryDao.getAllEntries();
+        mtimeCardDao = database.timeCardDao();
+        allTimeEntries = mtimeCardDao.getAllEntries();
     }
 
     //This is used by the view model to retrieve this time period's times
@@ -37,79 +37,79 @@ public class MainMenuRepository {
     }
 
     public void insert(TimeEntry timeEntry){
-        new insertAsyncTask(mtimeEntryDao).execute(timeEntry);
+        new insertAsyncTask(mtimeCardDao).execute(timeEntry);
     }
 
     public void delete(TimeEntry timeEntry){
-        new deleteAsyncTask(mtimeEntryDao).execute(timeEntry);
+        new deleteAsyncTask(mtimeCardDao).execute(timeEntry);
     }
 
     public void update(TimeEntry timeEntry){
-        new updateAsyncTask(mtimeEntryDao).execute(timeEntry);
+        new updateAsyncTask(mtimeCardDao).execute(timeEntry);
     }
 
     public void deleteAll(){
-        new deleteAllAsyncTask(mtimeEntryDao).execute();
+        new deleteAllAsyncTask(mtimeCardDao).execute();
     }
 
     private static class insertAsyncTask extends AsyncTask<TimeEntry, Void, Void>{
 
-        private TimeEntityDao timeEntityDao;
+        private TimeCardDao timeCardDao;
 
-        insertAsyncTask(TimeEntityDao dao){
-         timeEntityDao = dao;
+        insertAsyncTask(TimeCardDao dao){
+         timeCardDao = dao;
         }
 
         @Override
         protected Void doInBackground(TimeEntry... timeEntries) {
-            timeEntityDao.insert(timeEntries[0]);
+            timeCardDao.insert(timeEntries[0]);
             return null;
         }
     }
 
     private static class deleteAsyncTask extends AsyncTask<TimeEntry, Void, Void>{
 
-        private TimeEntityDao timeEntityDao;
+        private TimeCardDao timeCardDao;
 
-        deleteAsyncTask(TimeEntityDao dao){
-            timeEntityDao = dao;
+        deleteAsyncTask(TimeCardDao dao){
+            timeCardDao = dao;
         }
 
         @Override
         protected Void doInBackground(TimeEntry... timeEntries) {
-            timeEntityDao.delete(timeEntries[0]);
+            timeCardDao.delete(timeEntries[0]);
             return null;
         }
     }
 
     private static class updateAsyncTask extends AsyncTask<TimeEntry, Void, Void>{
 
-        private TimeEntityDao timeEntityDao;
+        private TimeCardDao timeCardDao;
 
-        updateAsyncTask(TimeEntityDao dao){
-            timeEntityDao = dao;
+        updateAsyncTask(TimeCardDao dao){
+            timeCardDao = dao;
         }
 
 
         @Override
         protected Void doInBackground(TimeEntry... timeEntries) {
-            timeEntityDao.update(timeEntries[0]);
+            timeCardDao.update(timeEntries[0]);
             return null;
         }
     }
 
     private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void>{
 
-        private TimeEntityDao timeEntityDao;
+        private TimeCardDao timeCardDao;
 
-        deleteAllAsyncTask(TimeEntityDao dao){
-            timeEntityDao = dao;
+        deleteAllAsyncTask(TimeCardDao dao){
+            timeCardDao = dao;
         }
 
 
         @Override
         protected Void doInBackground(Void... voids) {
-            timeEntityDao.deleteAllEntries();
+            timeCardDao.deleteAllEntries();
             return null;
         }
     }

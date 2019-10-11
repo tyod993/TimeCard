@@ -10,7 +10,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface TimeEntityDao {
+public interface TimeCardDao {
 
     @Insert
     void insert(TimeEntry timeEntry);
@@ -21,10 +21,10 @@ public interface TimeEntityDao {
     @Update
     void update(TimeEntry timeEntry);
 
-    @Query("DELETE FROM time_entries")
+    @Query("DELETE FROM time_card")
     void deleteAllEntries();
 
-    @Query("SELECT * FROM time_entries ORDER BY id ASC")
+    @Query("SELECT * FROM time_card ORDER BY id ASC")
     LiveData<List<TimeEntry>> getAllEntries();
 
 }

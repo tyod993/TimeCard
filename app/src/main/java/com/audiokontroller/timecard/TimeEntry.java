@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
 
-@Entity(tableName = "time_entries")
+@Entity(tableName = "time_card")
 public class TimeEntry {
 
     @PrimaryKey(autoGenerate = true)
@@ -30,6 +30,9 @@ public class TimeEntry {
     @ColumnInfo(name = "job_notes")
     private String mJobNotes;
 
+    @ColumnInfo(name = "submitted")
+    private boolean mSubmitted;
+
     public TimeEntry(String date, String startTime, String endTime, String jobName, String jobNotes){
 
         this.mEntryDate = date;
@@ -43,6 +46,10 @@ public class TimeEntry {
 
     public void setId(int id1){
         this.id = id1;
+    }
+
+    public void setmSubmitted(boolean submitted){
+        this.mSubmitted = submitted;
     }
 
     public String getmEntryDate(){
@@ -63,6 +70,10 @@ public class TimeEntry {
 
     public String getmJobNotes(){
         return mJobNotes;
+    }
+
+    public boolean getSubmition(){
+        return mSubmitted;
     }
 
 }
