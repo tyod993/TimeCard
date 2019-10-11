@@ -38,7 +38,7 @@ public abstract class TimeCardDatabase extends RoomDatabase {
         if(instance == null){
             //If the db does'nt exist create one
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    TimeCardDatabase.class, "time_entry_db")
+                    TimeCardDatabase.class, "time_card_db")
                     .fallbackToDestructiveMigrationFrom()
                     .build();
             Log.d(TAG, ".build.ex");

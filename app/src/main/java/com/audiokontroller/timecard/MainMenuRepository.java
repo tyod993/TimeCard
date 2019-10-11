@@ -21,19 +21,28 @@ public class MainMenuRepository {
 
     //This is set to the Dao of the local database if its being called.
     private TimeCardDao mtimeCardDao;
+    private UserDao muserDao;
 
     //holds the data for the weeks Times
     public LiveData<List<TimeEntry>> allTimeEntries;
 
     public MainMenuRepository(Context context){
-        TimeCardDatabase database = TimeCardDatabase.getInstance(context);
-        mtimeCardDao = database.timeCardDao();
-        allTimeEntries = mtimeCardDao.getAllEntries();
+        getTimeCardInfo(context);
     }
 
     //This is used by the view model to retrieve this time period's times
     LiveData<List<TimeEntry>> getAllEntries(){
         return allTimeEntries;
+    }
+
+    /*
+    TODO:This needs to check local memory for database or retrieve it from
+    the server.
+    */
+    private void getTimeCardInfo(Context context){
+        TimeCardDatabase database = TimeCardDatabase.getInstance(context);
+        mtimeCardDao = database.timeCardDao();
+        allTimeEntries = mtimeCardDao.getAllEntries();
     }
 
     public void insert(TimeEntry timeEntry){
