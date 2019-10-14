@@ -2,13 +2,18 @@ package com.audiokontroller.timecard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.audiokontroller.timecard.data.TimeEntry;
+import com.audiokontroller.timecard.data.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -19,6 +24,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private RecyclerView timeEntryRecView;
     private FloatingActionButton floatingButtonAddTime;
     private FrameLayout fragmentContainer;
+    private LiveData<List<TimeEntry>> timeCardList;
 
     //TODO:EVERYTHING!!!!
     @Override

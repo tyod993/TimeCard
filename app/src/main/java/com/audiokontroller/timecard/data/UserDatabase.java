@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard;
+package com.audiokontroller.timecard.data;
 
 import android.content.Context;
 import android.util.Log;

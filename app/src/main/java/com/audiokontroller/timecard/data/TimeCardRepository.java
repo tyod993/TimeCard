@@ -8,7 +8,7 @@ the UI. If the login does'nt match. Connect to the server to get the data.
  */
 
 
-package com.audiokontroller.timecard;
+package com.audiokontroller.timecard.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,27 +17,25 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class MainMenuRepository {
+public class TimeCardRepository {
 
     //This is set to the Dao of the local database if its being called.
     private TimeCardDao mtimeCardDao;
-    private UserDao muserDao;
 
     //holds the data for the weeks Times
     public LiveData<List<TimeEntry>> allTimeEntries;
 
-    public MainMenuRepository(Context context){
+    public TimeCardRepository(Context context){
         getTimeCardInfo(context);
     }
 
     //This is used by the view model to retrieve this time period's times
-    LiveData<List<TimeEntry>> getAllEntries(){
+    public LiveData<List<TimeEntry>> getAllEntries(){
         return allTimeEntries;
     }
 
     /*
-    TODO:This needs to check local memory for database or retrieve it from
-    the server.
+    TODO:This needs to check local memory for database or retrieve it from GCP
     */
     private void getTimeCardInfo(Context context){
         TimeCardDatabase database = TimeCardDatabase.getInstance(context);

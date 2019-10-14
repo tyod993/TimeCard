@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard;
+package com.audiokontroller.timecard.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -12,6 +12,9 @@ public class User {
 
     @ColumnInfo
     private String username;
+
+    @ColumnInfo
+    private String password;
 
     @ColumnInfo
     private String firstName;
@@ -28,13 +31,14 @@ public class User {
     @ColumnInfo
     private TimeCardDatabase currentTimeCard;
 
-    public User(String mUsername, String mFirstName, String mLastName, String mBirthday, String mCompanyName){
+    public User(String mUsername,String mPassword, String mFirstName, String mLastName, String mBirthday, String mCompanyName){
 
         this.username = mUsername;
         this.firstName = mFirstName;
         this.lastName = mLastName;
         this.birthday = mBirthday;
         this.companyName = mCompanyName;
+        this.password = mPassword;
 
     }
 
@@ -42,9 +46,15 @@ public class User {
         this.uid = newID;
     }
 
+    public void setPassword(String newPassword){
+        this.password = newPassword;
+    }
+
     public String getUsername(){
         return username;
     }
+
+    public String getPassword(){return password;}
 
     public String getFirstName(){
         return firstName;

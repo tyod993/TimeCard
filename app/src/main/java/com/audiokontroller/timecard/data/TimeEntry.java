@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard;
+package com.audiokontroller.timecard.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
