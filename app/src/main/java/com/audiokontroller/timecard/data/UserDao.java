@@ -15,4 +15,9 @@ public interface UserDao {
     @Delete
     void delete(User user);
 
+    @Query("SELECT username FROM user_data")
+    String getUsername();
+
+    @Query("SELECT currentTimeCard FROM user_data")
+    TimeCardDatabase getCurrentTimeCard();
 }

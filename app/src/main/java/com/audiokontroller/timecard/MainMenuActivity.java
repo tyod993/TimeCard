@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.audiokontroller.timecard.data.TimeEntry;
-import com.audiokontroller.timecard.data.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -79,4 +78,5 @@ public class MainMenuActivity extends AppCompatActivity {
         TimeEntryFragment fragment = TimeEntryFragment.newInstance(null);
         return fragment;
     }
+
 }

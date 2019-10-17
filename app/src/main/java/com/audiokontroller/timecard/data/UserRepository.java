@@ -8,10 +8,10 @@ public class UserRepository {
     private UserDao mUserDao;
 
     public UserRepository(Context context){
-        getUserInfo(context);
+        getUserDB(context);
     }
 
-    private void getUserInfo(Context context){
+    private void getUserDB(Context context){
         UserDatabase database = UserDatabase.getInstance(context);
         mUserDao = database.userDao();
     }

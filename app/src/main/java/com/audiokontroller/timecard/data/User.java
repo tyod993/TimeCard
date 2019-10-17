@@ -1,5 +1,7 @@
 package com.audiokontroller.timecard.data;
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,8 +9,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "user_data")
 public class User {
 
+    private static final String TAG = User.class.getSimpleName();
+
     @PrimaryKey(autoGenerate = true)
-    private int uid;
+    private int id;
 
     @ColumnInfo
     private String username;
@@ -40,10 +44,12 @@ public class User {
         this.companyName = mCompanyName;
         this.password = mPassword;
 
+        Log.e(TAG, ".uName." + username + ".created");
+
     }
 
     public void setID(int newID){
-        this.uid = newID;
+        this.id = newID;
     }
 
     public void setPassword(String newPassword){
@@ -70,6 +76,11 @@ public class User {
 
     public String getCompanyName(){
         return companyName;
+    }
+
+    public TimeCardDatabase setTimeCardDB(TimeCardDatabase timeCardDatabase){
+        this.currentTimeCard = timeCardDatabase;
+        return timeCardDatabase;
     }
 
     public TimeCardDatabase getCurrentTimeCard(){
