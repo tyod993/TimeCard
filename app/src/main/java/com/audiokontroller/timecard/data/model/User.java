@@ -1,10 +1,12 @@
-package com.audiokontroller.timecard.data;
+package com.audiokontroller.timecard.data.model;
 
 import android.util.Log;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.audiokontroller.timecard.data.TimeCardDatabase;
 
 @Entity(tableName = "user_data")
 public class User {

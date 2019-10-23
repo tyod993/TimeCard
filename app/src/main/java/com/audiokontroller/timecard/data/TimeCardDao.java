@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.audiokontroller.timecard.data.model.TimeEntry;
+
 import java.util.List;
 
 @Dao

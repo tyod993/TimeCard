@@ -15,6 +15,8 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.audiokontroller.timecard.data.model.TimeEntry;
+
 import java.util.List;
 
 public class TimeCardRepository {

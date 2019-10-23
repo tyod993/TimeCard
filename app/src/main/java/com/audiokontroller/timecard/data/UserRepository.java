@@ -3,6 +3,8 @@ package com.audiokontroller.timecard.data;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.audiokontroller.timecard.data.model.User;
+
 public class UserRepository {
 
     private UserDao mUserDao;
@@ -15,13 +17,24 @@ public class UserRepository {
         UserDatabase database = UserDatabase.getInstance(context);
         mUserDao = database.userDao();
     }
-
     public void update(User user){
         new updateAsyncTask(mUserDao).execute(user);
     }
 
     public void delete(User user){
         new deleteAsyncTask(mUserDao).execute(user);
+    }
+
+    public String getFirstName(){return mUserDao.getFirstName();}
+
+    public String getLastName(){return mUserDao.getLastName();}
+
+    public String getUsername(){
+        return mUserDao.getUsername();
+    }
+
+    public String getPassword(){
+        return mUserDao.getPassword();
     }
 
     private static class deleteAsyncTask extends AsyncTask<User, Void,Void>{

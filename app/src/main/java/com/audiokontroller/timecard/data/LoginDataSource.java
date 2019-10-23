@@ -1,5 +1,7 @@
 package com.audiokontroller.timecard.data;
 
+import android.content.Context;
+
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -9,15 +11,23 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    private boolean isAuthenticated;
 
+    public Result login(Context context, String username, String password) {
         try {
-            // TODO: handle loggedInUser authentication
-            LoggedInUser fakeUser =
-                    new LoggedInUser(
-                            java.util.UUID.randomUUID().toString(),
-                            "Jane Doe");
-            return new Result.Success<>(fakeUser);
+            // TODO: create Firebase authentication
+            UserAuthentication authentication =
+                    new UserAuthentication(context, username, password);
+            if (authentication.getAuthentication()) {
+                LoggedInUser newUser =
+                        new LoggedInUser(
+                                username,
+                                authentication.getDisplayName());
+                isAuthenticated = true;
+                return new Result.Success<>(newUser);
+            }else{
+                return new Result.Error(new IOException("Username or Password did'nt match"));
+            }
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }
@@ -25,5 +35,6 @@ public class LoginDataSource {
 
     public void logout() {
         // TODO: revoke authentication
+        isAuthenticated = false;
     }
 }

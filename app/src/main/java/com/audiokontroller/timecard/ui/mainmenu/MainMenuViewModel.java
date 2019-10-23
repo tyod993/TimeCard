@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.viewmodels;
+package com.audiokontroller.timecard.ui.mainmenu;
 
 import android.app.Application;
 
@@ -6,8 +6,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.audiokontroller.timecard.data.TimeCardRepository;
-import com.audiokontroller.timecard.data.TimeEntry;
-import com.audiokontroller.timecard.data.User;
+import com.audiokontroller.timecard.data.model.TimeEntry;
+import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.UserRepository;
 
 import java.util.List;
@@ -32,6 +32,7 @@ public class MainMenuViewModel extends AndroidViewModel {
 
 
 
+    //these are'nt needed, delete when im sure
     public void updateUser(User user){muserRepository.update(user);}
 
     public void deleteUser(User user){muserRepository.delete(user);}

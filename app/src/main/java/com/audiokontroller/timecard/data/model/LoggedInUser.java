@@ -5,6 +5,7 @@ package com.audiokontroller.timecard.data.model;
  */
 public class LoggedInUser {
 
+    private boolean isAuthenticated;
     private String userId;
     private String displayName;
 
@@ -19,5 +20,13 @@ public class LoggedInUser {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public void setAuthenticated(){
+        isAuthenticated = true;
+    }
+
+    public void unauthenticate(){
+        isAuthenticated = false;
     }
 }

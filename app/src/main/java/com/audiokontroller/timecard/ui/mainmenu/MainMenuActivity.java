@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard;
+package com.audiokontroller.timecard.ui.mainmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.audiokontroller.timecard.data.TimeEntry;
+import com.audiokontroller.timecard.R;
+import com.audiokontroller.timecard.data.model.TimeEntry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = MainMenuActivity.class.getSimpleName();
 
-    public static String userID;
+    public MainMenuViewModel mainMenuViewModel;
 
     private RecyclerView timeEntryRecView;
     private FloatingActionButton floatingButtonAddTime;

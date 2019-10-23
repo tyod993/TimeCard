@@ -1,7 +1,6 @@
-package com.audiokontroller.timecard;
+package com.audiokontroller.timecard.ui.mainmenu;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.audiokontroller.timecard.R;
 
 public class TimeEntryFragment extends Fragment {
 
@@ -19,7 +20,7 @@ public class TimeEntryFragment extends Fragment {
     private String mUsername;
 
     public TimeEntryFragment() {
-        // Required empty public constructor
+        //Required empty constructor
     }
 
     public static TimeEntryFragment newInstance(String param1) {
