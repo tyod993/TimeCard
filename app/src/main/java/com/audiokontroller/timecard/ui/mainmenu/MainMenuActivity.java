@@ -35,7 +35,6 @@ public class MainMenuActivity extends AppCompatActivity {
         timeEntryRecView = findViewById(R.id.time_list_rec_view);
         floatingButtonAddTime = findViewById(R.id.add_time_entry_float_button);
         fragmentContainer = findViewById(R.id.fragment_container);
-
     }
 
     @Override

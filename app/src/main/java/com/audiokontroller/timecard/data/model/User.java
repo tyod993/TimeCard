@@ -2,11 +2,16 @@ package com.audiokontroller.timecard.data.model;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.audiokontroller.timecard.data.TimeCardDatabase;
+
+/*
+Add functionality for profile images.
+ */
 
 @Entity(tableName = "user_data")
 public class User {
@@ -23,6 +28,9 @@ public class User {
     private String password;
 
     @ColumnInfo
+    private String email;
+
+    @ColumnInfo
     private String firstName;
 
     @ColumnInfo
@@ -37,7 +45,8 @@ public class User {
     @ColumnInfo
     private TimeCardDatabase currentTimeCard;
 
-    public User(String mUsername,String mPassword, String mFirstName, String mLastName, String mBirthday, String mCompanyName){
+    public User(@NonNull  String mUsername,@NonNull String mPassword,@NonNull String mEmail,
+                String mFirstName, String mLastName, String mBirthday, String mCompanyName){
 
         this.username = mUsername;
         this.firstName = mFirstName;
@@ -45,6 +54,7 @@ public class User {
         this.birthday = mBirthday;
         this.companyName = mCompanyName;
         this.password = mPassword;
+        this.email= mEmail;
 
         Log.e(TAG, ".uName." + username + ".created");
 
@@ -63,6 +73,8 @@ public class User {
     }
 
     public String getPassword(){return password;}
+
+    public String getEmail(){return email;}
 
     public String getFirstName(){
         return firstName;

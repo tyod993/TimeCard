@@ -22,6 +22,7 @@ import java.util.List;
 public class TimeCardRepository {
 
     //This is set to the Dao of the local database if its being called.
+    private static volatile TimeCardRepository instance;
     private TimeCardDao mtimeCardDao;
 
     //holds the data for the weeks Times
@@ -29,6 +30,13 @@ public class TimeCardRepository {
 
     public TimeCardRepository(Context context){
         getTimeCardInfo(context);
+    }
+
+    public TimeCardRepository getInstance(Context context){
+        if(instance == null){
+            instance = new TimeCardRepository(context);
+        }
+        return instance;
     }
 
     //This is used by the view model to retrieve this time period's times

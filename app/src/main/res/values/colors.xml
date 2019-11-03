@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="mainMenuText">#001C3D</color>
+    <color name="registerUserBackground">#FF8942</color>
+    <color name="gradient1">#FFEBDF</color>
 </resources>
