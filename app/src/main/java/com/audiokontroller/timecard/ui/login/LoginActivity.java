@@ -2,6 +2,8 @@ package com.audiokontroller.timecard.ui.login;
 
 import android.app.Activity;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final TextView createAccountTV = findViewById(R.id.createAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -115,6 +118,17 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(getApplication(),usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        createAccountTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                RegisterUserFragment registerUserFragment = RegisterUserFragment.newInstance();
+                fragmentTransaction.add(R.id.fragment_container, registerUserFragment);
+                fragmentTransaction.commit();
             }
         });
     }

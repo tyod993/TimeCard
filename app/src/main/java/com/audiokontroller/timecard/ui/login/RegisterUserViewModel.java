@@ -10,7 +10,7 @@ import com.audiokontroller.timecard.data.LoginRepository;
 import com.audiokontroller.timecard.data.UserRepository;
 import com.audiokontroller.timecard.data.model.User;
 
-public class RegisterUserViewModel extends ViewModel {
+public class RegisterUserViewModel extends ViewModel{
 
     private UserRepository userRepository;
     private LoginRepository loginRepository;

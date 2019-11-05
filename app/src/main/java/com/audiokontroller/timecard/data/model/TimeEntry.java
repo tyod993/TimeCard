@@ -13,7 +13,7 @@ public class TimeEntry {
     private int id;
 
     @ColumnInfo(name = "submission_date_time")
-    private Calendar mDateTimeSubmitted;
+    private Calendar mDateSubmitted;
 
     @ColumnInfo(name = "entry_date")
     private String mEntryDate;
@@ -40,7 +40,7 @@ public class TimeEntry {
         this.mEntryEndTime = endTime;
         this.mJobName = jobName;
         this.mJobNotes = jobNotes;
-        this.mDateTimeSubmitted = Calendar.getInstance();
+        this.mDateSubmitted = Calendar.getInstance();
 
     }
 
