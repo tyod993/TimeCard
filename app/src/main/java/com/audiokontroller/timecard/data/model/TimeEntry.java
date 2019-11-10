@@ -1,10 +1,10 @@
 package com.audiokontroller.timecard.data.model;
 
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Calendar;
 
 @Entity(tableName = "time_card")
 public class TimeEntry {
@@ -12,35 +12,33 @@ public class TimeEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "submission_date_time")
-    private Calendar mDateSubmitted;
-
     @ColumnInfo(name = "entry_date")
-    private String mEntryDate;
+    private String entryDate;
 
     @ColumnInfo(name = "entry_start_time")
-    private String mEntryStartTime;
+    private String entryStartTime;
 
     @ColumnInfo(name = "entry_end_time")
-    private String mEntryEndTime;
+    private String entryEndTime;
 
     @ColumnInfo(name = "job_location")
-    private String mJobName;
+    private String jobName;
 
     @ColumnInfo(name = "job_notes")
-    private String mJobNotes;
+    private String jobNotes;
 
     @ColumnInfo(name = "submitted")
-    private boolean mSubmitted;
+    private boolean submitted;
 
-    public TimeEntry(String date, String startTime, String endTime, String jobName, String jobNotes){
+    public TimeEntry(String entryDate, String entryStartTime, String entryEndTime,
+                     String jobName, String jobNotes, boolean submitted){
 
-        this.mEntryDate = date;
-        this.mEntryStartTime = startTime;
-        this.mEntryEndTime = endTime;
-        this.mJobName = jobName;
-        this.mJobNotes = jobNotes;
-        this.mDateSubmitted = Calendar.getInstance();
+        this.entryDate = entryDate;
+        this.entryStartTime = entryStartTime;
+        this.entryEndTime = entryEndTime;
+        this.jobName = jobName;
+        this.jobNotes = jobNotes;
+        this.submitted = submitted;
 
     }
 
@@ -48,32 +46,34 @@ public class TimeEntry {
         this.id = id1;
     }
 
-    public void setmSubmitted(boolean submitted){
-        this.mSubmitted = submitted;
+    public int getId(){return this.id;}
+
+    public void setSubmitted(boolean submitted){
+        this.submitted = submitted;
     }
 
-    public String getmEntryDate(){
-        return mEntryDate;
+    public String getEntryDate(){
+        return entryDate;
     }
 
-    public String getmEntryStartTime(){
-        return mEntryStartTime;
+    public String getEntryStartTime(){
+        return entryStartTime;
     }
 
-    public String getmEntryEndTime(){
-        return mEntryEndTime;
+    public String getEntryEndTime(){
+        return entryEndTime;
     }
 
-    public String getmJobName(){
-        return mJobName;
+    public String getJobName(){
+        return jobName;
     }
 
-    public String getmJobNotes(){
-        return mJobNotes;
+    public String getJobNotes(){
+        return jobNotes;
     }
 
-    public boolean getSubmition(){
-        return mSubmitted;
+    public boolean getSubmitted(){
+        return submitted;
     }
 
 }

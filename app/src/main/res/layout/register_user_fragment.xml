@@ -22,11 +22,11 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_corners"
-                android:padding="8dp"
                 android:layout_marginTop="24dp"
+                android:background="@drawable/round_corners"
                 android:fontFamily="@font/rubik_bold"
                 android:gravity="center"
+                android:padding="8dp"
                 android:text="Create Account"
                 android:textColor="#515A5A"
                 android:textSize="30dp"
@@ -40,12 +40,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:padding="5dp"
                 android:background="@drawable/round_corners"
                 android:ems="10"
                 android:fontFamily="@font/rubik_light_italic"
                 android:hint="First Name"
                 android:inputType="text"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -56,11 +56,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_corners"
-                android:padding="5dp"
                 android:ems="10"
-                android:hint="Last Name"
                 android:fontFamily="@font/rubik_light_italic"
+                android:hint="Last Name"
                 android:inputType="text"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/firstNameInput" />
@@ -71,14 +71,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_corners"
-                android:padding="5dp"
                 android:ems="10"
-                android:hint="Email"
                 android:fontFamily="@font/rubik_light_italic"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastNameInput"/>
+                app:layout_constraintTop_toBottomOf="@+id/lastNameInput" />
 
             <EditText
                 android:id="@+id/passwordInput"
@@ -86,26 +86,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_corners"
-                android:padding="5dp"
                 android:ems="10"
-                android:hint="Password"
                 android:fontFamily="@font/rubik_light_italic"
+                android:hint="Password"
                 android:inputType="textPassword"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailInput"/>
+                app:layout_constraintTop_toBottomOf="@+id/emailInput" />
 
             <Button
                 android:id="@+id/signUpButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/round_corners"
-                android:layout_marginTop="20dp"
-                android:text="Sign Up"
+                android:enabled="false"
                 android:fontFamily="@font/rubik_regular"
+                android:text="Sign Up"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordInput"/>
+                app:layout_constraintTop_toBottomOf="@+id/signUpLoading" />
+
+            <ProgressBar
+                android:id="@+id/signUpLoading"
+                style="?android:attr/progressBarStyle"
+                android:visibility="gone"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

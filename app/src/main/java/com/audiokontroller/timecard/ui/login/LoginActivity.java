@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final TextView createAccountTV = findViewById(R.id.createAccount);
+        final TextView createAccountTextView = findViewById(R.id.createAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(getApplication(), usernameEditText.getText().toString(),
+                    loginViewModel.login(getApplicationContext(), usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -116,19 +116,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(getApplication(),usernameEditText.getText().toString(),
+                loginViewModel.login(getApplicationContext(),usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
 
-        createAccountTV.setOnClickListener(new View.OnClickListener() {
+        createAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                RegisterUserFragment registerUserFragment = RegisterUserFragment.newInstance();
-                fragmentTransaction.add(R.id.fragment_container, registerUserFragment);
-                fragmentTransaction.commit();
+                launchRegisterUserFrag();
             }
         });
     }
@@ -143,5 +139,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void launchRegisterUserFrag(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        RegisterUserFragment registerUserFragment = RegisterUserFragment.newInstance();
+        registerUserFragment.setViewModel(loginViewModel);
+        loginViewModel.getUserRepository(getApplicationContext());
+        fragmentTransaction.add(R.id.fragment_container, registerUserFragment);
+        fragmentTransaction.commit();
     }
 }

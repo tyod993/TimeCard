@@ -66,22 +66,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <RecyclerView
         android:id="@+id/time_list_rec_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftof="parent"
-        app:layout_constraintRight_toRightof="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:itemCount="4"
         tools:layout_editor_absoluteY="371dp"
         tools:listitem="@layout/recycler_view_item">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_time_entry_float_button"

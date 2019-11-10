@@ -37,10 +37,6 @@ public class UserRepository {
 
     public String getLastName(){return mUserDao.getLastName();}
 
-    public String getUsername(){
-        return mUserDao.getUsername();
-    }
-
     public String getPassword(){
         return mUserDao.getPassword();
     }

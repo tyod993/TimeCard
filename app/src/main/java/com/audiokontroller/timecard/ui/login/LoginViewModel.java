@@ -1,23 +1,28 @@
 package com.audiokontroller.timecard.ui.login;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Patterns;
 
 import com.audiokontroller.timecard.data.LoginRepository;
 import com.audiokontroller.timecard.data.Result;
+import com.audiokontroller.timecard.data.UserRepository;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 import com.audiokontroller.timecard.R;
+import com.audiokontroller.timecard.data.model.User;
 
 public class LoginViewModel extends ViewModel {
 
+    // This new user is only used within the RegisterFragment.
+    private User newUser;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
+    private UserRepository userRepository;
 
     LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
@@ -31,9 +36,9 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(Application application, String username, String password) {
+    public void login(Context context, String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(application, username, password);
+        Result<LoggedInUser> result = loginRepository.login(context, username, password);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
@@ -53,6 +58,13 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    public void newUserDataChanged(@Nullable String firstName, @Nullable String lastName, String email, String password){
+        if(isUserNameValid(email) || isPasswordValid(password) || isNameValid(firstName)){
+            newUser = new User(password, email, firstName, lastName);
+            userRepository.update(newUser);
+        }
+    }
+
     // A placeholder username validation check
     private boolean isUserNameValid(String username) {
         if (username == null) {
@@ -69,4 +81,23 @@ public class LoginViewModel extends ViewModel {
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }
+
+    private boolean isNameValid(String name){
+        if(name == null){
+            return true;
+        } else if (name.trim().length() <= 2){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void registerNewUser(){
+        // TODO ; Connect to Firebase and register user information.
+        if(newUser != null){
+            userRepository.update(newUser);
+        }
+    }
+
+    public UserRepository getUserRepository(Context context){return userRepository.getInstance(context);}
 }

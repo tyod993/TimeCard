@@ -22,9 +22,6 @@ public interface UserDao {
     @Query("SELECT firstName FROM user_data")
     String getFirstName();
 
-    @Query("SELECT username FROM user_data")
-    String getUsername();
-
     @Query("SELECT password FROM user_data")
     String getPassword();
 
