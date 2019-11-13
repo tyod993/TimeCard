@@ -1,6 +1,7 @@
 package com.audiokontroller.timecard.ui.mainmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,10 +22,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public MainMenuViewModel mainMenuViewModel;
 
-    private RecyclerView timeEntryRecView;
-    private FloatingActionButton floatingButtonAddTime;
-    private FrameLayout fragmentContainer;
-    private LiveData<List<TimeEntry>> timeCardList;
+    private ConstraintLayout fragmentContainer;
 
     //TODO:EVERYTHING!!!!
     @Override
@@ -32,43 +30,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timeEntryRecView = findViewById(R.id.time_list_rec_view);
-        floatingButtonAddTime = findViewById(R.id.add_time_entry_float_button);
-        fragmentContainer = findViewById(R.id.fragment_container);
-    }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-
-        floatingButtonAddTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openTimeEntryFrag();
-
-            }
-        });
-
-    }
-
-    protected void onStop(){
-        super.onStop();
-
-
-    }
-
-    protected void onPause(){
-        super.onPause();
-
-
-    }
-
-    protected void onRestart(){
-        super.onRestart();
-    }
-
-    protected void onResume(){
-        super.onResume();
     }
 
     public Fragment openTimeEntryFrag(){

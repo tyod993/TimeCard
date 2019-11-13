@@ -6,4 +6,5 @@
     <color name="mainMenuText">#001C3D</color>
     <color name="registerUserBackground">#FF8942</color>
     <color name="gradient1">#FFEBDF</color>
+    <color name="bottom_menu">#F1F9FF</color>
 </resources>

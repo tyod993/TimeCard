@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 
+
+//TODO; Major bug when setting EditText variables to resource containers
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -39,8 +41,13 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        /*
+        Currently no matter what argument you pass to the findViewById() to retrieve the
+        EditText containers it calls usernameEditText first and always finds the username_text.
+        */
+
+        final EditText passwordEditText = findViewById(R.id.username_text);
+        final EditText usernameEditText = findViewById(R.id.passwordInput);
         final Button loginButton = findViewById(R.id.login);
         final TextView createAccountTextView = findViewById(R.id.createAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
@@ -147,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         RegisterUserFragment registerUserFragment = RegisterUserFragment.newInstance();
         registerUserFragment.setViewModel(loginViewModel);
         loginViewModel.getUserRepository(getApplicationContext());
-        fragmentTransaction.add(R.id.fragment_container, registerUserFragment);
+        fragmentTransaction.add(R.id.login_viewpager, registerUserFragment);
         fragmentTransaction.commit();
     }
 }

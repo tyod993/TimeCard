@@ -26,12 +26,12 @@ public class RegisterUserViewModel extends ViewModel{
     public void saveNewUser(@NonNull String username, @NonNull String password, @NonNull String email,
                             String firstName, String lastName, String birthday,
                             String companyName){
-        newUser = new User(username, password, email, firstName, lastName, birthday, companyName);
+        newUser = new User(password, email, firstName, lastName);
         userRepository.update(newUser);
     }
 
     public void loginNewUser(Context context){
-        loginRepository.login(context, newUser.getUsername(), newUser.getPassword());
+        loginRepository.login(context, newUser.getEmail(), newUser.getPassword());
     }
 
     public void setContext(Context context){this.context=context;}

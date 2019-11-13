@@ -15,5 +15,11 @@
     <string name="invalid_password">Password must be more then 5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="register">Register</string>
-    <string name="create_account">Don\'t have an accunt? Create one here.</string>
+    <string name="create_account">Don\'t have an account? Create one here.</string>
+
+    //Bottom navigation bar
+    <string name="home">Home</string>
+    <string name="messages">Messages</string>
+    <string name="calendar">Calendar</string>
+    <string name="projects">Projects</string>
 </resources>

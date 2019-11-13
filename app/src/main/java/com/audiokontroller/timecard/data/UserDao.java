@@ -16,6 +16,10 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+    @Query("SELECT email FROM user_data")
+    String getEmail();
+
     @Query("SELECT lastName FROM user_data")
     String getLastName();
 
@@ -24,7 +28,4 @@ public interface UserDao {
 
     @Query("SELECT password FROM user_data")
     String getPassword();
-
-    @Query("SELECT currentTimeCard FROM user_data")
-    TimeCardDatabase getCurrentTimeCard();
 }

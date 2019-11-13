@@ -13,7 +13,7 @@ public class UserAuthentication {
 
     public UserAuthentication(Context context, String username, String password){
         userRepo = new UserRepository(context);
-        testUsername= userRepo.getUsername();
+        testUsername = userRepo.getEmail();
 
         if(validLocalUser(testUsername)){
             if(testUsername.trim() == username.trim()){
