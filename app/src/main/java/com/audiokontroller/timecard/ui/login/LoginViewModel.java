@@ -18,6 +18,7 @@ import com.audiokontroller.timecard.data.model.User;
 public class LoginViewModel extends ViewModel {
 
     // This new user is only used within the RegisterFragment.
+    public Context context;
     private User newUser;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
@@ -99,5 +100,11 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public UserRepository getUserRepository(Context context){return userRepository.getInstance(context);}
+    public void setUserRepository(){
+        userRepository = new UserRepository(context);
+    }
+
+    public void setContext(Context context){this.context = context;}
+
+
 }

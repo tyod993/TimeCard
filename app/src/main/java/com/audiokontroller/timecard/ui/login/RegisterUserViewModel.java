@@ -12,6 +12,8 @@ import com.audiokontroller.timecard.data.model.User;
 
 public class RegisterUserViewModel extends ViewModel{
 
+    //TODO; Some weird logic in here that needs to be fixed.
+
     private UserRepository userRepository;
     private LoginRepository loginRepository;
     private Context context;
@@ -20,7 +22,7 @@ public class RegisterUserViewModel extends ViewModel{
 
     RegisterUserViewModel(LoginDataSource loginDataSource){
         loginRepository = LoginRepository.getInstance(loginDataSource);
-        this.userRepository = userRepository;
+
     }
 
     public void saveNewUser(@NonNull String username, @NonNull String password, @NonNull String email,

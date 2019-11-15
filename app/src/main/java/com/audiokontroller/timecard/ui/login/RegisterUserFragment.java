@@ -30,19 +30,11 @@ public class RegisterUserFragment extends Fragment {
     private EditText mPasswordInput;
     private ProgressBar mLoadingProgressBar;
 
-    public static RegisterUserFragment newInstance() {
-        return new RegisterUserFragment();
-    }
+    public  RegisterUserFragment(LoginViewModel loginViewModel){this.loginViewModel = loginViewModel;}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSignUpButton = getActivity().findViewById(R.id.signUpButton);
-        mFNameInput = getActivity().findViewById(R.id.firstNameInput);
-        mLNameInput = getActivity().findViewById(R.id.lastNameInput);
-        mEmailInput = getActivity().findViewById(R.id.emailInput);
-        mPasswordInput = getActivity().findViewById(R.id.passwordInput);
-        mLoadingProgressBar = getActivity().findViewById(R.id.signUpLoading);
     }
 
     @Override
@@ -54,6 +46,13 @@ public class RegisterUserFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mSignUpButton = getActivity().findViewById(R.id.signUpButton);
+        mFNameInput = getActivity().findViewById(R.id.firstNameInput);
+        mLNameInput = getActivity().findViewById(R.id.lastNameInput);
+        mEmailInput = getActivity().findViewById(R.id.emailInput);
+        mPasswordInput = getActivity().findViewById(R.id.passwordInput);
+        mLoadingProgressBar = getActivity().findViewById(R.id.signUpLoading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -106,7 +105,5 @@ public class RegisterUserFragment extends Fragment {
             }
         });
     }
-
-    public void setViewModel(LoginViewModel viewModel){this.loginViewModel = viewModel;}
 
 }

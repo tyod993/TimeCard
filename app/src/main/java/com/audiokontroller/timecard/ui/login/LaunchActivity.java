@@ -2,7 +2,6 @@ package com.audiokontroller.timecard.ui.login;
 
 import android.app.Activity;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +28,16 @@ import android.widget.Toast;
 import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 
-
-//TODO; Major bug when setting EditText variables to resource containers
-public class LoginActivity extends AppCompatActivity {
+public class LaunchActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private TextView createAccountTextView;
+    private ProgressBar loadingProgressBar;
+    private FrameLayout fragmentContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,16 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        /*
-        Currently no matter what argument you pass to the findViewById() to retrieve the
-        EditText containers it calls usernameEditText first and always finds the username_text.
-        */
-
-        final EditText passwordEditText = findViewById(R.id.username_text);
-        final EditText usernameEditText = findViewById(R.id.passwordInput);
-        final Button loginButton = findViewById(R.id.login);
-        final TextView createAccountTextView = findViewById(R.id.createAccount);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        fragmentContainer = findViewById(R.id.login_fragment_container);
+        passwordEditText = findViewById(R.id.password_text);
+        emailEditText = findViewById(R.id.username_text);
+        loginButton = findViewById(R.id.login);
+        createAccountTextView = findViewById(R.id.createAccount);
+        loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                    emailEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -101,18 +102,18 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+                loginViewModel.loginDataChanged(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
+        emailEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(getApplicationContext(), usernameEditText.getText().toString(),
+                    loginViewModel.login(getApplicationContext(), emailEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -123,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(getApplicationContext(),usernameEditText.getText().toString(),
+                loginViewModel.login(getApplicationContext(), emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -132,6 +133,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 launchRegisterUserFrag();
+                fragmentContainer.isClickable();
+                fragmentContainer.bringToFront();
+
             }
         });
     }
@@ -139,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+        Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
@@ -149,12 +153,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void launchRegisterUserFrag(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        RegisterUserFragment registerUserFragment = RegisterUserFragment.newInstance();
-        registerUserFragment.setViewModel(loginViewModel);
-        loginViewModel.getUserRepository(getApplicationContext());
-        fragmentTransaction.add(R.id.login_viewpager, registerUserFragment);
-        fragmentTransaction.commit();
+        RegisterUserFragment registerUserFragment = new RegisterUserFragment(loginViewModel);
+        loginViewModel.setContext(getApplicationContext());
+        loginViewModel.setUserRepository();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.login_fragment_container, registerUserFragment).commit();
     }
 }
