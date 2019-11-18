@@ -4,123 +4,214 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingEnd="42dp"
+    android:paddingStart="42dp"
     tools:context=".ui.login.RegisterUserFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-4dp">
+    <TextView
+        android:id="@+id/register_heading"
+        android:layout_width="273dp"
+        android:layout_height="164dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/nunito_bold"
+        android:gravity="clip_vertical"
+        android:padding="5dp"
+        android:text="@string/register_heading"
+        android:textColor="#1E0981"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/registration_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/registration_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingTop="20dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingBottom="30dp"
+        android:background="@drawable/round_corners_gradient"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_heading">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/create_account"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstName_txtInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="10dp">
+            android:layout_marginTop="8dp"
+            android:paddingTop="10dp"
+            android:textColorHint="#99FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/round_corners"
-                android:fontFamily="@font/rubik_bold"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="Create Account"
-                android:textColor="#515A5A"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstNameInput"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/round_corners"
+                android:backgroundTint="#B3FFFFFF"
                 android:ems="10"
-                android:fontFamily="@font/rubik_light_italic"
-                android:hint="First Name"
-                android:inputType="text"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/first_name"
+                android:inputType="textPersonName"
                 android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                android:selectAllOnFocus="true"
+                android:textColor="#E6FFFFFF"
+                android:textSize="18sp" />
 
-            <EditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastName_txtInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingTop="10dp"
+            android:textColorHint="#99FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstName_txtInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastNameInput"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/round_corners"
+                android:backgroundTint="#B3FFFFFF"
                 android:ems="10"
-                android:fontFamily="@font/rubik_light_italic"
-                android:hint="Last Name"
-                android:inputType="text"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/last_name"
+                android:inputType="textPersonName"
                 android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstNameInput" />
+                android:selectAllOnFocus="true"
+                android:textColor="#E6FFFFFF"
+                android:textSize="18sp"
+                />
 
-            <EditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_txtInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingTop="10dp"
+            android:textColorHint="#99FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lastName_txtInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInput"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/round_corners"
+                android:backgroundTint="#B3FFFFFF"
                 android:ems="10"
-                android:fontFamily="@font/rubik_light_italic"
-                android:hint="Email"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastNameInput" />
+                android:selectAllOnFocus="true"
+                android:textColor="#E6FFFFFF"
+                android:textSize="18sp"
+                />
 
-            <EditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_txtInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingTop="10dp"
+            android:textColorHint="#99FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_txtInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/round_corners"
+                android:backgroundTint="#B3FFFFFF"
                 android:ems="10"
-                android:fontFamily="@font/rubik_light_italic"
-                android:hint="Password"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailInput" />
+                android:selectAllOnFocus="true"
+                android:textColor="#E6FFFFFF"
+                android:textSize="15sp"
+                />
 
-            <Button
-                android:id="@+id/signUpButton"
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/login"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:animationCache="false"
+        android:clickable="false"
+        app:cardBackgroundColor="#FF7031"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_layout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/round_corners"
-                android:enabled="false"
-                android:fontFamily="@font/rubik_regular"
-                android:text="Sign Up"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signUpLoading" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:gravity="center"
+                android:text="@string/sign_up"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
-            <ProgressBar
-                android:id="@+id/signUpLoading"
-                style="?android:attr/progressBarStyle"
-                android:visibility="gone"
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+        <ProgressBar
+            android:id="@+id/signUpLoading"
+            style="?android:attr/progressBarStyle"
+            android:visibility="gone"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

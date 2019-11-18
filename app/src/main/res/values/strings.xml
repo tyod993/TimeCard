@@ -19,6 +19,12 @@
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="app_logo_string">application logo</string>
+    <string name="register_heading">Work Simplified.</string>
+    <string name="example_first_name">Steve</string>
+    <string name="example_last_name">Pratt</string>
+    <string name="create_account">Create Account</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 
 
     //Bottom navigation bar

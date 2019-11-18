@@ -7,4 +7,5 @@
     <color name="registerUserBackground">#FF8942</color>
     <color name="gradient1">#FFEBDF</color>
     <color name="bottom_menu">#F1F9FF</color>
+    <color name="white">#FFFFFF</color>
 </resources>
