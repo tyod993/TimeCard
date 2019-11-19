@@ -147,6 +147,8 @@
             android:layout_marginTop="8dp"
             android:paddingTop="10dp"
             android:textColorHint="#99FFFFFF"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#99FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_txtInputLayout">
@@ -171,7 +173,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/login"
+        android:id="@+id/signUp_cardView"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"

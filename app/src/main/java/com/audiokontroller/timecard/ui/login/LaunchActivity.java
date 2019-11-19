@@ -2,6 +2,7 @@ package com.audiokontroller.timecard.ui.login;
 
 import android.app.Activity;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -34,7 +35,7 @@ public class LaunchActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
-    private Button loginButton;
+    private CardView loginButton;
     private TextView createAccountTextView;
     private ProgressBar loadingProgressBar;
     private FrameLayout fragmentContainer;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -13,7 +14,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -23,7 +23,7 @@ public class RegisterUserFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
 
-    private Button mSignUpButton;
+    private CardView mSignUpButton;
     private EditText mFNameInput;
     private EditText mLNameInput;
     private EditText mEmailInput;
@@ -47,11 +47,12 @@ public class RegisterUserFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mSignUpButton = getActivity().findViewById(R.id.signUpButton);
+        mSignUpButton = getActivity().findViewById(R.id.signUp_cardView);
         mFNameInput = getActivity().findViewById(R.id.firstNameInput);
         mLNameInput = getActivity().findViewById(R.id.lastNameInput);
         mEmailInput = getActivity().findViewById(R.id.emailInput);
         mPasswordInput = getActivity().findViewById(R.id.passwordInput);
+
         mLoadingProgressBar = getActivity().findViewById(R.id.signUpLoading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
