@@ -1,5 +1,6 @@
 package com.audiokontroller.timecard.ui.login;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,8 +18,9 @@ import com.audiokontroller.timecard.data.model.User;
 
 public class LoginViewModel extends ViewModel {
 
-    // This new user is only used within the RegisterFragment.
+
     public Context context;
+    // This new user is only used within the RegisterFragment.
     private User newUser;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
@@ -59,6 +61,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    // Updating the room database everytime the user enters something new is a bit heavy.
     public void newUserDataChanged(@Nullable String firstName, @Nullable String lastName, String email, String password){
         if(isUserNameValid(email) || isPasswordValid(password) || isNameValid(firstName)){
             newUser = new User(password, email, firstName, lastName);
@@ -96,8 +99,13 @@ public class LoginViewModel extends ViewModel {
     public void registerNewUser(){
         // TODO ; Connect to Firebase and register user information.
         if(newUser != null){
+
             userRepository.update(newUser);
         }
+    }
+
+    public void createNewUser(@NonNull String email, @NonNull String password, String firstName, String lastName){
+        newUser = new User(password, email, firstName, lastName);
     }
 
     public void setUserRepository(){

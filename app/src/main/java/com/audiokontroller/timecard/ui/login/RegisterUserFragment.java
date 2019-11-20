@@ -19,6 +19,11 @@ import android.widget.ProgressBar;
 
 import com.audiokontroller.timecard.R;
 
+/*TODO; Currently crashing when logging in with new user aa well as creating new user.
+should also impliment a screen that tells the user that the account was created successfully
+then auto-login for them.
+*/
+
 public class RegisterUserFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
