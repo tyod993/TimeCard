@@ -73,6 +73,9 @@ public class RegisterUserFragment extends Fragment {
                 if (loginFormState.getPasswordError() != null) {
                     mPasswordInput.setError(getString(loginFormState.getPasswordError()));
                 }
+                if (loginFormState.getNameError() != null) {
+                    mFNameInput.setError(getString(loginFormState.getNameError()));
+                }
             }
         });
 
@@ -89,20 +92,25 @@ public class RegisterUserFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(mEmailInput.getText().toString(),
-                        mPasswordInput.getText().toString());
-                loginViewModel.newUserDataChanged(mFNameInput.getText().toString(),
-                        mLNameInput.getText().toString(), mEmailInput.getText().toString(),
-                        mPasswordInput.getText().toString());
+                loginViewModel.registrationDataChanged(mEmailInput.getText().toString(),
+                        mPasswordInput.getText().toString(), mFNameInput.getText().toString());
             }
         };
         mEmailInput.addTextChangedListener(afterTextChangedListener);
         mPasswordInput.addTextChangedListener(afterTextChangedListener);
+        mFNameInput.addTextChangedListener(afterTextChangedListener);
 
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mLoadingProgressBar.setVisibility(View.VISIBLE);
+                loginViewModel.createNewUser(
+                        mEmailInput.getText().toString(),
+                        mPasswordInput.getText().toString(),
+                        mFNameInput.getText().toString(),
+                        mLNameInput.getText().toString()
+                );
+
                 loginViewModel.registerNewUser();
                 loginViewModel.login(getContext(),
                         mEmailInput.getText().toString(),

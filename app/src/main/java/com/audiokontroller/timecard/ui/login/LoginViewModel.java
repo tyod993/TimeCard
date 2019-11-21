@@ -53,20 +53,26 @@ public class LoginViewModel extends ViewModel {
 
     public void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
+            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null, null));
         } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
+            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password, null));
         } else {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
 
-    // Updating the room database everytime the user enters something new is a bit heavy.
-    public void newUserDataChanged(@Nullable String firstName, @Nullable String lastName, String email, String password){
-        if(isUserNameValid(email) || isPasswordValid(password) || isNameValid(firstName)){
-            newUser = new User(password, email, firstName, lastName);
-            userRepository.update(newUser);
+    //Reusing loginFormState to validate registration input
+    public void registrationDataChanged(String username, String password, String firstName){
+        if(!isUserNameValid(username)){
+            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null, null));
+        }else if(!isPasswordValid(password)){
+            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password, null));
+        }else if(!isNameValid(firstName)){
+            loginFormState.setValue(new LoginFormState(null, null, R.string.invalid_firstName));
+        }else{
+            loginFormState.setValue(new LoginFormState(true));
         }
+
     }
 
     // A placeholder username validation check
@@ -99,7 +105,6 @@ public class LoginViewModel extends ViewModel {
     public void registerNewUser(){
         // TODO ; Connect to Firebase and register user information.
         if(newUser != null){
-
             userRepository.update(newUser);
         }
     }
@@ -109,7 +114,9 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void setUserRepository(){
-        userRepository = new UserRepository(context);
+        if(userRepository == null) {
+            userRepository = new UserRepository(context);
+        }
     }
 
     public void setContext(Context context){this.context = context;}
