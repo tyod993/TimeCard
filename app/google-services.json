@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "590536767669",
+    "firebase_url": "https://gera-c8916.firebaseio.com",
+    "project_id": "gera-c8916",
+    "storage_bucket": "gera-c8916.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590536767669:android:a574ee5665be6bef40a6fc",
+        "android_client_info": {
+          "package_name": "com.adlestechnologies.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590536767669-kt27t9e485fnf39dkq9mgeqo319vmcqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adlestechnologies.android",
+            "certificate_hash": "de536b75ee7bd03ad9ced7983c9c1331796f1422"
+          }
+        },
+        {
+          "client_id": "590536767669-lvo04unajn4s1p05bmln4vet86fpthls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW1TscOwpac_xGgNLx2HZn_kwOgTZ94k4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590536767669-lvo04unajn4s1p05bmln4vet86fpthls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

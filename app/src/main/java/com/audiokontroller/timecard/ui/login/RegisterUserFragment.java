@@ -1,5 +1,6 @@
 package com.audiokontroller.timecard.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,20 +12,19 @@ import androidx.lifecycle.Observer;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.audiokontroller.timecard.R;
 
-/*TODO; Currently crashing when logging in with new user aa well as creating new user.
-should also impliment a screen that tells the user that the account was created successfully
-then auto-login for them.
-*/
-
 public class RegisterUserFragment extends Fragment {
+
+    private final String TAG = RegisterUserFragment.class.getSimpleName();
 
     private LoginViewModel loginViewModel;
 
@@ -104,20 +104,13 @@ public class RegisterUserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mLoadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.createNewUser(
-                        mEmailInput.getText().toString(),
-                        mPasswordInput.getText().toString(),
-                        mFNameInput.getText().toString(),
-                        mLNameInput.getText().toString()
-                );
-
-                loginViewModel.registerNewUser();
-                loginViewModel.login(getContext(),
-                        mEmailInput.getText().toString(),
-                        mPasswordInput.getText().toString());
-
+                try{loginViewModel.registerNewUser();}
+                    catch(Exception e){
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, ".registration.exception." + e.toString());
+                }
+                loginViewModel.login(getContext(), mEmailInput.getText().toString(), mPasswordInput.getText().toString());
             }
         });
     }
-
 }

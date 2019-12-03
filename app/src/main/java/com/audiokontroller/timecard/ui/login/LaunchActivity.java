@@ -19,7 +19,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -46,6 +45,12 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+
+        //Check if Firebase user is already logged in before any initialization.
+        if (loginViewModel.isFBUserLoggedIn()){
+            updateUiWithUser(());
+        }
+        //
 
         fragmentContainer = findViewById(R.id.login_fragment_container);
         passwordEditText = findViewById(R.id.password_text);

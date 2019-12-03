@@ -1,18 +1,20 @@
 package com.audiokontroller.timecard.ui.login;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import androidx.annotation.Nullable;
+
+import java.net.URL;
 
 /**
  * Class exposing authenticated user details to the UI.
  */
 class LoggedInUserView {
     private String displayName;
+
     @Nullable
-    private String companyName;
-    @Nullable
-    private Bitmap profilePicture;
+    private Uri profilePicture;
     //... other data fields that may be accessible to the UI
 
     public LoggedInUserView(String displayName) {
@@ -22,4 +24,11 @@ class LoggedInUserView {
     String getDisplayName() {
         return displayName;
     }
+
+    void setDisplayName(String newDisplayName){this.displayName = newDisplayName;}
+
+    Uri getProfilePicture(){return profilePicture;}
+
+    void setProfilePicture(Uri newProfilePicture){this.profilePicture = newProfilePicture;}
+
 }

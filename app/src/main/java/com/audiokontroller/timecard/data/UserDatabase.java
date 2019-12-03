@@ -14,17 +14,20 @@ public abstract class UserDatabase extends RoomDatabase {
 
     private static final String TAG = UserDatabase.class.getSimpleName();
 
-    private static UserDatabase instance;
+    private static final String DATABASE_NAME = "user_db";
+
+    private static volatile UserDatabase instance;
 
     public abstract UserDao userDao();
 
-    public static synchronized UserDatabase getInstance(Context context){
-        if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    UserDatabase.class, "user_db")
-                    .fallbackToDestructiveMigrationFrom()
-                    .build();
-                    Log.e(TAG, ".build.exe");
+    public static synchronized UserDatabase getInstance(final Context context){
+        if(instance == null) {
+            synchronized (UserDatabase.class) {
+                instance = Room.databaseBuilder(context.getApplicationContext(),
+                        UserDatabase.class, DATABASE_NAME)
+                        .build();
+                Log.e(TAG, ".build.exe");
+            }
         }
         return instance;
     }
