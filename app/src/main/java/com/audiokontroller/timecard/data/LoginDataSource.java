@@ -1,8 +1,7 @@
 package com.audiokontroller.timecard.data;
 
-import android.content.Context;
-
 import com.audiokontroller.timecard.data.model.LoggedInUser;
+import com.audiokontroller.timecard.data.firebase.FirebaseAuthHandler;
 
 import java.io.IOException;
 
@@ -13,16 +12,13 @@ public class LoginDataSource {
 
     private boolean isAuthenticated;
 
-    public Result login(Context context, String username, String password) {
+    public Result login(String email, String password) {
         try {
-            // TODO: create Firebase authentication
-            UserAuthentication authentication =
-                    new UserAuthentication(context, username, password);
-            if (authentication.getAuthentication()) {
+            FirebaseAuthHandler authHandler = new FirebaseAuthHandler();
+            authHandler.loginWithFirebase(email, password);
+            if (authHandler.getLoginSuccess()) {
                 LoggedInUser newUser =
-                        new LoggedInUser(
-                                username,
-                                authentication.getDisplayName());
+                        authHandler.getLoggedInUser();
                 isAuthenticated = true;
                 return new Result.Success<>(newUser);
             }else{
@@ -37,4 +33,6 @@ public class LoginDataSource {
         // TODO: revoke authentication
         isAuthenticated = false;
     }
+
+    public boolean getAuthentication(){return isAuthenticated;}
 }

@@ -1,6 +1,5 @@
 package com.audiokontroller.timecard.ui.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.audiokontroller.timecard.R;
+
+//TODO: Handle state changes
 
 public class RegisterUserFragment extends Fragment {
 
@@ -104,12 +105,17 @@ public class RegisterUserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mLoadingProgressBar.setVisibility(View.VISIBLE);
-                try{loginViewModel.registerNewUser();}
+                try{loginViewModel.registerNewUser(
+                        mEmailInput.getText().toString(),
+                        mPasswordInput.getText().toString(),
+                        mFNameInput.getText().toString(),
+                        mLNameInput.getText().toString());
+                }
                     catch(Exception e){
                         Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                         Log.d(TAG, ".registration.exception." + e.toString());
                 }
-                loginViewModel.login(getContext(), mEmailInput.getText().toString(), mPasswordInput.getText().toString());
+                loginViewModel.login(mEmailInput.getText().toString().trim(), mPasswordInput.getText().toString().trim());
             }
         });
     }

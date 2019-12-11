@@ -1,6 +1,6 @@
 package com.audiokontroller.timecard.ui.login;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,6 +11,7 @@ import android.util.Patterns;
 import com.audiokontroller.timecard.data.LoginRepository;
 import com.audiokontroller.timecard.data.Result;
 import com.audiokontroller.timecard.data.UserRepository;
+import com.audiokontroller.timecard.data.firebase.FirebaseAuthHandler;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 import com.audiokontroller.timecard.R;
 
@@ -37,13 +38,13 @@ public class LoginViewModel extends ViewModel {
     }
 
     //TODO:App currently closes when login fails, this should"nt be the case
-    public void login(Context context, String username, String password) {
+    public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(context, username, password);
+        Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            loginResult.setValue(new LoginResult(data));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
@@ -74,8 +75,14 @@ public class LoginViewModel extends ViewModel {
     }
     //
     // Firebase Authentications
-    public boolean isFBUserLoggedIn(){return firebaseAuthHandler.isUserLoggedIn();}
 
+    public void registerNewUser(String email, String password, @Nullable String firstName, @Nullable String lastName){
+        firebaseAuthHandler.registerNewUser(email, password, firstName, lastName);
+    }
+
+    public boolean isFirebaseUserLoggedIn(){return firebaseAuthHandler.isUserLoggedIn();}
+
+    public LoggedInUser getLoggedInUser(){return firebaseAuthHandler.getLoggedInUser();}
 
     //
     //
@@ -107,9 +114,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void registerNewUser(){
-        // TODO ; Connect to Firebase and register user information.
-    }
+
 
     public void setUserRepository(){
         if(userRepository == null) {

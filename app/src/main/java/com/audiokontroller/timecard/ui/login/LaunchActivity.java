@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
+import com.audiokontroller.timecard.data.model.LoggedInUser;
 
 public class LaunchActivity extends AppCompatActivity {
 
@@ -47,8 +48,8 @@ public class LaunchActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         //Check if Firebase user is already logged in before any initialization.
-        if (loginViewModel.isFBUserLoggedIn()){
-            updateUiWithUser(());
+        if (loginViewModel.isFirebaseUserLoggedIn()){
+            updateUiWithUser((loginViewModel.getLoggedInUser()));
         }
         //
 
@@ -119,7 +120,7 @@ public class LaunchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(getApplicationContext(), emailEditText.getText().toString(),
+                    loginViewModel.login(emailEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -130,7 +131,7 @@ public class LaunchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(getApplicationContext(), emailEditText.getText().toString(),
+                loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -146,7 +147,7 @@ public class LaunchActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
+    private void updateUiWithUser(LoggedInUser model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
