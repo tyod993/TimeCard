@@ -11,7 +11,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.concurrent.Executor;
 
@@ -54,7 +53,8 @@ public class FirebaseAuthHandler {
                             Log.d(TAG, ".registerNewUser.successful");
                             currentUser = firebaseAuth.getCurrentUser();
                             if (firstName != null) {
-                                updateUserDisplayName(firstName + " " + lastName);
+                                FireUserProfileUpdate userUpdate = new FireUserProfileUpdate(currentUser);
+                                userUpdate.updateUserDisplayName(firstName + " " + lastName);
                                 authSuccess = true;
                             }
                         } else {
@@ -67,22 +67,7 @@ public class FirebaseAuthHandler {
 
     }
 
-    private void updateUserDisplayName(String newDisplayName) {
-        if (newDisplayName != null) {
-            UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(newDisplayName)
-                    .build();
-            currentUser.updateProfile(request)
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, ".displayNameChange.success");
-                            }
-                        }
-                    });
-        }
-    }
+
 
     private void formatFirebaseUser(FirebaseUser firebaseUser) {
         loggedInUser = new LoggedInUser(firebaseUser.getEmail(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl());
