@@ -3,7 +3,7 @@
     <string name="this_week">This Week\'s Time</string>
     <string name="weather">Weather</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Organize all of these strings into categories. It currently stresses me out! -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
@@ -26,6 +26,7 @@
     <string name="create_account">Create Account</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="dashboard">Dashboard</string>
 
 
     //Bottom navigation bar
