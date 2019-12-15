@@ -19,13 +19,12 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainMenuViewModel = new MainMenuViewModel(getApplication());
+        // mainMenuViewModel = new MainMenuViewModel(getApplication());
     }
 
     public Fragment openTimeEntryFrag(){
 
-        // Change the newInstance() argument to the user
-        // name
+        // Change the newInstance() argument to the username
         TimeEntryFragment fragment = TimeEntryFragment.newInstance(null);
         return fragment;
     }

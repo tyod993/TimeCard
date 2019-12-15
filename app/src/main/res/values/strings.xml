@@ -4,7 +4,7 @@
     <string name="weather">Weather</string>
 
     <!-- TODO: Organize all of these strings into categories. It currently stresses me out! -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //Login Screen
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -19,6 +19,9 @@
     <string name="sign_up_sentence">Don\'t have an account? </string>
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
+    //
+
+    //Registration Screen
     <string name="app_logo_string">application logo</string>
     <string name="register_heading">Work Simplified.</string>
     <string name="example_first_name">Steve</string>
@@ -26,12 +29,20 @@
     <string name="create_account">Create Account</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="dashboard">Dashboard</string>
+    //
 
+    //Dashboard
+    <string name="dashboard">Dashboard</string>
+    <string name="settings_icon">Settings Button</string>
+    <string name="notifications_icon">Notification icon</string>
+    <string name="clockin_button">Clock in Button</string>
+    //
 
     //Bottom navigation bar
     <string name="home">Home</string>
     <string name="messages">Messages</string>
     <string name="calendar">Calendar</string>
     <string name="projects">Projects</string>
+    //
+
 </resources>

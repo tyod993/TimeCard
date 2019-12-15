@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.audiokontroller.timecard.data.TimeCardRepository;
 import com.audiokontroller.timecard.data.model.TimeEntry;
@@ -13,7 +12,7 @@ import com.audiokontroller.timecard.data.UserRepository;
 
 import java.util.List;
 
-public class MainMenuViewModel extends ViewModel {
+public class MainMenuViewModel extends AndroidViewModel {
 
     private TimeCardRepository mtimeEntryRepository;
     private UserRepository muserRepository;
