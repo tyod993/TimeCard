@@ -1,3 +1,11 @@
+/**
+TODO: New Feature: 4 Digit pin validation.
+
+ Feature: Update this class to keep the user validated for one week from log in time.
+ When the time has elapsed launch a variation on logging in that
+ only requires a 4 digit pin.
+*/
+
 package com.audiokontroller.timecard.ui.login;
 
 import androidx.annotation.Nullable;

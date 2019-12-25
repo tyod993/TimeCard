@@ -21,29 +21,16 @@ public class MainMenuViewModel extends AndroidViewModel {
 
     LiveData<List<TimeEntry>> allTimeEntries;
 
-    public MainMenuViewModel(Application application){
+    public MainMenuViewModel(Application application) {
         super(application);
         mtimeEntryRepository = new TimeCardRepository(application);
         muserRepository = new UserRepository(application);
         allTimeEntries = mtimeEntryRepository.getAllEntries();
     }
 
-    private LiveData<List<TimeEntry>> getAllTimeEntries(){return allTimeEntries;}
+    private LiveData<List<TimeEntry>> getAllTimeEntries() {
+        return allTimeEntries;
+    }
 
 
-
-    //these are'nt needed, delete when im sure
-    public void updateUser(User user){muserRepository.update(user);}
-
-    public void deleteUser(User user){muserRepository.delete(user);}
-
-
-
-    public void insertTimeEntry(TimeEntry timeEntry){mtimeEntryRepository.insert(timeEntry);}
-
-    public void deleteTimeEntry(TimeEntry timeEntry){mtimeEntryRepository.delete(timeEntry);}
-
-    public void updateTimeEntry(TimeEntry timeEntry){mtimeEntryRepository.update(timeEntry);}
-
-    public void deleteAllTimeEntries(){mtimeEntryRepository.deleteAll();}
 }

@@ -33,9 +33,10 @@
 
     //Dashboard
     <string name="dashboard">Dashboard</string>
-    <string name="settings_icon">Settings Button</string>
+    <string name="today">Today</string>
     <string name="notifications_icon">Notification icon</string>
     <string name="clockin_button">Clock in Button</string>
+    <string name="settings_button">Settings Button</string>
     //
 
     //Bottom navigation bar

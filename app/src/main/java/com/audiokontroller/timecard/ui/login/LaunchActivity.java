@@ -53,13 +53,16 @@ public class LaunchActivity extends AppCompatActivity {
         }
         //
 
+        //UI Components
         fragmentContainer = findViewById(R.id.login_fragment_container);
         passwordEditText = findViewById(R.id.password_text);
         emailEditText = findViewById(R.id.username_text);
         loginButton = findViewById(R.id.login);
         createAccountTextView = findViewById(R.id.createAccount);
         loadingProgressBar = findViewById(R.id.loading);
+        //
 
+        //Format validation
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
@@ -75,7 +78,9 @@ public class LaunchActivity extends AppCompatActivity {
                 }
             }
         });
+        //
 
+        //Let's get down to business
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
@@ -95,6 +100,7 @@ public class LaunchActivity extends AppCompatActivity {
                 finish();
             }
         });
+        //
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -113,8 +119,10 @@ public class LaunchActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         };
+
         emailEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
+
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -149,7 +157,6 @@ public class LaunchActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUser model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
         Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         startActivity(intent);

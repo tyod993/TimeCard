@@ -5,78 +5,32 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
     tools:context=".ui.mainmenu.MainMenuActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="408dp"
-        android:layout_height="662dp"
-        android:clickable="false"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/home_top_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F1F9FF"
+        android:elevation="10dp"
+        android:title="@string/today"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_container"
         >
+    </androidx.appcompat.widget.Toolbar>
 
-        <ImageView
-            android:id="@+id/settings_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/settings_icon"
-            android:src="@drawable/ic_settings_blue_30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <fragment
+        android:id="@+id/home_nav_host_fragment"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/home_top_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
-        <ImageView
-            android:id="@+id/notification_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/settings_icon"
-            android:src="@drawable/ic_notifications_blue_30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/dashboard_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dashboard"
-            android:textColor="#1E0981"
-            android:textSize="35sp"
-            android:fontFamily="@font/nunito_bold"
-            android:gravity="center_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Titile"
-            app:layout_constraintTop_toBottomOf="@id/dashboard_tv"/>
-
-        <ImageView
-            android:id="@+id/clockin_button"
-            android:layout_width="256dp"
-            android:layout_height="256dp"
-            android:layout_marginTop="32dp"
-            android:contentDescription="@string/clockin_button"
-            android:cropToPadding="true"
-            android:src="@mipmap/clockin_button_blue_foreground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
