@@ -37,6 +37,13 @@
     <string name="notifications_icon">Notification icon</string>
     <string name="clockin_button">Clock in Button</string>
     <string name="settings_button">Settings Button</string>
+    <string name="break_button">Break</string>
+
+    //Time Card Submission Review
+    <string name="clock_out_image">Clocked out image</string>
+    <string name="total_hours_script">Hours Worked Today</string>
+    <string name="required">*Required</string>
+    <string name="projects_required">*Projects:</string>
     //
 
     //Bottom navigation bar

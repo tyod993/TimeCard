@@ -8,6 +8,15 @@
     <color name="gradient1">#FFEBDF</color>
     <color name="bottom_menu">#F1F9FF</color>
     <color name="white">#FFFFFF</color>
-    <color name="btn_drk_blue">#2424BC</color>
+    <color name="drk_blue_txt">#1E0981</color>
+    <color name="btn_drk_blue_80">#CC2424BC</color>
+    <color name="drk_blue">#2424BC</color>
+    <color name="spinner_border">#09BBF9</color>
     <color name="btn_lt_blue">#07C1FA</color>
+    <color name="lt_blue_80">#CC07C1FA</color>
+    <color name="lt_btn">#F1F9FF</color>
+    <color name="yellow_btn">#FFB33A</color>
+    <color name="black">#120426</color>
+    <color name="divider">#1E098140</color>
+    <color name="lt_txt">#4D042643</color>
 </resources>

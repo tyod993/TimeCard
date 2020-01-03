@@ -39,19 +39,14 @@ public class RegisterUserFragment extends Fragment {
     public  RegisterUserFragment(LoginViewModel loginViewModel){this.loginViewModel = loginViewModel;}
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.register_user_fragment, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mSignUpButton = getActivity().findViewById(R.id.signUp_cardView);
         mFNameInput = getActivity().findViewById(R.id.firstNameInput);

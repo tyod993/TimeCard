@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
         android:padding="3dp"
@@ -25,11 +25,25 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/today"
-            android:textColor="#120426"
+            android:textColor="@color/btn_lt_blue"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/total_hours_clk_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="60sp"
+            android:text="8"
+            android:textColor="@color/lt_blue_80"
+            app:layout_constraintTop_toBottomOf="@id/title_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
         <ImageView
@@ -42,62 +56,29 @@
             android:src="@raw/clock_initial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_tv"
+            app:layout_constraintTop_toBottomOf="@id/total_hours_clk_in"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="403dp"
-            android:layout_height="120dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
+        <Button
+            android:id="@+id/break_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:background="@drawable/round_corners_40dp"
+            android:backgroundTint="@color/yellow_btn"
+            android:fontFamily="@font/nunito_extra_bold"
+            android:textSize="22sp"
+            android:text="@string/break_button"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/clockin_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clockin_button">
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-            <Button
-                android:id="@+id/project_suggestion1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corners"
-                android:backgroundTint="@color/btn_lt_blue"
-                app:layout_constraintBottom_toTopOf="@+id/project_suggestion3"
-                app:layout_constraintEnd_toStartOf="@id/project_suggestion2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/project_suggestion2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corners"
-                android:backgroundTint="@color/btn_drk_blue"
-                app:layout_constraintBottom_toTopOf="@+id/more_projects_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/project_suggestion1"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/project_suggestion3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corners"
-                android:backgroundTint="@color/btn_drk_blue"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/more_projects_btn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/project_suggestion1" />
-
-            <Button
-                android:id="@+id/more_projects_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corners"
-                android:backgroundTint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/project_suggestion3"
-                app:layout_constraintTop_toBottomOf="@id/project_suggestion2" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
