@@ -28,7 +28,10 @@ public class MainClockInViewModel extends ViewModel {
         Log.d(TAG, ".clock.in");
     }
 
-    //TODO: Returning 0 is a temp solution to the error!!! Fix later
+    public void startBreak(){
+        currentTimeEntry.setValue(timeHandler.).
+    }
+
     public double getTotalHours(){
         currentTimeEntry.setValue(timeHandler.calcTotalHours(currentTimeEntry.getValue()));
         return currentTimeEntry.getValue().getTotalHours();

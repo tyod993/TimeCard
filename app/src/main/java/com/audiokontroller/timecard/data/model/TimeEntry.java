@@ -25,6 +25,10 @@ public class TimeEntry {
     @ColumnInfo(name = "entry_end_time")
     private String entryEndTime;
 
+    @Nullable
+    @ColumnInfo(name = "breaks")
+    private String[] breaks;
+
     @ColumnInfo(name = "total_hours")
     private double totalHours;
 
@@ -61,10 +65,6 @@ public class TimeEntry {
 
     public int getId(){return this.id;}
 
-    public void setSubmitted(boolean submitted){
-        this.submitted = submitted;
-    }
-
     public String getEntryDate(){
         return entryDate;
     }
@@ -75,9 +75,13 @@ public class TimeEntry {
     }
 
     @Nullable
-    public String getEntryEndTime(){
-        return entryEndTime;
-    }
+    public String getEntryEndTime(){ return entryEndTime; }
+
+    public void setEntryEndTime(String endTime){this.entryEndTime = endTime;}
+
+    public String[] getBreaks(){return breaks;}
+
+    public void setBreaks(String[] breaks){ this.breaks = breaks; }
 
     @Nullable
     public String getJobName(){
@@ -92,6 +96,8 @@ public class TimeEntry {
     public boolean getSubmitted(){
         return submitted;
     }
+
+    public void setSubmitted(boolean submitted){ this.submitted = submitted; }
 
     public void setTotalHours(double total){totalHours = total;}
 

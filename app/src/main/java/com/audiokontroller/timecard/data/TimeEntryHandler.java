@@ -14,10 +14,10 @@ import java.util.Locale;
 public class TimeEntryHandler {
 
     private static final String TAG = TimeEntryHandler.class.getSimpleName();
-    private static final int MILLIS_IN_SEC = 1000;
-    private static final int SEC_IN_MIN = 60;
+
+    private static final String DATE_FORMAT = "EEE MMM dd HH:mm:ss z yyyy";
+    private static final int MILLIS_IN_MIN = 60000;
     private static final int MIN_IN_HOUR = 60;
-    private static final int HOUR_IN_DAY = 24;
 
     private TimeEntry timeEntry;
 
@@ -29,23 +29,53 @@ public class TimeEntryHandler {
 
     public TimeEntry clockIn(){
         String current = Calendar.getInstance().getTime().toString();
-        return timeEntry = new TimeEntry(current, current, null, null, null, false, true);
+        return timeEntry = new TimeEntry(current, current, null,
+                null, null, false, true);
     }
 
-    public TimeEntry calcTotalHours(TimeEntry timeEntry){
-        if(timeEntry.getTotalHours() == 0 && timeEntry.isActive()){
-                Calendar start = formatCalendar(timeEntry.getEntryEndTime());
+    public TimeEntry clockOut(TimeEntry timeEntry){
+        String end = Calendar.getInstance().getTime().toString();
+        timeEntry.setEntryEndTime(end);
+        return timeEntry;
+    }
+
+    public TimeEntry startBreak(TimeEntry timeEntry){
+        if(timeEntry.isActive()) {
+            String[] breaks = {Calendar.getInstance().getTime().toString(), ""};
+            timeEntry.setBreaks(breaks);
+        }
+        return timeEntry;
+    }
+
+    public TimeEntry endBreak(TimeEntry timeEntry){
+        if(timeEntry.isActive()) {
+            String[] breaks = timeEntry.getBreaks();
+            breaks[1]= Calendar.getInstance().getTime().toString();
+            timeEntry.setBreaks(breaks);
+        }
+        return timeEntry;
+    }
+
+    public TimeEntry calcTotalHours(@NonNull TimeEntry timeEntry){
+        if(timeEntry.isActive()){
+                Calendar start = formatCalendar(timeEntry.getEntryStartTime());
                 Calendar now = Calendar.getInstance();
                 long startMillis = start.getTimeInMillis();
                 long nowMillis = now.getTimeInMillis();
-
+                timeEntry.setTotalHours(millisDiffHrs(startMillis, nowMillis));
+        }else if(!timeEntry.isActive() && timeEntry.getEntryEndTime() != null){
+            Calendar start = formatCalendar(timeEntry.getEntryStartTime());
+            Calendar end = formatCalendar(timeEntry.getEntryEndTime());
+            long startMillis = start.getTimeInMillis();
+            long endMillis = end.getTimeInMillis();
+            timeEntry.setTotalHours(millisDiffHrs(startMillis, endMillis));
         }
         return timeEntry;
     }
 
     private Calendar formatCalendar(@NonNull String v){
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
         try{cal.setTime(sdf.parse(v));
         }catch (Exception e){
             Log.e(TAG, e.toString());
@@ -53,8 +83,11 @@ public class TimeEntryHandler {
         return cal;
     }
 
-    private double millisDiff(long start, long stop){
-        long diff = start - stop;
-
+    private double millisDiffHrs(long start, long stop){
+        long diff = start - stop;//In Millis
+        int temp = (int) diff / MILLIS_IN_MIN;//Convert to Min
+        return (double) temp % (double) MIN_IN_HOUR;
     }
+
+    public TimeEntry getTimeEntry(){return timeEntry;}
 }
