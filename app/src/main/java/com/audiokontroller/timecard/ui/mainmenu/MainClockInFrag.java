@@ -19,10 +19,12 @@ public class MainClockInFrag extends Fragment {
 
     private final String TAG = MainClockInFrag.class.getSimpleName();
 
+    //Notes: Left off setting the button image URLs to make the button state change class?
+    private static final String[] buttonImageUrls = {};
+
     private TextView totalHoursTV;
     private ImageView clockinButton;
     private Button breakButton;
-
 
     public MainClockInFrag(){}
 
@@ -42,6 +44,12 @@ public class MainClockInFrag extends Fragment {
         breakButton.findViewById(R.id.break_button);
         //
 
+        clockinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
     }

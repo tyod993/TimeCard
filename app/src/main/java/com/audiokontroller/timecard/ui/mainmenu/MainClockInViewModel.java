@@ -28,13 +28,28 @@ public class MainClockInViewModel extends ViewModel {
         Log.d(TAG, ".clock.in");
     }
 
+    //Calling clockOut triggers the review process
+    public void clockOut(){timeHandler.clockOut(
+            currentTimeEntry.getValue());
+            startReviewFrag(currentTimeEntry.getValue());
+    }
+
     public void startBreak(){
-        currentTimeEntry.setValue(timeHandler.).
+        currentTimeEntry.setValue(timeHandler.startBreak(currentTimeEntry.getValue()));
+    }
+
+    public void endBreak(){
+        currentTimeEntry.setValue(timeHandler.endBreak(currentTimeEntry.getValue()));
     }
 
     public double getTotalHours(){
         currentTimeEntry.setValue(timeHandler.calcTotalHours(currentTimeEntry.getValue()));
         return currentTimeEntry.getValue().getTotalHours();
+    }
+
+    //TODO: Initialize the review fragment and pass the current TimeEntry
+    private void startReviewFrag(TimeEntry timeEntry){
+
     }
 
     public void setContext(Context context){this.context = context;}

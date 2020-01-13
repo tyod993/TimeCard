@@ -19,4 +19,6 @@
     <color name="black">#120426</color>
     <color name="divider">#1E098140</color>
     <color name="lt_txt">#4D042643</color>
+    <color name="button_orange">#FF7031</color>
+
 </resources>

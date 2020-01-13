@@ -27,6 +27,7 @@ public class TimeCardRepository {
 
     //holds the data for the weeks Times
     public LiveData<List<TimeEntry>> allTimeEntries;
+    public LiveData<TimeEntry> activeEntry;
 
     public TimeCardRepository(Context context){
         getTimeCardInfo(context);
@@ -44,9 +45,14 @@ public class TimeCardRepository {
         return allTimeEntries;
     }
 
+    public LiveData<TimeEntry> getActiveEntry(){return activeEntry;}
+
     /*
     TODO:This needs to check local memory for database or retrieve it from GCP
     */
+
+
+
     private void getTimeCardInfo(Context context){
         TimeCardDatabase database = TimeCardDatabase.getInstance(context);
         mtimeCardDao = database.timeCardDao();
