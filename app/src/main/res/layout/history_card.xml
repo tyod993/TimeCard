@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="6dp">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/his_cv_date_tv"
+        android:layout_marginStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/lt_txt"
+        android:fontFamily="@font/nunito_regular"
+        android:text="January 11th 2020"
+        android:textSize="14sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/his_cv_date_tv"
+        >
+
+    <TextView
+        android:id="@+id/his_cv_day_tv"
+        android:layout_marginStart="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mainMenuText"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Monday"
+        android:textSize="25sp"
+        android:gravity="start"
+        />
+
+    <TextView
+        android:id="@+id/his_cv_total_hrs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Hours: 8"
+        android:textColor="@color/drk_blue_txt"
+        android:textSize="18sp"
+        />
+
+        <ImageButton
+            android:id="@+id/his_cv_edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:background="transparent"
+            android:src="@drawable/ic_edit_orange_24dp"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/his_cv_tasks_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lin1"
+        />
+
+</RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

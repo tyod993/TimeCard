@@ -56,6 +56,12 @@
     <string name="notes_hint">Type your notes here..</string>
     //
 
+    //History
+    <string name="history">History</string>
+    <string name="week">Week</string>
+    <string name="period">Period</string>
+    //
+
     //Bottom navigation bar
     <string name="home">Home</string>
     <string name="messages">Messages</string>

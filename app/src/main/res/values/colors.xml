@@ -20,5 +20,6 @@
     <color name="divider">#1E098140</color>
     <color name="lt_txt">#4D042643</color>
     <color name="button_orange">#FF7031</color>
+    <color name="blue_white">F4FEFF</color>
 
 </resources>

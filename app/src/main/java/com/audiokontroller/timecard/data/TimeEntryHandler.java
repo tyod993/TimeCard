@@ -89,5 +89,26 @@ public class TimeEntryHandler {
         return (double) temp % (double) MIN_IN_HOUR;
     }
 
+    public String getDayNameFull(){
+        String day = timeEntry.getEntryStartTime().trim().substring(0,2);
+        switch (day) {
+            case "Mon": day = "Monday";
+            break;
+            case "Tue": day = "Tuesday";
+            break;
+            case "Wed": day = "Wednesday";
+            break;
+            case "Thu": day = "Thursday";
+            break;
+            case "Fri": day = "Friday";
+            break;
+            case "Sat": day = "Saturday";
+            break;
+            case "Sun": day = "Sunday";
+            break;
+        }
+        return day;
+    }
+
     public TimeEntry getTimeEntry(){return timeEntry;}
 }
