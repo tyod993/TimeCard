@@ -60,6 +60,7 @@
     <string name="history">History</string>
     <string name="week">Week</string>
     <string name="period">Period</string>
+    <string name="hours_preface">Hours:</string>
     //
 
     //Bottom navigation bar

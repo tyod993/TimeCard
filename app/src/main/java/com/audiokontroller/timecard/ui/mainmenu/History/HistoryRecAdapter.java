@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.audiokontroller.timecard.R;
+import com.audiokontroller.timecard.data.TimeEntryFormat;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 public class HistoryRecAdapter extends RecyclerView.Adapter<HistoryRecAdapter.ViewHolder> {
 
     private ArrayList<TimeEntry> mDataSet;
+
+    final String TOTAL_HRS_PREFIX = "Hours:";
 
     public HistoryRecAdapter(ArrayList<TimeEntry> dataSet){
         mDataSet = dataSet;
@@ -34,7 +37,10 @@ public class HistoryRecAdapter extends RecyclerView.Adapter<HistoryRecAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TimeEntry timeEntry = mDataSet.get(position);
-        holder.dateTV.setText(timeEntry.);
+        TimeEntryFormat format = new TimeEntryFormat(timeEntry);
+        holder.dateTV.setText(format.getSimpleDate(timeEntry.getEntryStartTime(), null));
+        holder.dayTV.setText(format.getDayNameFull());
+        holder.totalHrsTV.setText(format.getTotalHours(TOTAL_HRS_PREFIX));
     }
 
     @Override

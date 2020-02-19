@@ -1,15 +1,22 @@
 package com.audiokontroller.timecard.data.model;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
+// TODO: Set up type Converters to utilize object classes for simplification code
 
 @Entity(tableName = "time_card")
 public class TimeEntry {
+
+    private final String TAG = TimeEntry.class.getSimpleName();
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -24,6 +31,10 @@ public class TimeEntry {
     @Nullable
     @ColumnInfo(name = "entry_end_time")
     private String entryEndTime;
+
+    @Nullable
+    @ColumnInfo(name = "tasks")
+    private List<Task> tasks;
 
     @Nullable
     @ColumnInfo(name = "breaks")
@@ -58,6 +69,8 @@ public class TimeEntry {
         this.active = active;
 
     }
+
+    //TODO:Organize me Please!!!
 
     public void setId(int id1){
         this.id = id1;
@@ -102,6 +115,21 @@ public class TimeEntry {
     public void setTotalHours(double total){totalHours = total;}
 
     public double getTotalHours(){return totalHours;}
+
+    public List<Task> getTasks(){return tasks;}
+
+    public void setTasks(@Nullable List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public void addNewTask(Task newTask){
+        if(tasks != null) {
+            tasks.add(newTask);
+        }
+        else{
+            Log.d(TAG, ".Tasks=null");
+        }
+    }
 
     public boolean isActive(){return active;}
 }

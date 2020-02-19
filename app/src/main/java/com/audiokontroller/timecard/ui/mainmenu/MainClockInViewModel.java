@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.audiokontroller.timecard.data.TimeEntryHandler;
+import com.audiokontroller.timecard.data.TimeEntryFactory;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 
 public class MainClockInViewModel extends ViewModel {
@@ -15,7 +15,7 @@ public class MainClockInViewModel extends ViewModel {
     private final String TAG = MainClockInViewModel.class.getSimpleName();
 
     public Context context;
-    private TimeEntryHandler timeHandler;
+    private TimeEntryFactory timeFactory;
     private MutableLiveData<TimeEntry> currentTimeEntry = new MutableLiveData<>();
 
     public MainClockInViewModel(){}
@@ -23,27 +23,27 @@ public class MainClockInViewModel extends ViewModel {
     public LiveData<TimeEntry> getCurrentEntry(){return currentTimeEntry;}
 
     public void clockIn(){
-        timeHandler = new TimeEntryHandler(null);
-        currentTimeEntry.setValue(timeHandler.clockIn());
+        timeFactory = new TimeEntryFactory(null);
+        currentTimeEntry.setValue(timeFactory.clockIn());
         Log.d(TAG, ".clock.in");
     }
 
     //Calling clockOut triggers the review process
-    public void clockOut(){timeHandler.clockOut(
+    public void clockOut(){timeFactory.clockOut(
             currentTimeEntry.getValue());
             startReviewFrag(currentTimeEntry.getValue());
     }
 
     public void startBreak(){
-        currentTimeEntry.setValue(timeHandler.startBreak(currentTimeEntry.getValue()));
+        currentTimeEntry.setValue(timeFactory.startBreak(currentTimeEntry.getValue()));
     }
 
     public void endBreak(){
-        currentTimeEntry.setValue(timeHandler.endBreak(currentTimeEntry.getValue()));
+        currentTimeEntry.setValue(timeFactory.endBreak(currentTimeEntry.getValue()));
     }
 
     public double getTotalHours(){
-        currentTimeEntry.setValue(timeHandler.calcTotalHours(currentTimeEntry.getValue()));
+        currentTimeEntry.setValue(timeFactory.calcTotalHours(currentTimeEntry.getValue()));
         return currentTimeEntry.getValue().getTotalHours();
     }
 

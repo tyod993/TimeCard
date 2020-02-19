@@ -11,9 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class TimeEntryHandler {
+public class TimeEntryFactory {
 
-    private static final String TAG = TimeEntryHandler.class.getSimpleName();
+    private static final String TAG = TimeEntryFactory.class.getSimpleName();
 
     private static final String DATE_FORMAT = "EEE MMM dd HH:mm:ss z yyyy";
     private static final int MILLIS_IN_MIN = 60000;
@@ -21,7 +21,7 @@ public class TimeEntryHandler {
 
     private TimeEntry timeEntry;
 
-    public TimeEntryHandler(@Nullable TimeEntry timeEntry){
+    public TimeEntryFactory(@Nullable TimeEntry timeEntry){
         if(timeEntry != null){
             this.timeEntry = timeEntry;
         }
@@ -58,14 +58,14 @@ public class TimeEntryHandler {
 
     public TimeEntry calcTotalHours(@NonNull TimeEntry timeEntry){
         if(timeEntry.isActive()){
-                Calendar start = formatCalendar(timeEntry.getEntryStartTime());
+                Calendar start = formatCalendar(timeEntry.getEntryStartTime(), DATE_FORMAT);
                 Calendar now = Calendar.getInstance();
                 long startMillis = start.getTimeInMillis();
                 long nowMillis = now.getTimeInMillis();
                 timeEntry.setTotalHours(millisDiffHrs(startMillis, nowMillis));
         }else if(!timeEntry.isActive() && timeEntry.getEntryEndTime() != null){
-            Calendar start = formatCalendar(timeEntry.getEntryStartTime());
-            Calendar end = formatCalendar(timeEntry.getEntryEndTime());
+            Calendar start = formatCalendar(timeEntry.getEntryStartTime(), DATE_FORMAT);
+            Calendar end = formatCalendar(timeEntry.getEntryEndTime(), DATE_FORMAT);
             long startMillis = start.getTimeInMillis();
             long endMillis = end.getTimeInMillis();
             timeEntry.setTotalHours(millisDiffHrs(startMillis, endMillis));
@@ -73,12 +73,13 @@ public class TimeEntryHandler {
         return timeEntry;
     }
 
-    private Calendar formatCalendar(@NonNull String v){
+    public Calendar formatCalendar(@NonNull String v, @NonNull String dateFormat){
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
         try{cal.setTime(sdf.parse(v));
         }catch (Exception e){
             Log.e(TAG, e.toString());
+            cal = null;
         }
         return cal;
     }
@@ -87,27 +88,6 @@ public class TimeEntryHandler {
         long diff = start - stop;//In Millis
         int temp = (int) diff / MILLIS_IN_MIN;//Convert to Min
         return (double) temp % (double) MIN_IN_HOUR;
-    }
-
-    public String getDayNameFull(){
-        String day = timeEntry.getEntryStartTime().trim().substring(0,2);
-        switch (day) {
-            case "Mon": day = "Monday";
-            break;
-            case "Tue": day = "Tuesday";
-            break;
-            case "Wed": day = "Wednesday";
-            break;
-            case "Thu": day = "Thursday";
-            break;
-            case "Fri": day = "Friday";
-            break;
-            case "Sat": day = "Saturday";
-            break;
-            case "Sun": day = "Sunday";
-            break;
-        }
-        return day;
     }
 
     public TimeEntry getTimeEntry(){return timeEntry;}
