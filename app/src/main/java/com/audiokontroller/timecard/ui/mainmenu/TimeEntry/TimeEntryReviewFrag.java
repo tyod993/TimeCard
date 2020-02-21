@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.audiokontroller.timecard.R;
-import com.audiokontroller.timecard.data.TimeEntryHandler;
+import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 
 public class TimeEntryReviewFrag extends Fragment {

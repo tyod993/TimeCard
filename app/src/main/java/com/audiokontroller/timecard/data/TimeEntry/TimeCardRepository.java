@@ -8,7 +8,7 @@ the UI. If the login does'nt match. Connect to the server to get the data.
  */
 
 
-package com.audiokontroller.timecard.data;
+package com.audiokontroller.timecard.data.TimeEntry;
 
 import android.content.Context;
 import android.os.AsyncTask;

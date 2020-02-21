@@ -1,6 +1,7 @@
 package com.audiokontroller.timecard.data.model;
 
 
+import android.telecom.Call;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 // TODO: Set up type Converters to utilize object classes for simplification code
@@ -16,21 +19,21 @@ import java.util.List;
 @Entity(tableName = "time_card")
 public class TimeEntry {
 
-    private final String TAG = TimeEntry.class.getSimpleName();
+    private final static String TAG = TimeEntry.class.getSimpleName();
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     @ColumnInfo(name = "entry_date")
-    private String entryDate;
+    private Calendar entryDate;
 
     @NonNull
     @ColumnInfo(name = "entry_start_time")
-    private String entryStartTime;
+    private Calendar entryStartTime;
 
     @Nullable
     @ColumnInfo(name = "entry_end_time")
-    private String entryEndTime;
+    private Calendar entryEndTime;
 
     @Nullable
     @ColumnInfo(name = "tasks")
@@ -38,7 +41,7 @@ public class TimeEntry {
 
     @Nullable
     @ColumnInfo(name = "breaks")
-    private String[] breaks;
+    private List<Break> breaks;
 
     @ColumnInfo(name = "total_hours")
     private double totalHours;
@@ -57,16 +60,17 @@ public class TimeEntry {
     @ColumnInfo(name = "active")
     private boolean active;
 
-    public TimeEntry(String entryDate, @NonNull String entryStartTime, @Nullable String entryEndTime,
+    public TimeEntry(@NonNull Calendar entryStartTime, @Nullable Calendar entryEndTime,
                      @Nullable String jobName, @Nullable String jobNotes, boolean submitted, boolean active){
 
-        this.entryDate = entryDate;
+        entryDate = Calendar.getInstance();
         this.entryStartTime = entryStartTime;
         this.entryEndTime = entryEndTime;
         this.jobName = jobName;
         this.jobNotes = jobNotes;
         this.submitted = submitted;
         this.active = active;
+        Log.d(TAG,"TimeEntry.Created");
 
     }
 
@@ -78,23 +82,35 @@ public class TimeEntry {
 
     public int getId(){return this.id;}
 
-    public String getEntryDate(){
+    public Calendar getEntryDate(){
         return entryDate;
     }
 
     @NonNull
-    public String getEntryStartTime(){
+    public Calendar getEntryStartTime(){
         return entryStartTime;
     }
 
     @Nullable
-    public String getEntryEndTime(){ return entryEndTime; }
+    public Calendar getEntryEndTime(){ return entryEndTime; }
 
-    public void setEntryEndTime(String endTime){this.entryEndTime = endTime;}
+    public void setEntryEndTime(Calendar endTime){this.entryEndTime = endTime;}
 
-    public String[] getBreaks(){return breaks;}
+    @Nullable
+    public List<Break> getBreaks(){return breaks;}
 
-    public void setBreaks(String[] breaks){ this.breaks = breaks; }
+    public void setBreaks(@NonNull List<Break> breaks){
+        this.breaks = breaks;
+    }
+
+    public void addBreak(Break newBreak){
+        if(breaks != null) {
+            breaks.add(newBreak);
+        } else {
+            breaks = new LinkedList<>();
+            breaks.add(newBreak);
+        }
+    }
 
     @Nullable
     public String getJobName(){
@@ -127,7 +143,8 @@ public class TimeEntry {
             tasks.add(newTask);
         }
         else{
-            Log.d(TAG, ".Tasks=null");
+            tasks = new LinkedList<>();
+            tasks.add(newTask);
         }
     }
 

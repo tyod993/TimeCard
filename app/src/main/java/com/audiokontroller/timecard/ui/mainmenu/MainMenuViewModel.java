@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.audiokontroller.timecard.data.TimeCardRepository;
+import com.audiokontroller.timecard.data.TimeEntry.TimeCardRepository;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.UserRepository;

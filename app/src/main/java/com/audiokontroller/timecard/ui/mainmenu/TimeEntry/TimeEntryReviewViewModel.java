@@ -3,7 +3,7 @@ package com.audiokontroller.timecard.ui.mainmenu.TimeEntry;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.audiokontroller.timecard.data.TimeEntryHandler;
+import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 
 public class TimeEntryReviewViewModel extends ViewModel {

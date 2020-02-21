@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.audiokontroller.timecard.data.TimeEntryFactory;
+import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 
 public class MainClockInViewModel extends ViewModel {
@@ -15,7 +15,7 @@ public class MainClockInViewModel extends ViewModel {
     private final String TAG = MainClockInViewModel.class.getSimpleName();
 
     public Context context;
-    private TimeEntryFactory timeFactory;
+    private TimeEntryHandler timeFactory;
     private MutableLiveData<TimeEntry> currentTimeEntry = new MutableLiveData<>();
 
     public MainClockInViewModel(){}
@@ -23,7 +23,7 @@ public class MainClockInViewModel extends ViewModel {
     public LiveData<TimeEntry> getCurrentEntry(){return currentTimeEntry;}
 
     public void clockIn(){
-        timeFactory = new TimeEntryFactory(null);
+        timeFactory = new TimeEntryHandler(null);
         currentTimeEntry.setValue(timeFactory.clockIn());
         Log.d(TAG, ".clock.in");
     }
