@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.audiokontroller.timecard.R;
-import com.audiokontroller.timecard.data.TimeEntryFormat;
+import com.audiokontroller.timecard.data.TimeEntry.TimeEntryDisplayFormat;
 import com.audiokontroller.timecard.data.model.TimeEntry;
+import com.audiokontroller.timecard.ui.mainmenu.TimeEntry.TimeEntryEditFragment;
 
 import java.util.ArrayList;
 
@@ -37,10 +38,13 @@ public class HistoryRecAdapter extends RecyclerView.Adapter<HistoryRecAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TimeEntry timeEntry = mDataSet.get(position);
-        TimeEntryFormat format = new TimeEntryFormat(timeEntry);
-        holder.dateTV.setText(format.getSimpleDate(timeEntry.getEntryStartTime(), null));
-        holder.dayTV.setText(format.getDayNameFull());
+        TimeEntryDisplayFormat format = new TimeEntryDisplayFormat(timeEntry);
+        holder.dateTV.setText(format.getSimpleDate(timeEntry.getEntryStartTime().toString(), null));
+        holder.dayTV.setText(format.getDayNameLong());
         holder.totalHrsTV.setText(format.getTotalHours(TOTAL_HRS_PREFIX));
+        holder.tasksLV.setAdapter(new HistoryListAdapter(timeEntry.getTasks()));
+        holder.editBtn.setOnClickListener(view ->  new TimeEntryEditFragment(timeEntry)
+        );
     }
 
     @Override

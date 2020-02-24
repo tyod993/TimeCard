@@ -7,16 +7,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.audiokontroller.timecard.R;
+import com.audiokontroller.timecard.data.model.Task;
 
 import java.util.List;
+import java.util.Random;
 
 public class HistoryListAdapter extends BaseAdapter {
 
-    private List<String[]> mDataSet;
+    private List<Task> mDataSet;
     //Todo: choose the colors to cycle through when creating list
-    private String[] backgroundColorCodes = {};
+    private int[] backgroundColorId = {R.color.list_item_1, R.color.list_item_2, R.color.list_time_3};
 
-    public HistoryListAdapter(List<String[]> dataSet){
+    public HistoryListAdapter(List<Task> dataSet){
         mDataSet = dataSet;
     }
 
@@ -39,11 +41,22 @@ public class HistoryListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.history_list_item, parent, false);
-        String[] currentTask = mDataSet.get(position);
+        Task currentTask = mDataSet.get(position - 1);
         TextView taskName = convertView.findViewById(R.id.list_task_name);
         TextView time = convertView.findViewById(R.id.list_task_hrs);
-        taskName.setText(currentTask[0]);
-        time.setText(currentTask[1]);
+        taskName.setText(currentTask.getmName());
+        time.setText(currentTask.getmHours());
+        int backgroundRes;
+        Random random = new Random(1);
+        double randomDouble = random.nextDouble();
+        if (randomDouble <= 0.33){
+            backgroundRes = backgroundColorId[0];
+        } else if (randomDouble <= 0.66) {
+            backgroundRes = backgroundColorId[1];
+        } else {
+            backgroundRes = backgroundColorId[2];
+        }
+        convertView.setBackgroundResource(backgroundRes);
         return convertView;
     }
 }

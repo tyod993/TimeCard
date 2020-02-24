@@ -22,4 +22,9 @@
     <color name="button_orange">#FF7031</color>
     <color name="blue_white">F4FEFF</color>
 
+    //List item colors
+    <color name="list_item_1">#1F05C6FB</color>
+    <color name="list_item_2">#1F2C7BE0</color>
+    <color name="list_time_3">#1F4352D1</color>
+
 </resources>

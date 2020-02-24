@@ -14,7 +14,7 @@ public class TimeEntryDisplayFormat extends TimeEntryHandler{
         super(timeEntry);
     }
 
-    public String getDayNameFull(){
+    public String getDayNameLong(){
         return getTimeEntry().getEntryStartTime().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
     }
 
