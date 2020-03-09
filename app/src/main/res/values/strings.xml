@@ -68,6 +68,12 @@
     <string name="messages">Messages</string>
     <string name="calendar">Calendar</string>
     <string name="projects">Projects</string>
+    <string name="edit_time_title">Edit Time</string>
     //
+
+    //Edit Time Entry fragment
+    <string name="project">Project</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
 </resources>
