@@ -4,7 +4,7 @@
     <string name="weather">Weather</string>
 
     <!-- TODO: Organize all of these strings into categories. It currently stresses me out! -->
-    //Login Screen
+    <!--Login-->
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -19,9 +19,9 @@
     <string name="sign_up_sentence">Don\'t have an account? </string>
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
-    //
 
-    //Registration Screen
+
+    <!--Registration -->
     <string name="app_logo_string">application logo</string>
     <string name="register_heading">Work Simplified.</string>
     <string name="example_first_name">Steve</string>
@@ -29,9 +29,9 @@
     <string name="create_account">Create Account</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    //
 
-    //Dashboard
+
+    <!--Dashboard -->
     <string name="dashboard">Dashboard</string>
     <string name="today">Today</string>
     <string name="notifications_icon">Notification icon</string>
@@ -40,7 +40,7 @@
     <string name="break_button">Break</string>
 
 
-    //Time Card Submission Review
+    <!--Time card submission Review -->
     <string name="clock_out_image">Clocked out image</string>
     <string name="total_hours_script">Hours Worked Today</string>
     <string name="required">*Required</string>
@@ -54,26 +54,30 @@
     <string name="edit_time">Edit Time</string>
     <string name="add_task_btn">Add task button</string>
     <string name="notes_hint">Type your notes here..</string>
-    //
 
-    //History
+
+    <!--Bottom navigation bar -->
     <string name="history">History</string>
     <string name="week">Week</string>
     <string name="period">Period</string>
     <string name="hours_preface">Hours:</string>
-    //
 
-    //Bottom navigation bar
+    <!--Bottom navigation bar -->
     <string name="home">Home</string>
     <string name="messages">Messages</string>
     <string name="calendar">Calendar</string>
     <string name="projects">Projects</string>
     <string name="edit_time_title">Edit Time</string>
-    //
 
-    //Edit Time Entry fragment
+
+    <!--Edit Time Entry fragment-->
     <string name="project">Project</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="tasks">Tasks</string>
+    <string name="breaks">Breaks</string>
 
+    <!--Error Messages-->
+    <string name="error">ERROR</string>
+    <string name="time_card_loading_error_message">Error loading Time Entry :( Please try again :)</string>
 </resources>

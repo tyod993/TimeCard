@@ -13,6 +13,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +31,8 @@ import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 
+
+// TODO --> Update everything to use Lambda expressions <--
 public class LaunchActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -44,8 +48,7 @@ public class LaunchActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         //Check if Firebase user is already logged in before any initialization.
         if (loginViewModel.isFirebaseUserLoggedIn()){

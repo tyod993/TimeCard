@@ -62,7 +62,7 @@
            android:layout_height="wrap_content"
            android:fontFamily="@font/nunito_bold"
            android:layout_marginEnd="15dp"
-           android:text="Example"
+           android:text="@string/error"
            android:textColor="@color/btn_drk_blue_80"
            android:textSize="14sp"
            android:gravity="center_vertical"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_bold"
             android:layout_marginEnd="15dp"
-            android:text="8 p.m."
+            android:text="@string/error"
             android:textColor="@color/btn_drk_blue_80"
             android:textSize="14sp"
             android:gravity="center_vertical"
@@ -122,7 +122,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/edit_project_end_lo"
+        android:id="@+id/edit_time_end_lo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -156,7 +156,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_bold"
             android:layout_marginEnd="15dp"
-            android:text="8 a.m."
+            android:text="@string/error"
             android:textColor="@color/btn_drk_blue_80"
             android:textSize="14sp"
             android:gravity="center_vertical"
@@ -166,4 +166,96 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_time_tasks_lo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/round_corners_40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_time_end_lo"
+        >
+
+        <TextView
+            android:id="@+id/edit_time_tasks_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/tasks"
+            android:textColor="@color/black_80"
+            android:textSize="18sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ListView
+            android:id="@+id/edit_time_tasks_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/edit_time_tasks_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_time_breaks_lo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/round_corners_40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_time_tasks_lo"
+        >
+
+        <TextView
+            android:id="@+id/edit_time_tasks_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/breaks"
+            android:textColor="@color/black_80"
+            android:textSize="18sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ListView
+            android:id="@+id/edit_time_breaks_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/edit_time_tasks_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
