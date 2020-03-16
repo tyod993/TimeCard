@@ -19,12 +19,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.TimeEntry;
+import com.audiokontroller.timecard.ui.mainmenu.History.HistoryListAdapter;
+import com.audiokontroller.timecard.ui.mainmenu.utils.TasksListAdapter;
 
 import java.util.Calendar;
 
 public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.OnTimeSetListener {
 
-    private final TimeEntry timeEntry;
+    private TimeEntry timeEntry;
     private final TimeEntryEditViewModel viewModel;
 
     //UI Components
@@ -73,13 +75,42 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
         tasksList.findViewById(R.id.edit_time_tasks_list_view);
         breaksListView.findViewById(R.id.edit_time_breaks_list_view);
 
+        // Initial UI Draw
+        if(timeEntry != null && !timeEntry.isActive()) {
+            if(timeEntry.getJobName() != null) {
+                projectET.setText(timeEntry.getJobName());
+            }else {
+                projectET.setText(R.string.none);
+            }
+            Calendar time1 = timeEntry.getEntryStartTime();
+            startTV.setText(time1.get(Calendar.AM_PM) + time1.get(Calendar.HOUR));
+            if(timeEntry.getEntryEndTime() != null) {
+                time1 = timeEntry.getEntryEndTime();
+                endTV.setText(time1.get(Calendar.HOUR) + time1.get(Calendar.AM_PM));
+            } else {
+                endTV.setText(R.string.none);
+            }
+            if(tasksList != null) {
+                tasksList.setAdapter(new TasksListAdapter(timeEntry.getTasks()));
+            } else {
+                tasksModule.setVisibility(View.INVISIBLE);
+            }
+            if()
+
+
+        }
+
         viewModel.getTimeEntry().observe(this, timeEntry1 ->{
                     if(timeEntry1 != null && !timeEntry1.isActive()){
-                        projectET.setText(timeEntry1.getJobName());
+                        if(timeEntry1.getJobName() != null) {
+                            projectET.setText(timeEntry1.getJobName());
+                        }
                         Calendar time = timeEntry1.getEntryStartTime();
                         startTV.setText(time.get(Calendar.HOUR) + time.get(Calendar.AM_PM));
-                        time = timeEntry1.getEntryEndTime();
-                        endTV.setText(time.get(Calendar.HOUR) + time.get(Calendar.AM_PM));
+                        if(timeEntry1.getEntryEndTime() != null) {
+                            time = timeEntry1.getEntryEndTime();
+                            endTV.setText(time.get(Calendar.HOUR) + time.get(Calendar.AM_PM));
+                        }
                     } else{
                         projectET.setText(R.string.time_card_loading_error_message);
                         Toast.makeText(this.getContext(), R.string.time_card_loading_error_message, Toast.LENGTH_LONG).show();
@@ -89,6 +120,7 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
         viewModel.getTaskList().observe(this, tasks -> {
             if(tasks != null){
 
+                //TODO
             }else{
 
             }
@@ -97,6 +129,7 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
 
         viewModel.getBreaksList().observe(this, breaks -> {
 
+            //TODO
 
         });
 

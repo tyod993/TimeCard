@@ -28,5 +28,6 @@
     <color name="list_time_3">#1F4352D1</color>
     <color name="grey_blue_background">#F1F6F6</color>
     <color name="black_80">#E6120426</color>
+    <color name="trans_grey_50">#80DDE6E6</color>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.History;
+package com.audiokontroller.timecard.ui.mainmenu.utils;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +12,14 @@ import com.audiokontroller.timecard.data.model.Task;
 import java.util.List;
 import java.util.Random;
 
-public class HistoryListAdapter extends BaseAdapter {
+public class TasksListAdapter extends BaseAdapter {
 
+    private boolean editable;
     private List<Task> mDataSet;
-    //Todo: choose the colors to cycle through when creating list
     private int[] backgroundColorId = {R.color.list_item_1, R.color.list_item_2, R.color.list_time_3};
 
-    public HistoryListAdapter(List<Task> dataSet){
+    public TasksListAdapter(List<Task> dataSet, boolean editable){
+        this.editable = editable;
         mDataSet = dataSet;
     }
 
@@ -40,10 +41,13 @@ public class HistoryListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.history_list_item, parent, false);
+                .inflate(R.layout.task_list_item, parent, false);
         Task currentTask = mDataSet.get(position - 1);
         TextView taskName = convertView.findViewById(R.id.list_task_name);
         TextView time = convertView.findViewById(R.id.list_task_hrs);
+        if(editable){
+            taskName.setOnClickListener(view -> );
+        }
         taskName.setText(currentTask.getmName());
         time.setText(currentTask.getmHours());
         int backgroundRes;

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/trans_grey_50">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/task_edit_pop_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corners_40dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/task_edit_pop_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_task"
+            android:textSize="20sp"
+            android:textColor="@color/drk_blue"
+            android:fontFamily="@font/nunito_semi_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task"
+            android:textColor="@color/btn_drk_blue_80"
+            android:textSize="18sp"
+            android:fontFamily="@font/nunito_semi_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/task_edit_pop_name_tv"
+            app:layout_constraintTop_toBottomOf="@id/task_edit_pop_title_tv"
+
+
+        <AutoCompleteTextView
+            android:id="@+id/task_edit_pop_name_tv"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/none"
+            android:textSize="14sp"
+            android:textColor="@color/btn_drk_blue_80"
+            android:fontFamily="@font/nunito_semi_bold"
+            app:layout_constraintTop_toBottomOf="@+id/task_edit_pop_title_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -76,8 +76,11 @@
     <string name="end">End</string>
     <string name="tasks">Tasks</string>
     <string name="breaks">Breaks</string>
+    <string name="edit_break">Edit Break</string>
+    <string name="edit_task">Edit Task</string>
 
     <!--Error Messages-->
     <string name="error">ERROR</string>
+    <string name="none">None</string>
     <string name="time_card_loading_error_message">Error loading Time Entry :( Please try again :)</string>
 </resources>

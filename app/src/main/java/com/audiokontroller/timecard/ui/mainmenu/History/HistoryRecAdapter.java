@@ -14,6 +14,7 @@ import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryDisplayFormat;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 import com.audiokontroller.timecard.ui.mainmenu.TimeEntry.TimeEntryEditFragment;
+import com.audiokontroller.timecard.ui.mainmenu.utils.TasksListAdapter;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class HistoryRecAdapter extends RecyclerView.Adapter<HistoryRecAdapter.Vi
         holder.dateTV.setText(format.getSimpleDate(timeEntry.getEntryStartTime().toString(), null));
         holder.dayTV.setText(format.getDayNameLong());
         holder.totalHrsTV.setText(format.getTotalHours(TOTAL_HRS_PREFIX));
-        holder.tasksLV.setAdapter(new HistoryListAdapter(timeEntry.getTasks()));
+        holder.tasksLV.setAdapter(new TasksListAdapter(timeEntry.getTasks()));
         holder.editBtn.setOnClickListener(view ->  new TimeEntryEditFragment(timeEntry)
         );
     }
