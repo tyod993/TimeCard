@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Duration spinner strings -->
+    <string-array name="duration_array">
+        <item>15min</item>
+        <item>30min</item>
+        <item>45min</item>
+        <item>1hr</item>
+        <item>2hrs</item>
+        <item>3hrs</item>
+        <item>4hrs</item>
+        <item>5hrs</item>
+        <item>6hrs</item>
+        <item>7hrs</item>
+        <item>8hrs</item>
+        <item>9hrs</item>
+        <item>10hrs</item>
+        <item>11hrs</item>
+        <item>12hrs</item>
+    </string-array>
+
+</resources>

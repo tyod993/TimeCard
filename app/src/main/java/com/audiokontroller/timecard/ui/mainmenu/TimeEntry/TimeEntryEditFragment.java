@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.TimeEntry;
-import com.audiokontroller.timecard.ui.mainmenu.History.HistoryListAdapter;
 import com.audiokontroller.timecard.ui.mainmenu.utils.TasksListAdapter;
 
 import java.util.Calendar;
@@ -91,7 +90,7 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
                 endTV.setText(R.string.none);
             }
             if(tasksList != null) {
-                tasksList.setAdapter(new TasksListAdapter(timeEntry.getTasks()));
+                tasksList.setAdapter(new TasksListAdapter(timeEntry.getTasks(), false));
             } else {
                 tasksModule.setVisibility(View.INVISIBLE);
             }

@@ -15,10 +15,12 @@ public class Task {
         this.mHours = hours;
     }
 
+    @NonNull
     public String getmName(){return mName;}
 
     public void setmName(@NonNull String newName){mName = newName;}
 
+    @NonNull
     public String getmHours(){ return mHours;}
 
     public void setmHours(@NonNull String newHours){mHours = newHours;}

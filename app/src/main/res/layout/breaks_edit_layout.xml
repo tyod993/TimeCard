@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/trans_grey_50">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/task_edit_pop_layout"
+        android:id="@+id/break_edit_pop_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_corners_40dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/task_edit_pop_title_tv"
+            android:id="@+id/break_edit_pop_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_semi_bold"
@@ -40,14 +40,14 @@
             android:text="@string/name"
             android:textColor="@color/purple_dark_bold"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/task_edit_pop_name_tv"
+            app:layout_constraintBottom_toTopOf="@+id/break_edit_pop_name_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_edit_pop_title_tv" />
+            app:layout_constraintTop_toBottomOf="@id/break_edit_pop_title_tv" />
 
 
         <AutoCompleteTextView
-            android:id="@+id/task_edit_pop_name_tv"
+            android:id="@+id/break_edit_pop_name_tv"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_semi_bold"
@@ -64,7 +64,7 @@
             android:background="@color/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_edit_pop_name_tv" />
+            app:layout_constraintTop_toBottomOf="@id/break_edit_pop_name_tv" />
 
 
         <TextView
@@ -74,37 +74,64 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/nunito_semi_bold"
             android:gravity="center"
-            android:text="@string/duration"
+            android:text="@string/start"
+            android:textColor="@color/purple_dark_bold"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/tv3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/break_edit_pop_name_tv" />
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:gravity="center"
+            android:text="@string/end"
             android:textColor="@color/purple_dark_bold"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_edit_pop_name_tv"
-            />
+            app:layout_constraintStart_toEndOf="@id/tv2"
+            app:layout_constraintTop_toBottomOf="@id/break_edit_pop_name_tv" />
 
-
-        <Spinner
-            android:id="@+id/task_edit_pop_duration_spin"
+        <TextView
+            android:id="@+id/break_edit_pop_start_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/spinner_layout"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:fontFamily="@font/nunito_regular"
             android:gravity="center"
             android:text="@string/none"
             android:textColor="@color/grey_text"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/break_edit_pop_end_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv2" />
 
+        <TextView
+            android:id="@+id/break_edit_pop_end_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/nunito_regular"
+            android:gravity="center"
+            android:text="@string/none"
+            android:textColor="@color/grey_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/break_edit_pop_start_tv"
+            app:layout_constraintTop_toBottomOf="@id/tv3" />
 
         <Button
-            android:id="@+id/task_edit_pop_save_btn"
+            android:id="@+id/break_edit_pop_save_btn"
             android:layout_width="72dp"
             android:layout_height="34dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/round_corners_40dp"
             android:backgroundTint="@color/button_orange"
@@ -112,16 +139,16 @@
             android:text="@string/save"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/task_edit_pop_cancel_btn"
+            app:layout_constraintEnd_toStartOf="@+id/break_edit_pop_cancel_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_edit_pop_duration_spin" />
+            app:layout_constraintTop_toBottomOf="@+id/break_edit_pop_start_tv" />
 
 
         <Button
-            android:id="@+id/task_edit_pop_cancel_btn"
+            android:id="@+id/break_edit_pop_cancel_btn"
             android:layout_width="72dp"
             android:layout_height="34dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/round_corners_40dp"
             android:backgroundTint="@color/btn_drk_blue_80"
@@ -130,8 +157,8 @@
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/task_edit_pop_save_btn"
-            />
+            app:layout_constraintStart_toEndOf="@+id/break_edit_pop_save_btn"
+            app:layout_constraintTop_toBottomOf="@+id/break_edit_pop_end_tv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

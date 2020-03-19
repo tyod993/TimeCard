@@ -29,5 +29,9 @@
     <color name="grey_blue_background">#F1F6F6</color>
     <color name="black_80">#E6120426</color>
     <color name="trans_grey_50">#80DDE6E6</color>
+    <color name="purple_bold">#8B39FF</color>
+    <color name="teal">#00F4F0</color>
+    <color name="purple_dark_bold">#6E00B2</color>
+    <color name="grey_text">#AAB9B9</color>
 
 </resources>

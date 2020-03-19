@@ -1,5 +1,6 @@
 package com.audiokontroller.timecard.ui.mainmenu.utils;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.Task;
+import com.audiokontroller.timecard.ui.mainmenu.TimeEntry.TasksEditFrag;
 
 import java.util.List;
 import java.util.Random;
@@ -46,7 +48,12 @@ public class TasksListAdapter extends BaseAdapter {
         TextView taskName = convertView.findViewById(R.id.list_task_name);
         TextView time = convertView.findViewById(R.id.list_task_hrs);
         if(editable){
-            taskName.setOnClickListener(view -> );
+            taskName.setOnClickListener(view -> {
+                TasksEditFrag editTaskFragment = new TasksEditFrag();
+                Bundle args = new Bundle();
+                args.putInt("EDIT_TASK", position - 1);
+                editTaskFragment.setArguments(args);
+            });
         }
         taskName.setText(currentTask.getmName());
         time.setText(currentTask.getmHours());

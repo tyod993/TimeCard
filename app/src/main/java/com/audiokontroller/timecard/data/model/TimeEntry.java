@@ -132,6 +132,7 @@ public class TimeEntry {
 
     public double getTotalHours(){return totalHours;}
 
+    @Nullable
     public List<Task> getTasks(){return tasks;}
 
     public void setTasks(@Nullable List<Task> tasks) {
