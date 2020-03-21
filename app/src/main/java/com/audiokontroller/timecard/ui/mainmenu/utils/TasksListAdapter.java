@@ -49,14 +49,15 @@ public class TasksListAdapter extends BaseAdapter {
         TextView time = convertView.findViewById(R.id.list_task_hrs);
         if(editable){
             taskName.setOnClickListener(view -> {
+                //TODO: Implement Navigation Component
                 TasksEditFrag editTaskFragment = new TasksEditFrag();
                 Bundle args = new Bundle();
-                args.putInt("EDIT_TASK", position - 1);
+                args.putInt("TASK_POSITION", position - 1);
                 editTaskFragment.setArguments(args);
             });
         }
-        taskName.setText(currentTask.getmName());
-        time.setText(currentTask.getmHours());
+        taskName.setText(currentTask.getName());
+        time.setText(currentTask.getHoursAsString());
         int backgroundRes;
         Random random = new Random(1);
         double randomDouble = random.nextDouble();

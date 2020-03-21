@@ -3,6 +3,7 @@ package com.audiokontroller.timecard.data.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.time.Duration;
 import java.util.Calendar;
 
 public class Break {
@@ -12,14 +13,16 @@ public class Break {
     @Nullable
     private Calendar endTime;
 
+    public String totalTime;
+
     //Represented in Milliseconds
-    private int totalTime;
+    private long totalTimeMillis;
 
     public Break(@NonNull Calendar startTime, @Nullable Calendar endTime){
         this.startTime = startTime;
         if(endTime != null) {
             this.endTime = endTime;
-            totalTime = startTime.compareTo(endTime);
+            totalTimeMillis = startTime.compareTo(endTime);
         }
     }
 
@@ -34,19 +37,28 @@ public class Break {
 
     public void setEndTime(@NonNull Calendar endTime) {
         this.endTime = endTime;
-        totalTime = endTime.compareTo(startTime);
+        totalTimeMillis = endTime.compareTo(startTime);
+        Duration duration =
     }
 
     public void setStartTime(Calendar startTime) {
         this.startTime = startTime;
     }
 
-    public int getTotalTime() {
+    public String getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(int totalTime) {
+    public void setTotalTime(String totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public long getTotalTimeMillis() {
+        return totalTimeMillis;
+    }
+
+    public void setTotalTimeMillis(long totalTime) {
+        this.totalTimeMillis = totalTime;
     }
 
     @Override

@@ -37,5 +37,9 @@ public class TimeEntryEditViewModel extends ViewModel {
 
     public LiveData<TimeEntry> getTimeEntry(){return mTimeEntry;}
 
+    public void replaceTask(@NonNull Task editedTask, int position){
+         mTaskList.getValue().set(position, editedTask);
+    }
+
     public boolean isSubmitted(){return isSubmitted;}
 }

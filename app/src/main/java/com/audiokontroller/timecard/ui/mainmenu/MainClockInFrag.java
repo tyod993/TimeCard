@@ -39,16 +39,14 @@ public class MainClockInFrag extends Fragment {
         super.onCreate(savedInstanceState);
 
         //UI Components
-        totalHoursTV.findViewById(R.id.total_hours_clk_in);
-        clockinButton.findViewById(R.id.clockin_button);
-        breakButton.findViewById(R.id.break_button);
+        totalHoursTV = getActivity().findViewById(R.id.total_hours_clk_in);
+        clockinButton = getActivity().findViewById(R.id.clockin_button);
+        breakButton = getActivity().findViewById(R.id.break_button);
         //
 
-        clockinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        clockinButton.setOnClickListener(view ->{
 
-            }
+
         });
 
 

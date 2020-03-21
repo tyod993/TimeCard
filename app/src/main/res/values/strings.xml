@@ -82,6 +82,7 @@
     <string name="cancel">Cancel</string>
     <string name="name">Name</string>
     <string name="duration">Duration</string>
+    <string name="total">Total</string>
 
     <!--Error Messages-->
     <string name="error">ERROR</string>

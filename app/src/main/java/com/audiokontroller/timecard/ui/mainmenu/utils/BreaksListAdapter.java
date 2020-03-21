@@ -46,7 +46,7 @@ public class BreaksListAdapter extends BaseAdapter {
         Break currentBreak = mDataSet.get(position - 1);
         TextView breakTotalTV = convertView.findViewById(R.id.breaks_list_total_tv);
         TextView breakStartStopTV = convertView.findViewById(R.id.breaks_list_start_stop_tv);
-        taskName.setText(currentTask.getmName());
+        breakTotalTV.setText(currentBreak.getTotalTime());
         time.setText(currentTask.getmHours());
         int backgroundRes;
         Random random = new Random(1);
