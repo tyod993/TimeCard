@@ -6,9 +6,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.Break;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -47,7 +52,13 @@ public class BreaksListAdapter extends BaseAdapter {
         TextView breakTotalTV = convertView.findViewById(R.id.breaks_list_total_tv);
         TextView breakStartStopTV = convertView.findViewById(R.id.breaks_list_start_stop_tv);
         breakTotalTV.setText(currentBreak.getTotalTime());
-        time.setText(currentTask.getmHours());
+        breakStartStopTV.setText(startToEndForm(currentBreak.getStartTime(), currentBreak.getEndTime()));
+        if(editable){
+            ConstraintLayout itemLayout = convertView.findViewById(R.id.break_list_item_layout);
+            itemLayout.setOnClickListener(view ->{
+                //TODO: Add Navigation to BreakEditFragment
+            });
+        }
         int backgroundRes;
         Random random = new Random(1);
         double randomDouble = random.nextDouble();
@@ -60,5 +71,17 @@ public class BreaksListAdapter extends BaseAdapter {
         }
         convertView.setBackgroundResource(backgroundRes);
         return convertView;
+    }
+
+    private String startToEndForm(@NonNull Calendar start, @Nullable Calendar end){
+        String startString = start.get(Calendar.HOUR) + ":" + start.get(Calendar.MINUTE)
+            + start.get(Calendar.AM_PM);
+        if(end != null) {
+            String endString = end.get(Calendar.HOUR) + ":" + end.get(Calendar.MINUTE) +
+                    end.get(Calendar.AM_PM);
+            return startString + " to " + endString;
+        } else {
+         return startString + " to " + "Present";
+        }
     }
 }

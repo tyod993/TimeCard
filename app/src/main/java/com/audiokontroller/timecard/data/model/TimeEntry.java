@@ -91,6 +91,10 @@ public class TimeEntry {
         return entryStartTime;
     }
 
+    public void setEntryStartTime(@NonNull Calendar newStartTime){
+        this.entryStartTime = newStartTime;
+    }
+
     @Nullable
     public Calendar getEntryEndTime(){ return entryEndTime; }
 

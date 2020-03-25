@@ -83,6 +83,8 @@
     <string name="name">Name</string>
     <string name="duration">Duration</string>
     <string name="total">Total</string>
+    <string name="present">Present</string>
+    <string name="add_break">Add Break</string>
 
     <!--Error Messages-->
     <string name="error">ERROR</string>

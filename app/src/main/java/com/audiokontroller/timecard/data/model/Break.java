@@ -3,10 +3,11 @@ package com.audiokontroller.timecard.data.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.time.Duration;
 import java.util.Calendar;
 
 public class Break {
+
+    private boolean active;
 
     private Calendar startTime;
 
@@ -15,7 +16,6 @@ public class Break {
 
     public String totalTime;
 
-    //Represented in Milliseconds
     private long totalTimeMillis;
 
     public Break(@NonNull Calendar startTime, @Nullable Calendar endTime){
@@ -23,6 +23,7 @@ public class Break {
         if(endTime != null) {
             this.endTime = endTime;
             totalTimeMillis = startTime.compareTo(endTime);
+            setTotalTime();
         }
     }
 
@@ -38,27 +39,40 @@ public class Break {
     public void setEndTime(@NonNull Calendar endTime) {
         this.endTime = endTime;
         totalTimeMillis = endTime.compareTo(startTime);
-        Duration duration =
+        setTotalTime();
     }
 
-    public void setStartTime(Calendar startTime) {
+    public void setStartTime(@NonNull Calendar startTime) {
         this.startTime = startTime;
+        totalTimeMillis = endTime.compareTo(startTime);
+        setTotalTime();
     }
 
     public String getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(String totalTime) {
-        this.totalTime = totalTime;
-    }
-
     public long getTotalTimeMillis() {
         return totalTimeMillis;
     }
 
-    public void setTotalTimeMillis(long totalTime) {
-        this.totalTimeMillis = totalTime;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    private void setTotalTime(){
+        long total = ((totalTimeMillis/1000)/60);
+        if(total/60 >= 1){
+            int totalHrs = (int) total/60;
+            int totalMin = (int) total%60;
+            totalTime = totalHrs + "hrs " + totalMin + "min";
+        }else{
+            totalTime = total + "min";
+        }
     }
 
     @Override

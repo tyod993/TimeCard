@@ -14,22 +14,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.TimeEntry;
+import com.audiokontroller.timecard.ui.mainmenu.utils.BreaksListAdapter;
 import com.audiokontroller.timecard.ui.mainmenu.utils.TasksListAdapter;
+import com.audiokontroller.timecard.ui.mainmenu.utils.TimePickerFrag;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.OnTimeSetListener {
 
     private TimeEntry timeEntry;
-    private final TimeEntryEditViewModel viewModel;
+    private TimeEntryEditViewModel viewModel;
+    private boolean isStartEdit;
 
     //UI Components
-    private ConstraintLayout projectModule;//This can be deleted??
     private ConstraintLayout startModule;
     private ConstraintLayout endModule;
     private ConstraintLayout tasksModule;
@@ -40,13 +44,14 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
     private AutoCompleteTextView projectET;
     private TextView startTV;
     private TextView endTV;
+    private TextView addTaskTv;
+    private TextView addBreakTv;
 
     // TODO: Add the save button
+    // TODO: Apply the user Settings and dynamically load the UI accordingly
 
     public TimeEntryEditFragment(@NonNull TimeEntry timeEntry){
         this.timeEntry = timeEntry;
-        viewModel = new ViewModelProvider(this).get(TimeEntryEditViewModel.class);
-        viewModel.setActiveTimeEntry(timeEntry);
     }
 
     @Nullable
@@ -58,46 +63,73 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(TimeEntryEditViewModel.class);
+        viewModel.setActiveTimeEntry(timeEntry);
 
         // Should use Data Binding eventually
         //Finding Layout references for click actions
-        projectModule.findViewById(R.id.edit_project_name_lo);
-        startModule.findViewById(R.id.edit_time_start_lo);
-        endModule.findViewById(R.id.edit_time_end_lo);
-        tasksModule.findViewById(R.id.edit_time_tasks_lo);
-        breaksModule.findViewById(R.id.edit_time_breaks_lo);
+        startModule = getActivity().findViewById(R.id.edit_time_start_lo);
+        endModule = getActivity().findViewById(R.id.edit_time_end_lo);
+        tasksModule = getActivity().findViewById(R.id.edit_time_tasks_lo);
+        breaksModule = getActivity().findViewById(R.id.edit_time_breaks_lo);
 
         //Visual data components
-        projectET.findViewById(R.id.edit_project_name_et);
-        startTV.findViewById(R.id.edit_time_start_tv);
-        endTV.findViewById(R.id.edit_time_end_tv);
-        tasksList.findViewById(R.id.edit_time_tasks_list_view);
-        breaksListView.findViewById(R.id.edit_time_breaks_list_view);
+        projectET = getActivity().findViewById(R.id.edit_project_name_et);
+        startTV = getActivity().findViewById(R.id.edit_time_start_tv);
+        endTV = getActivity().findViewById(R.id.edit_time_end_tv);
+        tasksList = getActivity().findViewById(R.id.edit_time_tasks_list_view);
+        breaksListView = getActivity().findViewById(R.id.edit_time_breaks_list_view);
 
         // Initial UI Draw
-        if(timeEntry != null && !timeEntry.isActive()) {
-            if(timeEntry.getJobName() != null) {
-                projectET.setText(timeEntry.getJobName());
+            if(viewModel.getTimeEntry().getValue().getJobName() != null) {
+                projectET.setText(viewModel.getTimeEntry().getValue().getJobName());
             }else {
                 projectET.setText(R.string.none);
             }
-            Calendar time1 = timeEntry.getEntryStartTime();
+            Calendar time1 = viewModel.getTimeEntry().getValue().getEntryStartTime();
             startTV.setText(time1.get(Calendar.AM_PM) + time1.get(Calendar.HOUR));
-            if(timeEntry.getEntryEndTime() != null) {
-                time1 = timeEntry.getEntryEndTime();
+            if(viewModel.getTimeEntry().getValue().getEntryEndTime() != null) {
+                time1 = viewModel.getTimeEntry().getValue().getEntryEndTime();
                 endTV.setText(time1.get(Calendar.HOUR) + time1.get(Calendar.AM_PM));
             } else {
-                endTV.setText(R.string.none);
+                endTV.setText(R.string.present);
             }
-            if(tasksList != null) {
-                tasksList.setAdapter(new TasksListAdapter(timeEntry.getTasks(), false));
-            } else {
-                tasksModule.setVisibility(View.INVISIBLE);
+
+            //The order of if statements should switch once the user preferences is implemented
+            if(viewModel.getTimeEntry().getValue().getTasks() != null) {
+                tasksList.setAdapter(new TasksListAdapter(viewModel.getTimeEntry().getValue().getTasks(), true));
             }
-            if()
+            if(viewModel.getTimeEntry().getValue().getBreaks() != null){
+                breaksListView.setAdapter(new BreaksListAdapter(viewModel.getTimeEntry().getValue().getBreaks(), true));
+            }
+
+            //
+            // *******  OnClickListeners ********
+            //
+
+            addTaskTv.setOnClickListener(view -> {
+                //TODO:Add Navigation Component to EditBreakFragment. And edit EditBreak fragment for adding a break
+            });
+
+            addTaskTv.setOnClickListener(view->{
+                //TODO:Add Navigation Component to EditTaskFragment. And edit EditTaskFragment for adding a task
+            });
+
+            startTV.setOnClickListener(view -> {
+                DialogFragment timePickerDialog = new TimePickerFrag();
+                timePickerDialog.show(getParentFragmentManager(), "start time picker");
+            });
+
+            endTV.setOnClickListener(view -> {
+                DialogFragment timePickerDialog = new TimePickerFrag();
+                timePickerDialog.show(getParentFragmentManager(), "end time picker");
+            });
 
 
-        }
+            //
+            //
+            //
+
 
         viewModel.getTimeEntry().observe(this, timeEntry1 ->{
                     if(timeEntry1 != null && !timeEntry1.isActive()){
@@ -116,27 +148,28 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
                     }
                 });
 
-        viewModel.getTaskList().observe(this, tasks -> {
-            if(tasks != null){
+            viewModel.getTaskList().observe(this, tasks -> {
+                if (tasks != null) {
+                    tasksList.setAdapter(new TasksListAdapter(viewModel.getTaskList().getValue(), true));
+                }
+            });
 
-                //TODO
-            }else{
-
-            }
-
-        });
-
-        viewModel.getBreaksList().observe(this, breaks -> {
-
-            //TODO
-
-        });
+            viewModel.getBreaksList().observe(this, breaks -> {
+                if(breaks != null){
+                    breaksListView.setAdapter(new BreaksListAdapter(viewModel.getBreaksList().getValue(), true));
+                }
+            });
 
     }
 
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+        if(isStartEdit){
+                viewModel.getTimeEntry().getValue().getEntryStartTime().set(Calendar.HOUR, hourOfDay);
+                viewModel.getTimeEntry().getValue().getEntryStartTime().set(Calendar.MINUTE, minute);
+        } else {
+            viewModel.getTimeEntry().getValue().getEntryEndTime().set(Calendar.HOUR, hourOfDay);
+            viewModel.getTimeEntry().getValue().getEntryEndTime().set(Calendar.MINUTE, minute);
+        }
     }
 }
