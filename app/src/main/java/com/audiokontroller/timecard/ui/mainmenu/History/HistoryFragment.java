@@ -1,6 +1,7 @@
 package com.audiokontroller.timecard.ui.mainmenu.History;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,23 +9,30 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.audiokontroller.timecard.R;
 
-//TODO:
-
 public class HistoryFragment extends Fragment {
+
+    private static final String TAG = HistoryFragment.class.getSimpleName();
+
+    //Parent Fragment is HistoryParentFrag, if changed this will cause a NullPointerException.
+    private HistoryViewModel viewModel = new ViewModelProvider(getParentFragment()).get(HistoryViewModel.class);
 
     private RecyclerView recView;
     private RecyclerView.Adapter recViewAdapter;
     private RecyclerView.LayoutManager recViewLayoutManager;
 
-    private int position;
+    //Position of Fragment in TabLayout of HistoryParentFrag
+    private short position;
 
     public HistoryFragment(int position){
-        this.position = position;
+        this.position = (short) position;
+        viewModel.setPosition((short) position);
+        Log.d(TAG,".Create=Success:pos=" + position);
     }
 
     @Nullable
@@ -37,9 +45,14 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        recView.findViewById(R.id.history_rec_view);
+        recView = getActivity().findViewById(R.id.history_rec_view);
          recViewLayoutManager = new LinearLayoutManager(getActivity());
+         recView.setHasFixedSize(true);
          recView.setLayoutManager(recViewLayoutManager);
+        recViewAdapter = new HistoryRecAdapter(viewModel.getTimeEntries(position));
+        recView.setAdapter(recViewAdapter);
+        Log.d(TAG, "RecViewAdapter.Set=Success");
+
     }
 
     @Override

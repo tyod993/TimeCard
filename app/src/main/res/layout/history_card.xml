@@ -4,30 +4,36 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:padding="8dp"
+    android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="6dp">
 
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/his_cv_rl"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/his_cv_date_tv"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/lt_txt"
         android:fontFamily="@font/nunito_regular"
         android:text="January 11th 2020"
         android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <LinearLayout
         android:id="@+id/lin1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/his_cv_date_tv"
+        app:layout_constraintTop_toBottomOf="@+id/his_cv_date_tv"
+        app:layout_constraintStart_toStartOf="parent"
         >
 
     <TextView
@@ -66,14 +72,51 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/his_cv_tasks_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="@string/tasks"
+        android:textColor="@color/drk_blue_txt"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/his_cv_break_lv"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
     <ListView
         android:id="@+id/his_cv_tasks_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lin1"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/his_cv_tasks_title"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/his_cv_break_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="@string/breaks"
+        android:textColor="@color/drk_blue_txt"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lin1"
+        />
+
+    <ListView
+        android:id="@+id/his_cv_break_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/his_cv_break_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.cardview.widget.CardView>

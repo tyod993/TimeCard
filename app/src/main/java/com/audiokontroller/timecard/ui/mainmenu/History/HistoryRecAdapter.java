@@ -43,8 +43,10 @@ public class HistoryRecAdapter extends RecyclerView.Adapter<HistoryRecAdapter.Vi
         holder.dateTV.setText(format.getSimpleDate(timeEntry.getEntryStartTime().toString(), null));
         holder.dayTV.setText(format.getDayNameLong());
         holder.totalHrsTV.setText(format.getTotalHours(TOTAL_HRS_PREFIX));
-        holder.tasksLV.setAdapter(new TasksListAdapter(timeEntry.getTasks()));
-        holder.editBtn.setOnClickListener(view ->  new TimeEntryEditFragment(timeEntry)
+        holder.tasksLV.setAdapter(new TasksListAdapter(timeEntry.getTasks(), false));
+        holder.editBtn.setOnClickListener(view ->
+                //TODO: Navigate to TimeEntryEditFragment via NavFragment passing TimeEntry as SafeArgs;
+                new TimeEntryEditFragment(timeEntry)
         );
     }
 
@@ -57,16 +59,23 @@ public class HistoryRecAdapter extends RecyclerView.Adapter<HistoryRecAdapter.Vi
         TextView dateTV;
         TextView dayTV;
         TextView totalHrsTV;
+        TextView tasksTitle;
         ListView tasksLV;
         ImageButton editBtn;
+        TextView breaksTitle;
+        ListView breaksLV;
+
 
         public ViewHolder(View view){
             super(view);
             dateTV = view.findViewById(R.id.his_cv_date_tv);
             dayTV = view.findViewById(R.id.his_cv_day_tv);
             totalHrsTV = view.findViewById(R.id.his_cv_total_hrs);
+            tasksTitle = view.findViewById(R.id.his_cv_tasks_title);
             tasksLV = view.findViewById(R.id.his_cv_tasks_lv);
             editBtn = view.findViewById(R.id.his_cv_edit_btn);
+            breaksTitle = view.findViewById(R.id.his_cv_break_title);
+            breaksLV = view.findViewById(R.id.his_cv_break_lv);
         }
 
     }

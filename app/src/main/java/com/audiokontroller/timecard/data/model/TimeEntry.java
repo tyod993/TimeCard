@@ -1,7 +1,5 @@
 package com.audiokontroller.timecard.data.model;
 
-
-import android.telecom.Call;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 // TODO: Set up type Converters to utilize object classes for simplification code
+// TODO: Set up TimeCardID
 
 @Entity(tableName = "time_card")
 public class TimeEntry {
@@ -23,6 +22,8 @@ public class TimeEntry {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+    private int timeCardID;
 
     @ColumnInfo(name = "entry_date")
     private Calendar entryDate;
@@ -81,6 +82,14 @@ public class TimeEntry {
     }
 
     public int getId(){return this.id;}
+
+    public int getTimeCardID() {
+        return timeCardID;
+    }
+
+    public void setTimeCardID(int timeCardID) {
+        this.timeCardID = timeCardID;
+    }
 
     public Calendar getEntryDate(){
         return entryDate;
