@@ -1,8 +1,7 @@
-package com.audiokontroller.timecard.ui.mainmenu.History;
+package com.audiokontroller.timecard.ui.History;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -11,7 +10,6 @@ import com.audiokontroller.timecard.data.model.TimeEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class HistoryViewModel extends ViewModel {
 

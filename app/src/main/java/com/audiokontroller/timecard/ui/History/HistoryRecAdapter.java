@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.History;
+package com.audiokontroller.timecard.ui.History;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryDisplayFormat;
 import com.audiokontroller.timecard.data.model.TimeEntry;
-import com.audiokontroller.timecard.ui.mainmenu.TimeEntry.TimeEntryEditFragment;
-import com.audiokontroller.timecard.ui.mainmenu.utils.TasksListAdapter;
+import com.audiokontroller.timecard.ui.TimeEntry.TimeEntryEditFragment;
+import com.audiokontroller.timecard.ui.utils.TasksListAdapter;
 
 import java.util.ArrayList;
 

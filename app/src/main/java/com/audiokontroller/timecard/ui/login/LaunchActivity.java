@@ -82,9 +82,7 @@ public class LaunchActivity extends AppCompatActivity {
         //
 
         //Let's get down to business
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
+        loginViewModel.getLoginResult().observe(this, loginResult ->{
                 if (loginResult == null) {
                     return;
                 }
@@ -99,9 +97,8 @@ public class LaunchActivity extends AppCompatActivity {
 
                 //Complete and destroy login activity once successful
                 finish();
-            }
-        });
-        //
+            });
+
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -159,6 +156,7 @@ public class LaunchActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUser model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
+        intent.putExtra("userID", loginViewModel.getFirebaseUserID());
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         startActivity(intent);
     }

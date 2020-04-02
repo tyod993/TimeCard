@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.utils;
+package com.audiokontroller.timecard.ui.utils;
 
 import android.view.LayoutInflater;
 import android.view.View;

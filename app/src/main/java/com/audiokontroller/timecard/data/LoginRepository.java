@@ -1,7 +1,6 @@
 package com.audiokontroller.timecard.data;
 
-import android.content.Context;
-
+import com.audiokontroller.timecard.authentication.Result;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 
 /**

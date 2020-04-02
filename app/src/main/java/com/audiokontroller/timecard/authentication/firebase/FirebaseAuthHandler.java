@@ -1,10 +1,11 @@
-package com.audiokontroller.timecard.data.firebase;
+package com.audiokontroller.timecard.authentication.firebase;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.audiokontroller.timecard.data.firebase.FireUserProfileUpdate;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

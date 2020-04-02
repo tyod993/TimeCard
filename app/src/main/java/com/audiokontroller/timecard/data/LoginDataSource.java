@@ -1,7 +1,8 @@
 package com.audiokontroller.timecard.data;
 
+import com.audiokontroller.timecard.authentication.Result;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
-import com.audiokontroller.timecard.data.firebase.FirebaseAuthHandler;
+import com.audiokontroller.timecard.authentication.firebase.FirebaseAuthHandler;
 
 import java.io.IOException;
 

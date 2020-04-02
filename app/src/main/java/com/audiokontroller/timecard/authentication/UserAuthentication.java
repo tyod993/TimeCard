@@ -1,6 +1,8 @@
-package com.audiokontroller.timecard.data;
+package com.audiokontroller.timecard.authentication;
 
 import android.content.Context;
+
+import com.audiokontroller.timecard.data.room.UserRepository;
 
 public class UserAuthentication {
 

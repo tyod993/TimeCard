@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.data;
+package com.audiokontroller.timecard.data.room;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,10 +6,15 @@ import android.util.Log;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.audiokontroller.timecard.data.model.User;
+import com.audiokontroller.timecard.data.room.type_converters.Converters;
 
+
+//TODO: Handle version migrations
 @Database(entities = User.class, version = 1)
+@TypeConverters({Converters.class})
 public abstract class UserDatabase extends RoomDatabase {
 
     private static final String TAG = UserDatabase.class.getSimpleName();

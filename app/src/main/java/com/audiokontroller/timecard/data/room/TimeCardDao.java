@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.data.TimeEntry;
+package com.audiokontroller.timecard.data.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

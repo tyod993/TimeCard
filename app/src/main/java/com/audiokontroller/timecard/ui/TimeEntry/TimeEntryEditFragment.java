@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.TimeEntry;
+package com.audiokontroller.timecard.ui.TimeEntry;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -21,9 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.TimeEntry;
-import com.audiokontroller.timecard.ui.mainmenu.utils.BreaksListAdapter;
-import com.audiokontroller.timecard.ui.mainmenu.utils.TasksListAdapter;
-import com.audiokontroller.timecard.ui.mainmenu.utils.TimePickerFrag;
+import com.audiokontroller.timecard.ui.utils.BreaksListAdapter;
+import com.audiokontroller.timecard.ui.utils.TasksListAdapter;
+import com.audiokontroller.timecard.ui.utils.TimePickerFrag;
 
 import java.util.Calendar;
 

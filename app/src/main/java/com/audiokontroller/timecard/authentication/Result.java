@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.data;
+package com.audiokontroller.timecard.authentication;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

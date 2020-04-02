@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.TimeEntry;
+package com.audiokontroller.timecard.ui.TimeEntry;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.TimeEntry;
+package com.audiokontroller.timecard.ui.TimeEntry;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -13,12 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.Break;
-import com.audiokontroller.timecard.ui.mainmenu.utils.TimePickerFrag;
+import com.audiokontroller.timecard.ui.utils.TimePickerFrag;
 
 import java.util.Calendar;
 

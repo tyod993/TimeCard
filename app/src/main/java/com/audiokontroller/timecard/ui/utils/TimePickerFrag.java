@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.utils;
+package com.audiokontroller.timecard.ui.utils;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

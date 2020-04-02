@@ -7,6 +7,10 @@ import java.util.Calendar;
 
 public class Break {
 
+    private long breakID;
+
+    private long parentEntryID;
+
     private boolean active;
 
     private Calendar startTime;
@@ -20,11 +24,24 @@ public class Break {
 
     public Break(@NonNull Calendar startTime, @Nullable Calendar endTime){
         this.startTime = startTime;
+        this.breakID = Calendar.getInstance().getTimeInMillis();
         if(endTime != null) {
             this.endTime = endTime;
             totalTimeMillis = startTime.compareTo(endTime);
             setTotalTime();
         }
+    }
+
+    public long getBreakID() {
+        return breakID;
+    }
+
+    public void setParentEntryID(long parentEntryID) {
+        this.parentEntryID = parentEntryID;
+    }
+
+    public long getParentEntryID() {
+        return parentEntryID;
     }
 
     @Nullable

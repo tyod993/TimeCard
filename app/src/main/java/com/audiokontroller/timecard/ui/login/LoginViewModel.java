@@ -17,9 +17,9 @@ import android.content.Context;
 import android.util.Patterns;
 
 import com.audiokontroller.timecard.data.LoginRepository;
-import com.audiokontroller.timecard.data.Result;
-import com.audiokontroller.timecard.data.UserRepository;
-import com.audiokontroller.timecard.data.firebase.FirebaseAuthHandler;
+import com.audiokontroller.timecard.authentication.Result;
+import com.audiokontroller.timecard.data.room.UserRepository;
+import com.audiokontroller.timecard.authentication.firebase.FirebaseAuthHandler;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 import com.audiokontroller.timecard.R;
 
@@ -122,7 +122,9 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-
+    public String getFirebaseUserID(){
+       return firebaseAuthHandler.getFirebaseUser().getUid();
+    }
 
     public void setUserRepository(){
         if(userRepository == null) {

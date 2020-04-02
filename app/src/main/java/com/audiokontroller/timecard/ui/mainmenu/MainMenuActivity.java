@@ -26,6 +26,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //TODO call Intent.getIntent to retireve the UserId from the log in screen.
 
         mainMenuViewModel = new MainMenuViewModel(getApplication());
 

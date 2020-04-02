@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.data;
+package com.audiokontroller.timecard.data.room;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -31,16 +31,6 @@ public class UserRepository {
 
     public void delete(User user){
         new deleteAsyncTask(mUserDao).execute(user);
-    }
-
-    public String getFirstName(){return mUserDao.getFirstName();}
-
-    public String getLastName(){return mUserDao.getLastName();}
-
-    public String getEmail(){return mUserDao.getEmail();}
-
-    public String getPassword(){
-        return mUserDao.getPassword();
     }
 
     private static class deleteAsyncTask extends AsyncTask<User, Void,Void>{

@@ -2,6 +2,7 @@ package com.audiokontroller.timecard.data.model;
 
 import androidx.annotation.NonNull;
 
+import java.util.Calendar;
 
 public class Task {
 
@@ -11,14 +12,31 @@ public class Task {
             "10hrs", "11hrs", "12hrs", "13hrs", "14hrs"
     };
 
+    private long taskID;
+
+    private long entryID;
+
     @NonNull
     private String mName;
 
     private int mHours;
 
     public Task(@NonNull String name, int hours){
+        this.taskID = Calendar.getInstance().getTimeInMillis();
         this.mName = name;
         this.mHours = hours;
+    }
+
+    public long getTaskID() {
+        return taskID;
+    }
+
+    public void setEntryID(long entryID) {
+        this.entryID = entryID;
+    }
+
+    public long getEntryID() {
+        return entryID;
     }
 
     @NonNull

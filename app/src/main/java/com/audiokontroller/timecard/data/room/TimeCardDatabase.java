@@ -13,7 +13,7 @@ To Do:
  */
 
 
-package com.audiokontroller.timecard.data.TimeEntry;
+package com.audiokontroller.timecard.data.room;
 
 import android.content.Context;
 import android.util.Log;

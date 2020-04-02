@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.History;
+package com.audiokontroller.timecard.ui.History;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

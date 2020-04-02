@@ -4,9 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -15,50 +12,38 @@ import java.util.List;
 // TODO: Set up type Converters to utilize object classes for simplification code
 // TODO: Set up TimeCardID
 
-@Entity(tableName = "time_card")
 public class TimeEntry {
 
     private final static String TAG = TimeEntry.class.getSimpleName();
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int entryID;
 
     private int timeCardID;
 
-    @ColumnInfo(name = "entry_date")
     private Calendar entryDate;
 
     @NonNull
-    @ColumnInfo(name = "entry_start_time")
     private Calendar entryStartTime;
 
     @Nullable
-    @ColumnInfo(name = "entry_end_time")
     private Calendar entryEndTime;
 
     @Nullable
-    @ColumnInfo(name = "tasks")
     private List<Task> tasks;
 
     @Nullable
-    @ColumnInfo(name = "breaks")
     private List<Break> breaks;
 
-    @ColumnInfo(name = "total_hours")
     private double totalHours;
 
     @Nullable
-    @ColumnInfo(name = "job_location")
     private String jobName;
 
     @Nullable
-    @ColumnInfo(name = "job_notes")
     private String jobNotes;
 
-    @ColumnInfo(name = "submitted")
     private boolean submitted;
 
-    @ColumnInfo(name = "active")
     private boolean active;
 
     public TimeEntry(@NonNull Calendar entryStartTime, @Nullable Calendar entryEndTime,
@@ -78,10 +63,10 @@ public class TimeEntry {
     //TODO:Organize me Please!!!
 
     public void setId(int id1){
-        this.id = id1;
+        this.entryID = id1;
     }
 
-    public int getId(){return this.id;}
+    public int getId(){return this.entryID;}
 
     public int getTimeCardID() {
         return timeCardID;

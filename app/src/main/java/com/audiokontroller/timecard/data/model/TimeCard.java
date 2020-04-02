@@ -2,14 +2,17 @@ package com.audiokontroller.timecard.data.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+
 public class TimeCard {
 
-    public final long USER_ID;
-    public final long CARD_ID = Calendar.getInstance().getTimeInMillis();
+    public final long userID;
+
+    public final long cardID = Calendar.getInstance().getTimeInMillis();
 
     private boolean isActive;
     private Calendar periodStart;
@@ -17,15 +20,15 @@ public class TimeCard {
     private ArrayList<TimeEntry> entries;
 
     public TimeCard(long userID, @NonNull ArrayList<TimeEntry> timeEntryArrayList) {
-        this.USER_ID = userID;
+        this.userID = userID;
         this.entries = timeEntryArrayList;
     }
 
-    public long getUSER_ID() {
-        return USER_ID;
+    public long getUserID() {
+        return userID;
     }
 
-    public long getCARD_ID() { return CARD_ID; }
+    public long getCardID() { return cardID; }
 
     public boolean isActive() { return isActive; }
 

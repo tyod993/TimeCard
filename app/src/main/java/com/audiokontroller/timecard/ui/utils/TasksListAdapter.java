@@ -1,4 +1,4 @@
-package com.audiokontroller.timecard.ui.mainmenu.utils;
+package com.audiokontroller.timecard.ui.utils;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.Task;
-import com.audiokontroller.timecard.ui.mainmenu.TimeEntry.TasksEditFrag;
+import com.audiokontroller.timecard.ui.TimeEntry.TasksEditFrag;
 
 import java.util.List;
 import java.util.Random;
