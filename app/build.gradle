@@ -73,6 +73,10 @@ dependencies {
     //GSON Parser
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    //RX
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
 }
 
 

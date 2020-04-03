@@ -1,12 +1,15 @@
 package com.audiokontroller.timecard.ui.mainmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.audiokontroller.timecard.R;
@@ -26,9 +29,13 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TODO call Intent.getIntent to retireve the UserId from the log in screen.
-
-        mainMenuViewModel = new MainMenuViewModel(getApplication());
+        mainMenuViewModel = new ViewModelProvider(this).get(MainMenuViewModel.class);
+        try{mainMenuViewModel.setUserID(getIntent().getExtras().getString("userID"));}
+        catch(NullPointerException e){
+            Log.d(TAG, ":userID=null");
+            Toast.makeText(this, R.string.login_error, Toast.LENGTH_LONG).show();
+            super.onBackPressed();
+        }
 
         bottomNav = findViewById(R.id.bottom_navigation_view);
         topToolbar = findViewById(R.id.home_top_toolbar);

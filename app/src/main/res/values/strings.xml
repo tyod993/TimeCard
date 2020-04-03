@@ -90,6 +90,7 @@
     <string name="error">ERROR</string>
     <string name="none">None</string>
     <string name="time_card_loading_error_message">Error loading Time Entry :( Please try again :)</string>
+    <string name="login_error">There was an error logging in please try again</string>
 
 
 </resources>

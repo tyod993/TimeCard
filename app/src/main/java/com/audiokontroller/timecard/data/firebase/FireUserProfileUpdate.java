@@ -25,13 +25,10 @@ public class FireUserProfileUpdate {
                     .setDisplayName(newDisplayName)
                     .build();
             currentUser.updateProfile(request)
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                    .addOnCompleteListener((Executor) this, task -> {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, ".displayNameChange.success");
                             }
-                        }
                     });
     }
 
@@ -40,13 +37,10 @@ public class FireUserProfileUpdate {
                 .setPhotoUri(newPhoto)
                 .build();
         currentUser.updateProfile(request)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                .addOnCompleteListener((Executor) this, task-> {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "profilePictureChange.successful");
                         }
-                    }
                 });
     }
 

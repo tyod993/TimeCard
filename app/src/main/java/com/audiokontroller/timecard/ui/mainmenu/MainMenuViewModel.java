@@ -13,17 +13,18 @@ import java.util.ArrayList;
 
 public class MainMenuViewModel extends AndroidViewModel {
 
+    public String userID;
     public ArrayList<TimeCard> loadedTimeCards;
-    private TimeCardRepository mtimeEntryRepository;
-    private UserRepository muserRepository;
+    private UserRepository userRepository;
 
     public User activeUser;
 
     public MainMenuViewModel(Application application) {
         super(application);
-        mtimeEntryRepository = new TimeCardRepository(application);
-        muserRepository = new UserRepository(application);
+        userRepository = new UserRepository(application);
     }
+
+    public void setUserID(String userID){this.userID = userID;}
 
     public ArrayList<TimeCard> getLoadedTimeCards(){ return loadedTimeCards;}
 
