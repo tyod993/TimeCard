@@ -92,5 +92,12 @@
     <string name="time_card_loading_error_message">Error loading Time Entry :( Please try again :)</string>
     <string name="login_error">There was an error logging in please try again</string>
 
+    <!--SharedPreferences -->
+    <string name="db_pref_key">database_used</string>
+    <string name="db_pref_def_val">firebase</string>
+    <string name="user_id_key">user_id</string>
+    <string name="user_id_def_val">none</string>
+    <string name="first_login_key">first_login</string>
+    <bool name="first_login_def_val">true</bool>
 
 </resources>

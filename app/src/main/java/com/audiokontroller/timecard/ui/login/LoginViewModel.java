@@ -18,7 +18,7 @@ import android.util.Patterns;
 
 import com.audiokontroller.timecard.data.LoginRepository;
 import com.audiokontroller.timecard.authentication.Result;
-import com.audiokontroller.timecard.data.room.UserRepository;
+import com.audiokontroller.timecard.data.UserDataSource;
 import com.audiokontroller.timecard.authentication.firebase.FirebaseAuthHandler;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 import com.audiokontroller.timecard.R;
@@ -31,7 +31,7 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
-    private UserRepository userRepository;
+    private UserDataSource userRepository;
 
     LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
@@ -128,7 +128,7 @@ public class LoginViewModel extends ViewModel {
 
     public void setUserRepository(){
         if(userRepository == null) {
-            userRepository = new UserRepository(context);
+            userRepository = new UserDataSource(context);
         }
     }
 

@@ -71,7 +71,7 @@ public class FirebaseAuthHandler {
 
 
     private void formatFirebaseUser(FirebaseUser firebaseUser) {
-        loggedInUser = new LoggedInUser(firebaseUser.getEmail(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl());
+        loggedInUser = new LoggedInUser(firebaseUser.getUid() ,firebaseUser.getEmail(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl());
     }
 
     public LoggedInUser getLoggedInUser() {

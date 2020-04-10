@@ -61,8 +61,10 @@ public class HistoryViewModel extends ViewModel {
             //position 0 is == Today
             if (position == 0) {
                 //TODO change to for each statement
-                for (TimeEntry entry : uiDataSetFull.getValue()) {
-
+                for (TimeEntry entry: uiDataSetFull.getValue()) {
+                    if(entry.getEntryStartTime().get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)){
+                        listTimeEntries.add(entry);
+                    }
                 }
             } else if (position == 1) { //Position 1 == This Week
                 for (TimeEntry entry : uiDataSetFull.getValue()) {
@@ -72,7 +74,7 @@ public class HistoryViewModel extends ViewModel {
                 }
             } else {
                 for (TimeEntry entry: uiDataSetFull.getValue()) {
-                    if(entry.getTimeCardID() == activeCard.CARD_ID){
+                    if(entry.getTimeCardID() == activeCard.cardID){
                         listTimeEntries.add(entry);
                     }
                 }

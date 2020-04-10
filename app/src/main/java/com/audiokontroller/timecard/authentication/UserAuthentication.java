@@ -2,11 +2,11 @@ package com.audiokontroller.timecard.authentication;
 
 import android.content.Context;
 
-import com.audiokontroller.timecard.data.room.UserRepository;
+import com.audiokontroller.timecard.data.UserDataSource;
 
 public class UserAuthentication {
 
-    public UserRepository userRepo;
+    public UserDataSource userRepo;
 
     private boolean isAuthenticated;
 
@@ -14,7 +14,7 @@ public class UserAuthentication {
     private String testPassword;
 
     public UserAuthentication(Context context, String username, String password){
-        userRepo = new UserRepository(context);
+        userRepo = new UserDataSource(context);
         testUsername = userRepo.getEmail();
 
         if(validLocalUser(testUsername)){
