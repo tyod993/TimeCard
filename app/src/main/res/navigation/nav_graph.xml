@@ -3,16 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainMenuActivity">
+    app:startDestination="@id/mainClockInFrag">
 
-    <activity
-        android:id="@+id/mainMenuActivity"
-        android:name="com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/mainClockInFrag"
         android:name="com.audiokontroller.timecard.ui.mainmenu.MainClockInFrag"
         android:label="main_clockin_frag"
-        tools:layout="@layout/main_clockin_frag" />
+        tools:layout="@layout/main_clockin_frag" >
+        <action
+            android:id="@+id/action_mainClockInFrag_to_historyParentFrag"
+            app:destination="@id/historyParentFrag" />
+        <action
+            android:id="@+id/action_mainClockInFrag_to_timeEntryReviewFrag"
+            app:destination="@id/timeEntryReviewFrag" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeEntryReviewFrag"
+        android:name="com.audiokontroller.timecard.ui.TimeEntry.TimeEntryReviewFrag"
+        android:label="TimeEntryReviewFrag" />
+    <fragment
+        android:id="@+id/historyParentFrag"
+        android:name="com.audiokontroller.timecard.ui.History.HistoryParentFrag"
+        android:label="HistoryParentFrag" >
+        <action
+            android:id="@+id/action_historyParentFrag_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.audiokontroller.timecard.ui.History.HistoryFragment"
+        android:label="HistoryFragment" >
+        <action
+            android:id="@+id/action_historyFragment_to_timeEntryEditFragment"
+            app:destination="@id/timeEntryEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeEntryEditFragment"
+        android:name="com.audiokontroller.timecard.ui.TimeEntry.TimeEntryEditFragment"
+        android:label="TimeEntryEditFragment" >
+        <action
+            android:id="@+id/action_timeEntryEditFragment_to_tasksEditFrag"
+            app:destination="@id/tasksEditFrag" />
+        <action
+            android:id="@+id/action_timeEntryEditFragment_to_breaksEditFrag"
+            app:destination="@id/breaksEditFrag" />
+    </fragment>
+    <fragment
+        android:id="@+id/tasksEditFrag"
+        android:name="com.audiokontroller.timecard.ui.TimeEntry.TasksEditFrag"
+        android:label="TasksEditFrag" />
+    <fragment
+        android:id="@+id/breaksEditFrag"
+        android:name="com.audiokontroller.timecard.ui.TimeEntry.BreaksEditFrag"
+        android:label="BreaksEditFrag" />
 </navigation>

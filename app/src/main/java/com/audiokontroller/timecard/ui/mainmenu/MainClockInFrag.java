@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
 
@@ -22,11 +23,12 @@ public class MainClockInFrag extends Fragment {
     //Notes: Left off setting the button image URLs to make the button state change class?
     private static final String[] buttonImageUrls = {};
 
+    private int clockState = 0;
     private TextView totalHoursTV;
     private ImageView clockinButton;
     private Button breakButton;
 
-    public MainClockInFrag(){}
+    private MainClockInViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup container,
@@ -37,6 +39,7 @@ public class MainClockInFrag extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
 
         //UI Components
         totalHoursTV = getActivity().findViewById(R.id.total_hours_clk_in);
@@ -44,8 +47,9 @@ public class MainClockInFrag extends Fragment {
         breakButton = getActivity().findViewById(R.id.break_button);
         //
 
-        clockinButton.setOnClickListener(view ->{
+        //Here get active time card. Otherwise wait for button click to create a new one;
 
+        clockinButton.setOnClickListener(view ->{
 
         });
 

@@ -14,8 +14,6 @@ import com.audiokontroller.timecard.data.UserDataSource;
 
 import java.util.ArrayList;
 
-import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 

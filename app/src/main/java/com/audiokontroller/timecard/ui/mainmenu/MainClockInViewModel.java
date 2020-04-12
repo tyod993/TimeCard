@@ -47,7 +47,7 @@ public class MainClockInViewModel extends ViewModel {
         return currentTimeEntry.getValue().getTotalHours();
     }
 
-    //TODO: Initialize the review fragment and pass the current TimeEntry
+    //TODO: Initialize the review fragment and pass the current TimeEntry via Navigation Component
     private void startReviewFrag(TimeEntry timeEntry){
 
     }
