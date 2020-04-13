@@ -7,15 +7,18 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.Calendar;
 import java.util.List;
+
 
 @Entity(tableName = "user_data")
 public class User {
 
     private static final String TAG = User.class.getSimpleName();
 
+    @NonNull
     @PrimaryKey
     private String userID;
 
@@ -38,7 +41,7 @@ public class User {
     private String companyName;
 
     @ColumnInfo
-    private List<TimeCard> timeCards;
+    private UserTimeCardsHolder timeCardsHolder;
 
     public User(@NonNull String userID, @NonNull String email,
                 String firstName, String lastName){
@@ -55,7 +58,7 @@ public class User {
         this.userID = newId;
     }
 
-    public String getId(){return this.userID;}
+    public String getUserID(){return this.userID;}
 
     public void setUserAuthenticated(boolean auth){userAuthenticated = auth;}
 
@@ -86,10 +89,18 @@ public class User {
     public String getLastName(){ return lastName; }
 
     public List<TimeCard> getTimeCards() {
-        return timeCards;
+        return timeCardsHolder.getTimeEntries();
     }
 
     public void setTimeCards(List<TimeCard> timeCards) {
-        this.timeCards = timeCards;
+        timeCardsHolder.setTimeEntries(timeCards);
+    }
+
+    public UserTimeCardsHolder getTimeCardsHolder(){
+        return timeCardsHolder;
+    }
+
+    public void setTimeCardsHolder(UserTimeCardsHolder holder){
+        this.timeCardsHolder = holder;
     }
 }

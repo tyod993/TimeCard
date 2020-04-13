@@ -26,7 +26,7 @@ public interface UserDao {
     Completable update(User user);
 
     @Delete
-    Completable delete();
+    Completable delete(User user);
 
     @Query("SELECT * FROM user_data WHERE userID = :ID")
     Flowable<User> getUser(String ID);
