@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel;
 import android.content.Context;
 import android.util.Patterns;
 
+import com.audiokontroller.timecard.data.LoginDataSource;
 import com.audiokontroller.timecard.data.LoginRepository;
 import com.audiokontroller.timecard.authentication.Result;
 import com.audiokontroller.timecard.data.UserDataSource;
@@ -30,12 +31,10 @@ public class LoginViewModel extends ViewModel {
     private FirebaseAuthHandler firebaseAuthHandler = new FirebaseAuthHandler();
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
     private UserDataSource userRepository;
 
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
+
+    public LoginViewModel() {}
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -47,6 +46,7 @@ public class LoginViewModel extends ViewModel {
 
     //TODO:App currently closes when login fails, this should"nt be the case
     public void login(String username, String password) {
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 

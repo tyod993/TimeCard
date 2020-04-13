@@ -30,7 +30,6 @@ import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 
-
 // TODO --> Update everything to use Lambda expressions <--
 public class LaunchActivity extends AppCompatActivity {
 
