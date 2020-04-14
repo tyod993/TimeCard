@@ -30,17 +30,33 @@ class LoginFormState {
     }
 
     @Nullable
-    Integer getUsernameError() {
+    public Integer getUsernameError() {
         return usernameError;
     }
 
     @Nullable
-    Integer getPasswordError() {
+    public Integer getPasswordError() {
         return passwordError;
     }
 
     @Nullable
-    Integer getNameError(){return nameError;}
+    public Integer getNameError(){return nameError;}
+
+    public void setNameError(@Nullable Integer nameError) {
+        this.nameError = nameError;
+    }
+
+    public void setDataValid(boolean dataValid) {
+        isDataValid = dataValid;
+    }
+
+    public void setPasswordError(@Nullable Integer passwordError) {
+        this.passwordError = passwordError;
+    }
+
+    public void setUsernameError(@Nullable Integer usernameError) {
+        this.usernameError = usernameError;
+    }
 
     boolean isDataValid() {
         return isDataValid;

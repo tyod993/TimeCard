@@ -91,6 +91,8 @@
     <string name="none">None</string>
     <string name="time_card_loading_error_message">Error loading Time Entry :( Please try again :)</string>
     <string name="login_error">There was an error logging in please try again</string>
+    <string name="email_user_input_error">You forgot to enter your email!</string>
+    <string name="password_user_input_error">You forgot to enter a password!</string>
 
     <!--SharedPreferences -->
     <string name="db_pref_key">database_used</string>
@@ -98,6 +100,8 @@
     <string name="user_id_key">user_id</string>
     <string name="user_id_def_val">none</string>
     <string name="first_login_key">first_login</string>
-    <bool name="first_login_def_val">true</bool>
+    <string name="user_email_key">user_email</string>
+    <string name="user_display_name_key">user_display_name</string>
+
 
 </resources>

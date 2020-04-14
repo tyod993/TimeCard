@@ -70,22 +70,23 @@ public class LoginViewModel extends ViewModel {
 
     //Reusing loginFormState to validate registration input
     public void registrationDataChanged(String username, String password, String firstName){
+        LoginFormState formState = new LoginFormState(false);
         if(!isUserNameValid(username)){
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null, null));
+            formState.setUsernameError(R.string.invalid_username);
         }else if(!isPasswordValid(password)){
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password, null));
+            formState.setPasswordError(R.string.invalid_password);
         }else if(!isNameValid(firstName)){
-            loginFormState.setValue(new LoginFormState(null, null, R.string.invalid_firstName));
+            formState.setNameError(R.string.invalid_firstName);
         }else{
-            loginFormState.setValue(new LoginFormState(true));
+            formState.setDataValid(true);
         }
-
+        loginFormState.setValue(formState);
     }
     //
     // Firebase Authentications
 
-    public void registerNewUser(String email, String password, @Nullable String firstName, @Nullable String lastName){
-        firebaseAuthHandler.registerNewUser(email, password, firstName, lastName);
+    public Result registerNewUser(String email, String password, @Nullable String firstName, @Nullable String lastName){
+        return firebaseAuthHandler.registerNewUser(email, password, firstName, lastName);
     }
 
     public boolean isFirebaseUserLoggedIn(){return firebaseAuthHandler.isUserLoggedIn();}

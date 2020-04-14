@@ -173,7 +173,8 @@ public class LaunchActivity extends AppCompatActivity {
         loginViewModel.setUserRepository();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.replace(R.id.login_fragment_container, registerUserFragment).commit();
+        transaction.replace(R.id.login_fragment_container, registerUserFragment);
+        transaction.commit();
     }
 
     public Result findExistingUser(){

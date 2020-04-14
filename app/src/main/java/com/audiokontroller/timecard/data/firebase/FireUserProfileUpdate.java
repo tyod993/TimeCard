@@ -25,7 +25,7 @@ public class FireUserProfileUpdate {
                     .setDisplayName(newDisplayName)
                     .build();
             currentUser.updateProfile(request)
-                    .addOnCompleteListener((Executor) this, task -> {
+                    .addOnCompleteListener( task -> {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, ".displayNameChange.success");
                             }
@@ -37,11 +37,11 @@ public class FireUserProfileUpdate {
                 .setPhotoUri(newPhoto)
                 .build();
         currentUser.updateProfile(request)
-                .addOnCompleteListener((Executor) this, task-> {
+                .addOnCompleteListener((task-> {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "profilePictureChange.successful");
                         }
-                });
+                }));
     }
 
     public void updateUserEmail(@NonNull String newEmail){

@@ -7,7 +7,8 @@ If you find bugs or problems please let me know.
 
 Current Bug List:
     - App currently closes when a login attempt is unsuccessful.
-
+    - When registration fails the app closes
+    - The register screen takes way too long to load and skips 47 frames
 
 Features to finish:
     -Animate the logging button on the main screen.
@@ -21,3 +22,4 @@ Future Features:
     -AutoEmail TimeCards at the end of the pay period
     -Calendar under history section for easier TimeEntry Searching
     -User Settings section(Urgent)
+    -Update all of the findViewById() calls to DataBinding
