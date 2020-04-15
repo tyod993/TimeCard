@@ -3,10 +3,10 @@ package com.audiokontroller.timecard.authentication.firebase;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.audiokontroller.timecard.authentication.Result;
-import com.audiokontroller.timecard.data.firebase.FireUserProfileUpdate;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,7 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class FirebaseAuthHandler {
+public class FirebaseAuthHandler{
 
     private final String TAG = FirebaseAuthHandler.class.getSimpleName();
 
@@ -22,12 +22,13 @@ public class FirebaseAuthHandler {
     private LoggedInUser loggedInUser;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
+    private MutableLiveData<Result> observableAuthResult = new MutableLiveData<>();
 
     public FirebaseAuthHandler() {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    //TODO this should also be refactored to return a Result
+    //TODO Use the same observableAuthResult to observer the AsychTask Call of signInWithEmailAndPassword
     public void loginWithFirebase(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
@@ -45,31 +46,16 @@ public class FirebaseAuthHandler {
                 });
     }
 
-    public Result registerNewUser(final String email, final String password, @Nullable final String firstName, @Nullable final String lastName) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, ".registerNewUser.successful");
-                            currentUser = firebaseAuth.getCurrentUser();
-                            if (firstName != null) {
-                                FireUserProfileUpdate userUpdate = new FireUserProfileUpdate(currentUser);
-                                userUpdate.updateUserDisplayName(firstName + " " + lastName);
-                                authSuccess = true;
-                            }
+    public void registerNewUser(final String email, final String password) {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(authResultTask -> {
+                        if(authResultTask.isSuccessful()){
+                            observableAuthResult.setValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
                         } else {
-                            Log.e(TAG, ".registerNewUser.failure");
-                            currentUser = null;
-                            authSuccess = false;
+                            observableAuthResult.setValue(new Result.Error(new Exception(authResultTask.getException())));
                         }
-                    }
-                });
-        if(authSuccess){
-            return new Result.Success<>(currentUser);
-        } else{
-            return new Result.Error(new Exception("Error occurred while attempting to register new user with Firebase"));
-        }
+                    });
+
     }
 
 
@@ -96,4 +82,6 @@ public class FirebaseAuthHandler {
     }
 
     public FirebaseUser getFirebaseUser(){return currentUser;}
+
+    public LiveData<Result> getObservableAuthResult(){return observableAuthResult;}
 }

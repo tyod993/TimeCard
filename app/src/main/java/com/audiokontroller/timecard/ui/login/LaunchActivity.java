@@ -46,6 +46,7 @@ public class LaunchActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Before searching the Shared
         try {
             Result result = findExistingUser();
             if (result instanceof Result.Success) {
@@ -54,7 +55,7 @@ public class LaunchActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }catch (Exception ignored){};
+        }catch (Exception ignored){}
 
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -181,7 +182,7 @@ public class LaunchActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         String uID = sharedPreferences.getString(getResources().getString(R.string.user_id_key), getResources().getString(R.string.user_id_def_val));
         if(uID.equalsIgnoreCase("none")){
-            return new Result.Error(new Exception());
+            return new Result.Error(new Exception("User uID does'nt exist in SharedPreferences"));
         }else{
             return new Result.Success<>(uID);
         }

@@ -35,11 +35,10 @@ public class RegisterUserFragment extends Fragment {
     private LoginViewModel loginViewModel;
 
     private Button mSignUpButton;
-    private EditText mFNameInput;
-    private EditText mLNameInput;
     private EditText mEmailInput;
     private EditText mPasswordInput;
 
+    // This constructor is the reason that the loading of the fragment is taking so long
     public  RegisterUserFragment(LoginViewModel loginViewModel){this.loginViewModel = loginViewModel;}
 
     @Override
@@ -48,38 +47,44 @@ public class RegisterUserFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.register_user_fragment, container, false);
         mSignUpButton = rootView.findViewById(R.id.register_user_save_button);
-        mFNameInput = rootView.findViewById(R.id.firstNameInput);
-        mLNameInput = rootView.findViewById(R.id.lastNameInput);
         mEmailInput = rootView.findViewById(R.id.emailInput);
         mPasswordInput = rootView.findViewById(R.id.passwordInput);
 
         mSignUpButton.setOnClickListener(view ->{
-            loginViewModel.registrationDataChanged(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), mFNameInput.getText().toString());
+
+            //There really needs to be a progress bar visual here for the time waiting on the auth.
+            loginViewModel.registrationDataChanged(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
+
             if(loginViewModel.getLoginFormState().getValue().isDataValid()) {
-                Result result = loginViewModel.registerNewUser(
+
+                loginViewModel.registerNewUser(
                         mEmailInput.getText().toString(),
-                        mPasswordInput.getText().toString(),
-                        mFNameInput.getText().toString(),
-                        mLNameInput.getText().toString());
-                if (result instanceof Result.Success) {
-                    Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-                    FirebaseUser firebaseUser = (FirebaseUser) ((Result.Success) result).getData();
-                    intent.putExtra(getResources().getString(R.string.first_login_key), true);
-                    intent.putExtra(getResources().getString(R.string.user_id_key), firebaseUser.getUid());
-                    intent.putExtra(getResources().getString(R.string.user_email_key), firebaseUser.getEmail());
-                    intent.putExtra(getResources().getString(R.string.user_display_name_key), firebaseUser.getDisplayName());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "error logging in.");
-                }
+                        mPasswordInput.getText().toString())
+                        .observe(getViewLifecycleOwner(), authResult ->{
+
+                    if (authResult instanceof Result.Success) {
+                        Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+                        FirebaseUser firebaseUser = (FirebaseUser) ((Result.Success) authResult).getData();
+                        intent.putExtra(getResources().getString(R.string.first_login_key), true);
+                        intent.putExtra(getResources().getString(R.string.user_id_key), firebaseUser.getUid());
+                        intent.putExtra(getResources().getString(R.string.user_email_key), firebaseUser.getEmail());
+                        intent.putExtra(getResources().getString(R.string.user_display_name_key), firebaseUser.getDisplayName());
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "error logging in." + authResult.toString());
+                    }
+
+                });
             }else {
+
                 if(mEmailInput.getText().toString().equalsIgnoreCase("")){
                     mEmailInput.setError(getResources().getString(R.string.email_user_input_error));
                 }
                 if (mPasswordInput.getText() == null){
                     mPasswordInput.setError(getResources().getString(R.string.password_user_input_error));
                 }
+
             }
         });
 
@@ -92,9 +97,6 @@ public class RegisterUserFragment extends Fragment {
             }
             if (loginFormState.getPasswordError() != null) {
                 mPasswordInput.setError(getString(loginFormState.getPasswordError()));
-            }
-            if (loginFormState.getNameError() != null) {
-                mFNameInput.setError(getString(loginFormState.getNameError()));
             }
         });
 

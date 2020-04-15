@@ -5,10 +5,15 @@ The goal here is to create a simple solution to the inherant forgetfulness of us
 The application is currently being worked on and has many bugs to address.
 If you find bugs or problems please let me know.
 
+TODO:
+    - Remove the first and last name entrances when registering a new user in RegisterUserFragment
+
 Current Bug List:
     - App currently closes when a login attempt is unsuccessful.
     - When registration fails the app closes
     - The register screen takes way too long to load and skips 47 frames
+    - If i delete the user on firebase the app will still think that they are validated
+        and starts at the main menu
 
 Features to finish:
     -Animate the logging button on the main screen.

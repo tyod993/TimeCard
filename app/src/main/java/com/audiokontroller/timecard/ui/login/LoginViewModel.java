@@ -69,14 +69,12 @@ public class LoginViewModel extends ViewModel {
     }
 
     //Reusing loginFormState to validate registration input
-    public void registrationDataChanged(String username, String password, String firstName){
+    public void registrationDataChanged(String username, String password){
         LoginFormState formState = new LoginFormState(false);
         if(!isUserNameValid(username)){
             formState.setUsernameError(R.string.invalid_username);
         }else if(!isPasswordValid(password)){
             formState.setPasswordError(R.string.invalid_password);
-        }else if(!isNameValid(firstName)){
-            formState.setNameError(R.string.invalid_firstName);
         }else{
             formState.setDataValid(true);
         }
@@ -85,8 +83,9 @@ public class LoginViewModel extends ViewModel {
     //
     // Firebase Authentications
 
-    public Result registerNewUser(String email, String password, @Nullable String firstName, @Nullable String lastName){
-        return firebaseAuthHandler.registerNewUser(email, password, firstName, lastName);
+    public LiveData<Result> registerNewUser(String email, String password){
+        firebaseAuthHandler.registerNewUser(email, password);
+        return firebaseAuthHandler.getObservableAuthResult();
     }
 
     public boolean isFirebaseUserLoggedIn(){return firebaseAuthHandler.isUserLoggedIn();}
@@ -102,7 +101,7 @@ public class LoginViewModel extends ViewModel {
         if (username == null) {
             return false;
         }
-        if (username.contains("@")) {
+        if (username.contains("@") && username.contains(".com")) {
             return Patterns.EMAIL_ADDRESS.matcher(username).matches();
         } else {
             return !username.trim().isEmpty();
