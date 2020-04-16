@@ -43,7 +43,7 @@ public class MainMenuViewModel extends AndroidViewModel {
         disposable.add(userDataSource.retrieveUserData(userID, databasePreference)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(user1 -> liveUser.setValue(user1)));
+                .subscribe(user1 -> liveUser.setValue(user1), Throwable::printStackTrace));
         return liveUser;
     }
 

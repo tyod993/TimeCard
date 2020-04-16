@@ -31,28 +31,21 @@ public class MainClockInFrag extends Fragment {
     private MainClockInViewModel viewModel;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup container,
                                 @Nullable Bundle savedInstanceState){
         return layoutInflater.inflate(R.layout.main_clockin_frag, container, false);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        //UI Components
-        totalHoursTV = getActivity().findViewById(R.id.total_hours_clk_in);
-        clockinButton = getActivity().findViewById(R.id.clockin_button);
-        breakButton = getActivity().findViewById(R.id.break_button);
-        //
-
-        //Here get active time card. Otherwise wait for button click to create a new one;
-
-        clockinButton.setOnClickListener(view ->{
-
-        });
-
-
+       // totalHoursTV = view.findViewById(R.id.)
     }
 }

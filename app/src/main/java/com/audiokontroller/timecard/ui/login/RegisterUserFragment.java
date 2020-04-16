@@ -47,6 +47,15 @@ public class RegisterUserFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.register_user_fragment, container, false);
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(rootView, savedInstanceState);
+
         mSignUpButton = rootView.findViewById(R.id.register_user_save_button);
         mEmailInput = rootView.findViewById(R.id.emailInput);
         mPasswordInput = rootView.findViewById(R.id.passwordInput);
@@ -65,20 +74,20 @@ public class RegisterUserFragment extends Fragment {
                         mPasswordInput.getText().toString())
                         .observe(getViewLifecycleOwner(), authResult ->{
 
-                    if (authResult instanceof Result.Success) {
-                        Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-                        FirebaseUser firebaseUser = (FirebaseUser) ((Result.Success) authResult).getData();
-                        intent.putExtra(getResources().getString(R.string.first_login_key), true);
-                        intent.putExtra(getResources().getString(R.string.user_id_key), firebaseUser.getUid());
-                        intent.putExtra(getResources().getString(R.string.user_email_key), firebaseUser.getEmail());
-                        intent.putExtra(getResources().getString(R.string.user_display_name_key), firebaseUser.getDisplayName());
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show();
-                        Log.e(TAG, "error logging in." + authResult.toString());
-                    }
+                            if (authResult instanceof Result.Success) {
+                                Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+                                FirebaseUser firebaseUser = (FirebaseUser) ((Result.Success) authResult).getData();
+                                intent.putExtra(getResources().getString(R.string.first_login_key), true);
+                                intent.putExtra(getResources().getString(R.string.user_id_key), firebaseUser.getUid());
+                                intent.putExtra(getResources().getString(R.string.user_email_key), firebaseUser.getEmail());
+                                intent.putExtra(getResources().getString(R.string.user_display_name_key), firebaseUser.getDisplayName());
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show();
+                                Log.e(TAG, "error logging in." + authResult.toString());
+                            }
 
-                });
+                        });
             }else {
 
                 if(mEmailInput.getText().toString().equalsIgnoreCase("")){
@@ -103,7 +112,5 @@ public class RegisterUserFragment extends Fragment {
             }
         });
 
-        return rootView;
     }
-
 }
