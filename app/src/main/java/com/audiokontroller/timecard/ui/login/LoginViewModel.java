@@ -27,12 +27,9 @@ import com.audiokontroller.timecard.R;
 public class LoginViewModel extends ViewModel {
 
 
-    public Context context;
     private FirebaseAuthHandler firebaseAuthHandler = new FirebaseAuthHandler();
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private UserDataSource userRepository;
-
 
     public LoginViewModel() {}
 
@@ -125,14 +122,5 @@ public class LoginViewModel extends ViewModel {
     public String getFirebaseUserID(){
        return firebaseAuthHandler.getFirebaseUser().getUid();
     }
-
-    public void setUserRepository(){
-        if(userRepository == null) {
-            userRepository = new UserDataSource(context);
-        }
-    }
-
-    public void setContext(Context context){this.context = context;}
-
 
 }

@@ -30,7 +30,6 @@ import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 
-// TODO --> Update everything to use Lambda expressions <--
 public class LaunchActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -51,7 +50,7 @@ public class LaunchActivity extends AppCompatActivity {
             Result result = findExistingUser();
             if (result instanceof Result.Success) {
                 Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
-                intent.putExtra(getResources().getString(R.string.user_id_key), (((Result.Success<String>) result).getData()));
+                intent.putExtra(getResources().getString(R.string.user_id_key), ((Result.Success<String>) result).getData());
                 startActivity(intent);
                 finish();
             }
@@ -77,7 +76,8 @@ public class LaunchActivity extends AppCompatActivity {
 
         //Format validation
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
-            if (loginFormState == null) {
+            if (loginFormState == null|| loginFormState.isDataValid()) {
+                loginButton.setEnabled(false);
                 return;
             }
             loginButton.setEnabled(loginFormState.isDataValid());
@@ -101,11 +101,11 @@ public class LaunchActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    finish();
                 }
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
             });
 
 
@@ -143,9 +143,14 @@ public class LaunchActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(view ->{
+            if(loginViewModel.getLoginFormState().getValue() == null){
+                loginViewModel.loginDataChanged(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            }else {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
+            }
         });
 
         createAccountTextView.setOnClickListener(view ->{
@@ -169,9 +174,7 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void launchRegisterUserFrag(){
-        RegisterUserFragment registerUserFragment = new RegisterUserFragment(loginViewModel);
-        loginViewModel.setContext(getApplicationContext());
-        loginViewModel.setUserRepository();
+        RegisterUserFragment registerUserFragment = new RegisterUserFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         transaction.replace(R.id.login_fragment_container, registerUserFragment);

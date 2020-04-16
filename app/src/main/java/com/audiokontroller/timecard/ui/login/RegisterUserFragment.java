@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,7 +40,7 @@ public class RegisterUserFragment extends Fragment {
     private EditText mPasswordInput;
 
     // This constructor is the reason that the loading of the fragment is taking so long
-    public  RegisterUserFragment(LoginViewModel loginViewModel){this.loginViewModel = loginViewModel;}
+    public  RegisterUserFragment(){}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -49,6 +50,8 @@ public class RegisterUserFragment extends Fragment {
         mSignUpButton = rootView.findViewById(R.id.register_user_save_button);
         mEmailInput = rootView.findViewById(R.id.emailInput);
         mPasswordInput = rootView.findViewById(R.id.passwordInput);
+
+        loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
         mSignUpButton.setOnClickListener(view ->{
 

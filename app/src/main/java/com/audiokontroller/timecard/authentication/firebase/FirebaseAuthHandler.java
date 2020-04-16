@@ -24,9 +24,11 @@ public class FirebaseAuthHandler{
     private FirebaseUser currentUser;
     private MutableLiveData<Result> observableAuthResult = new MutableLiveData<>();
 
+
     public FirebaseAuthHandler() {
         firebaseAuth = FirebaseAuth.getInstance();
     }
+
 
     //TODO Use the same observableAuthResult to observer the AsychTask Call of signInWithEmailAndPassword
     public void loginWithFirebase(String email, String password) {
@@ -71,10 +73,7 @@ public class FirebaseAuthHandler{
 
     public boolean isUserLoggedIn() {
         currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser == null) {
-            return false;
-        }
-        return true;
+        return currentUser != null;
     }
 
     public boolean getLoginSuccess() {
