@@ -27,7 +27,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
     private NavController navController;
 
-    // TODO:EVERYTHING!!!!
+    // TODO:Things need to be cleared out of the onCreate method to optomize UI draw times
+    //Move all of the UI drawing to the onStart method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Try to get the userID for the DB queries
         //There is potential here for an infinite loop.
+        //This also needs to be asych
         try {mainMenuViewModel.setUserID(getIntent().getExtras().getString(getResources().getString(R.string.user_id_key)));}
         catch (NullPointerException e){
             Log.d(TAG, ":userID=null");
@@ -54,14 +56,11 @@ public class MainMenuActivity extends AppCompatActivity {
         //TODO: Left off here. still need to finish the Navigation components
 
         bottomNav = findViewById(R.id.bottom_navigation_view);
-        topToolbar = findViewById(R.id.home_top_toolbar);
-
-        setSupportActionBar(topToolbar);
 
         //Navigation
         navController = Navigation.findNavController(this, R.id.home_nav_host_fragment);
         AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(topToolbar, navController);
+        NavigationUI.setupWithNavController(bottomNav, navController);
 
         Log.d(TAG, ".onCreate.success");
     }

@@ -46,6 +46,9 @@ public class MainClockInFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       // totalHoursTV = view.findViewById(R.id.)
+        totalHoursTV = view.findViewById(R.id.total_hours_clk_in);
+        clockinButton = view.findViewById(R.id.clockin_button);
+        breakButton = view.findViewById(R.id.break_button);
+
     }
 }

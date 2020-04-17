@@ -7,39 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.mainmenu.MainMenuActivity">
 
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/home_top_toolbar"
+    <ImageView
+        android:id="@+id/main_top_bprder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F1F9FF"
-        android:elevation="10dp"
-        app:titleTextAppearance="@font/nunito_bold"
-        app:titleTextColor="@color/lt_btn"
-        app:menu="@menu/top_menu"
-        android:title="@string/today"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/home_nav_host_fragment"
-        >
-    </androidx.appcompat.widget.Toolbar>
+        android:src=""
+        />
 
     <fragment
         android:id="@+id/home_nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_top_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
         />
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -49,9 +34,10 @@
         app:itemIconTint="#1D2659"
         app:itemTextColor="#1D2659"
         app:labelVisibilityMode="labeled"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 
 
