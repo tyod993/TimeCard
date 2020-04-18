@@ -16,6 +16,10 @@ public class MainClockInViewModel extends ViewModel {
 
     private final String TAG = MainClockInViewModel.class.getSimpleName();
 
+    public static final int DEFAULT_CLOCK_STATE = 0;
+    public static final boolean DEFAULT_BREAK_STATE = false;
+    public static final int DEFAULT_TOTAL_HOURS = 0;
+
     public Context context;
     private TimeEntryHandler timeFactory;
     private MutableLiveData<TimeClockFormState> timeClockFormStateLiveData = new MutableLiveData<>();
@@ -34,6 +38,7 @@ public class MainClockInViewModel extends ViewModel {
     //Calling clockOut triggers the review process
     public void clockOut(){timeFactory.clockOut(
             currentTimeEntry.getValue());
+            //TODO Add Navigation Component
             startReviewFrag(currentTimeEntry.getValue());
     }
 

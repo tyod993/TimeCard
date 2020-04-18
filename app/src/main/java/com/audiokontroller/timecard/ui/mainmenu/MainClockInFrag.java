@@ -27,6 +27,8 @@ public class MainClockInFrag extends Fragment {
 
     public final SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
 
+    private TimeClockFormState clockState;
+
     private TextView totalHoursTV;
     private ImageView clockinButton;
     private Button breakButton;
@@ -49,29 +51,52 @@ public class MainClockInFrag extends Fragment {
         clockinButton = view.findViewById(R.id.clockin_button);
         breakButton = view.findViewById(R.id.break_button);
 
-        if(preferences.getBoolean(getResources().getString(R.string.is_clocked_in_key), false)){
-            viewModel.setClockState(new TimeClockFormState(
-                    preferences.getInt()
-            ));
+        getStateFromPreferences();
+
+        //Draw all of the components with existing ClockState
+        clockinButton.setImageResource(buttonImageResID[clockState.getClockButtonState()]);
+        totalHoursTV.setText(clockState.getTotalHours());
+        if(clockState.isOnBreak()){
+            breakButton.setText(R.string.end_break);
         }
 
+        //Observe the ClockState updating when it is changed.
+        viewModel.getClockState().observe(getViewLifecycleOwner(), clockFormState ->{
 
-        //This should go inside the observer of the FormState
-        clockinButton.setImageResource(buttonImageResID[clockState]);
+            clockinButton.setImageResource(clockFormState.getClockButtonState());
+            totalHoursTV.setText(clockFormState.getTotalHours());
+            if(clockFormState.isOnBreak()) {
+                breakButton.setText(R.string.break_button);
+            } else {
+                breakButton.setText(R.string.end_break);
+            }
+        });
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        //If on pause is all that is called at this point maybe i should cache the state until on destroy is called
+        // In the future change this to cache the data until onDestroy is called for better performance
         TimeClockFormState formState = viewModel.getClockState().getValue();
         if(formState != null) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState());
-            editor.putBoolean(getResources().getString(R.string.is_clocked_in_key), formState.isOnBreak());
+            editor.putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak());
             editor.putInt(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
+            editor.apply();
         }
     }
 
+
+    private void getStateFromPreferences(){
+        if(preferences.getBoolean(getResources().getString(R.string.is_clocked_in_key), false)) {
+            clockState = new TimeClockFormState(
+                    preferences.getInt(getResources().getString(R.string.clock_state_key), MainClockInViewModel.DEFAULT_CLOCK_STATE),
+                    preferences.getBoolean(getResources().getString(R.string.on_break_key), MainClockInViewModel.DEFAULT_BREAK_STATE),
+                    preferences.getInt(getResources().getString(R.string.total_hours_key), MainClockInViewModel.DEFAULT_TOTAL_HOURS));
+        } else {
+            clockState = new TimeClockFormState();
+        }
+    }
 }

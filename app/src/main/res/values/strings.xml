@@ -38,6 +38,7 @@
     <string name="clockin_button">Clock in Button</string>
     <string name="settings_button">Settings Button</string>
     <string name="break_button">Break</string>
+    <string name="end_break">End Break</string>
 
 
     <!--Time card submission Review -->
@@ -107,6 +108,7 @@
     <string name="clock_state_key">clock_state</string>
     <string name="is_clocked_in_key">clocked_in</string>
     <string name="total_hours_key">total_hours</string>
+    <string name="on_break_key">on_break</string>
 
 
 </resources>
