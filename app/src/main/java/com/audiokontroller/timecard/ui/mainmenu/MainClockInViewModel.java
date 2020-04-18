@@ -10,12 +10,15 @@ import androidx.lifecycle.ViewModel;
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 
+import java.sql.Time;
+
 public class MainClockInViewModel extends ViewModel {
 
     private final String TAG = MainClockInViewModel.class.getSimpleName();
 
     public Context context;
     private TimeEntryHandler timeFactory;
+    private MutableLiveData<TimeClockFormState> timeClockFormStateLiveData = new MutableLiveData<>();
     private MutableLiveData<TimeEntry> currentTimeEntry = new MutableLiveData<>();
 
     public MainClockInViewModel(){}
@@ -47,9 +50,14 @@ public class MainClockInViewModel extends ViewModel {
         return currentTimeEntry.getValue().getTotalHours();
     }
 
-    //TODO: Initialize the review fragment and pass the current TimeEntry via Navigation Component
-    private void startReviewFrag(TimeEntry timeEntry){
+    public LiveData<TimeClockFormState> getClockState(){ return timeClockFormStateLiveData;}
 
+    public void setClockState(TimeClockFormState formState){
+        timeClockFormStateLiveData.setValue(formState);
+    }
+
+    private void startReviewFrag(TimeEntry timeEntry){
+        //TODO: Initialize the review fragment and pass the current TimeEntry via Navigation Component
     }
 
     public void setContext(Context context){this.context = context;}

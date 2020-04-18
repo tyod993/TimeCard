@@ -1,11 +1,11 @@
 package com.audiokontroller.timecard.ui.mainmenu;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 
 import com.audiokontroller.timecard.data.model.TimeCard;
@@ -17,10 +17,21 @@ import java.util.ArrayList;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * This class is the SINGLE SOURCE OF TRUTH for this entire application.
+ *
+ **/
+
 public class MainMenuViewModel extends AndroidViewModel {
 
+    public static final int FIREBASE_DB = 0;
+    public static final int ROOM_DB = 1;
+
     public String userID;
-    public String databasePreference;
+    public int databasePreference;
+
+    public SharedPreferences preferences;
+
     public ArrayList<TimeCard> loadedTimeCards;
     private UserDataSource userDataSource;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -51,10 +62,7 @@ public class MainMenuViewModel extends AndroidViewModel {
 
     public ArrayList<TimeCard> getLoadedTimeCards(){ return loadedTimeCards;}
 
-    public void setDatabasePreference(@NonNull String preferance){
-        this.databasePreference = preferance;
-    }
-
     public void clearDisposable(){disposable.clear();}
 
+  public void setPreferences(SharedPreferences preferences){this.preferences = preferences;}
 }

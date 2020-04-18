@@ -7,23 +7,29 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/time_card"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity
-            android:name=".ui.login.LaunchActivity"
-            android:label="@string/title_activity_login">
+
+        <activity android:name=".ui.login.RoutingActivity"
+            android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.mainmenu.MainMenuActivity">
 
+        <activity
+            android:name=".ui.login.LaunchActivity"
+            android:label="@string/title_activity_login">
         </activity>
+
+        <activity android:name=".ui.mainmenu.MainMenuActivity">
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,6 +1,9 @@
 package com.audiokontroller.timecard.ui.mainmenu;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,21 +23,15 @@ public class MainClockInFrag extends Fragment {
 
     private final String TAG = MainClockInFrag.class.getSimpleName();
 
-    //Notes: Left off setting the button image URLs to make the button state change class?
-    private static final String[] buttonImageUrls = {};
+    private final int[] buttonImageResID = {R.raw.clock_initial, R.raw.clock_out};
 
-    private int clockState = 0;
+    public final SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
     private TextView totalHoursTV;
     private ImageView clockinButton;
     private Button breakButton;
 
     private MainClockInViewModel viewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup container,
@@ -46,9 +43,35 @@ public class MainClockInFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
+
         totalHoursTV = view.findViewById(R.id.total_hours_clk_in);
         clockinButton = view.findViewById(R.id.clockin_button);
         breakButton = view.findViewById(R.id.break_button);
 
+        if(preferences.getBoolean(getResources().getString(R.string.is_clocked_in_key), false)){
+            viewModel.setClockState(new TimeClockFormState(
+                    preferences.getInt()
+            ));
+        }
+
+
+        //This should go inside the observer of the FormState
+        clockinButton.setImageResource(buttonImageResID[clockState]);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //If on pause is all that is called at this point maybe i should cache the state until on destroy is called
+        TimeClockFormState formState = viewModel.getClockState().getValue();
+        if(formState != null) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState());
+            editor.putBoolean(getResources().getString(R.string.is_clocked_in_key), formState.isOnBreak());
+            editor.putInt(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
+        }
+    }
+
 }

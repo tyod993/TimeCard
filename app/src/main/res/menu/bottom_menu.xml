@@ -6,15 +6,15 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/home"/>
 
-    <item android:id="@+id/bot_nav_calender"
+    <item android:id="@+id/bot_nav_history"
         android:icon="@drawable/ic_calendar_page_empty"
-        android:title="@string/calendar"/>
+        android:title="@string/history"/>
 
-    <item android:id="@+id/bot_nav_projects"
-        android:icon="@drawable/ic_assignment_black_24dp"
-        android:title="@string/projects"/>
+    <item android:id="@+id/bot_nav_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings"/>
 
-    <item android:id="@+id/bot_nav_messages"
-        android:icon="@drawable/ic_message_black_24dp"
-        android:title="@string/messages"/>
+    <item android:id="@+id/bot_nav_add"
+        android:icon="@drawable/ic_add_circle_black_24dp"
+        android:title="@string/add_time"/>
 </menu>

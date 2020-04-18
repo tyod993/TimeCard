@@ -67,7 +67,9 @@
     <string name="messages">Messages</string>
     <string name="calendar">Calendar</string>
     <string name="projects">Projects</string>
+    <string name="add_time">Add Time</string>
     <string name="edit_time_title">Edit Time</string>
+    <string name="settings">Settings</string>
 
 
     <!--Edit Time Entry fragment-->
@@ -102,6 +104,9 @@
     <string name="first_login_key">first_login</string>
     <string name="user_email_key">user_email</string>
     <string name="user_display_name_key">user_display_name</string>
+    <string name="clock_state_key">clock_state</string>
+    <string name="is_clocked_in_key">clocked_in</string>
+    <string name="total_hours_key">total_hours</string>
 
 
 </resources>

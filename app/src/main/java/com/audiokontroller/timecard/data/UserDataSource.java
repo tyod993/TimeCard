@@ -8,6 +8,7 @@ import com.audiokontroller.timecard.authentication.firebase.FirebaseAuthHandler;
 import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.room.UserDao;
 import com.audiokontroller.timecard.data.room.UserDatabase;
+import com.audiokontroller.timecard.ui.mainmenu.MainMenuViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.reactivestreams.Subscriber;
@@ -39,15 +40,15 @@ public class UserDataSource {
         return instance;
     }
 
-    public Flowable<User> retrieveUserData(@NonNull String userID,@NonNull String dbPreference){
+    public Flowable<User> retrieveUserData(@NonNull String userID, int dbPreference){
         //This is going to have problems if the roomDB does'nt exist yet.
         //TODO: Solve the NullPointerException
         if(reactiveUserData == null) {
-            if (dbPreference.equalsIgnoreCase("room")) {
+            if (dbPreference == MainMenuViewModel.ROOM_DB) {
                 UserDatabase database = UserDatabase.getInstance(context);
                 mUserDao = database.userDao();
                 reactiveUserData = mUserDao.getUser(userID);
-            } else if (dbPreference.equalsIgnoreCase("firebase")) {
+            } else if (dbPreference == MainMenuViewModel.FIREBASE_DB) {
                 getDataFromFirebase(userID);
             }
             return reactiveUserData;

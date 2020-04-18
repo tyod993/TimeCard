@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -30,7 +31,11 @@ import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
 
+
+//TODO The resource layout for this activity needs to be flattened
 public class LaunchActivity extends AppCompatActivity {
+
+    private final String TAG = LaunchActivity.class.getSimpleName();
 
     private LoginViewModel loginViewModel;
 
@@ -44,17 +49,8 @@ public class LaunchActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //search the SharedPref
 
-        //Before searching the Shared
-        try {
-            Result result = findExistingUser();
-            if (result instanceof Result.Success) {
-                Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
-                intent.putExtra(getResources().getString(R.string.user_id_key), ((Result.Success<String>) result).getData());
-                startActivity(intent);
-                finish();
-            }
-        }catch (Exception ignored){}
 
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -179,15 +175,5 @@ public class LaunchActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.replace(R.id.login_fragment_container, registerUserFragment);
         transaction.commit();
-    }
-
-    public Result findExistingUser(){
-        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
-        String uID = sharedPreferences.getString(getResources().getString(R.string.user_id_key), getResources().getString(R.string.user_id_def_val));
-        if(uID.equalsIgnoreCase("none")){
-            return new Result.Error(new Exception("User uID does'nt exist in SharedPreferences"));
-        }else{
-            return new Result.Success<>(uID);
-        }
     }
 }
