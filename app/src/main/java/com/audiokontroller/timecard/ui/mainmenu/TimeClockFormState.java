@@ -4,15 +4,15 @@ public class TimeClockFormState {
 
     private int clockButtonState;
     private boolean onBreak;
-    private int totalHours;
+    private String totalHours;
 
     public TimeClockFormState(){
         clockButtonState = 0;
         onBreak = false;
-        totalHours = 0;
+        totalHours = "0";
     }
 
-    public TimeClockFormState(int clockButtonState, boolean onBreak, int totalHours){
+    public TimeClockFormState(int clockButtonState, boolean onBreak, String totalHours){
         this.clockButtonState = clockButtonState;
         this.onBreak = onBreak;
         this.totalHours = totalHours;
@@ -22,7 +22,7 @@ public class TimeClockFormState {
         return clockButtonState;
     }
 
-    public int getTotalHours() {
+    public String getTotalHours() {
         return totalHours;
     }
 
@@ -30,7 +30,7 @@ public class TimeClockFormState {
         return onBreak;
     }
 
-    public void setTotalHours(int totalHours) {
+    public void setTotalHours(String totalHours) {
         this.totalHours = totalHours;
     }
 

@@ -3,7 +3,6 @@ package com.audiokontroller.timecard.ui.mainmenu;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.R;
@@ -25,7 +25,7 @@ public class MainClockInFrag extends Fragment {
 
     private final int[] buttonImageResID = {R.raw.clock_initial, R.raw.clock_out};
 
-    public final SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+    public SharedPreferences preferences;
 
     private TimeClockFormState clockState;
 
@@ -42,16 +42,24 @@ public class MainClockInFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(rootView, savedInstanceState);
+
+        if(getActivity().getPreferences(Context.MODE_PRIVATE) != null){
+             preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        } else {
+            preferences.edit().putBoolean(getResources().getString(R.string.is_clocked_in_key), false).commit();
+        }
 
         viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
 
-        totalHoursTV = view.findViewById(R.id.total_hours_clk_in);
-        clockinButton = view.findViewById(R.id.clockin_button);
-        breakButton = view.findViewById(R.id.break_button);
+        totalHoursTV = rootView.findViewById(R.id.total_hours_clk_in);
+        clockinButton = rootView.findViewById(R.id.clockin_button);
+        breakButton = rootView.findViewById(R.id.break_button);
 
         getStateFromPreferences();
+        //Future: Find another way of retrieving the user data then referencing the MainMenuViewModel
+        viewModel.getUserFromViewModel(new ViewModelProvider(requireActivity()).get(MainMenuViewModel.class));
 
         //Draw all of the components with existing ClockState
         clockinButton.setImageResource(buttonImageResID[clockState.getClockButtonState()]);
@@ -71,6 +79,15 @@ public class MainClockInFrag extends Fragment {
                 breakButton.setText(R.string.end_break);
             }
         });
+
+        clockinButton.setOnClickListener(view ->{
+            viewModel.clockButtonPressed();
+        });
+
+        breakButton.setOnClickListener(view ->{
+            viewModel.breakButtonPressed();
+        });
+
     }
 
     @Override
@@ -83,7 +100,7 @@ public class MainClockInFrag extends Fragment {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState());
             editor.putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak());
-            editor.putInt(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
+            editor.putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
             editor.apply();
         }
     }
@@ -94,7 +111,7 @@ public class MainClockInFrag extends Fragment {
             clockState = new TimeClockFormState(
                     preferences.getInt(getResources().getString(R.string.clock_state_key), MainClockInViewModel.DEFAULT_CLOCK_STATE),
                     preferences.getBoolean(getResources().getString(R.string.on_break_key), MainClockInViewModel.DEFAULT_BREAK_STATE),
-                    preferences.getInt(getResources().getString(R.string.total_hours_key), MainClockInViewModel.DEFAULT_TOTAL_HOURS));
+                    preferences.getString(getResources().getString(R.string.total_hours_key), MainClockInViewModel.DEFAULT_TOTAL_HOURS));
         } else {
             clockState = new TimeClockFormState();
         }

@@ -1,5 +1,7 @@
 package com.audiokontroller.timecard.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.telecom.Call;
 import android.util.Log;
 
@@ -9,12 +11,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
 
 @Entity(tableName = "user_data")
-public class User {
+public class User implements Serializable {
 
     private static final String TAG = User.class.getSimpleName();
 
@@ -28,9 +31,10 @@ public class User {
     @ColumnInfo
     private String email;
 
+    //Need to be removed after refactoring
     @ColumnInfo
     private String firstName;
-
+    //Need to be removed after refactoring
     @ColumnInfo
     private String lastName;
 
@@ -103,4 +107,6 @@ public class User {
     public void setTimeCardsHolder(UserTimeCardsHolder holder){
         this.timeCardsHolder = holder;
     }
+
+
 }
