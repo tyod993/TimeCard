@@ -9,8 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
+import com.audiokontroller.timecard.data.model.TimeCard;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 import com.audiokontroller.timecard.data.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainClockInViewModel extends ViewModel {
 
@@ -94,5 +98,33 @@ public class MainClockInViewModel extends ViewModel {
 
     public void getUserFromViewModel(@NonNull MainMenuViewModel viewModel){
         userLiveData = viewModel.retrieveUser();
+
+    }
+
+    private void getCurrentTimeEntry(){
+        //I see a potential problem here if the user leaves on the ReviewEntryFrag and comes back.
+        //Solution bay be to set Preference
+        if(timeClockFormStateLiveData.getValue().getClockButtonState() != DEFAULT_CLOCK_STATE) {
+            List<TimeCard> timeCards = userLiveData.getValue().getTimeCardsHolder().getTimeEntries();
+            TimeCard currentCard = timeCards.get(timeCards.size() - 1);
+            ArrayList<TimeEntry> timeEntries = currentCard.getEntries();
+            TimeEntry tempEntry = timeEntries.get(timeEntries.size() - 1);
+
+            if(tempEntry.isActive()){
+                currentTimeEntry.setValue(tempEntry);
+
+            } else {
+                for (TimeEntry entry : timeEntries){
+                    if(entry.isActive()){
+                        currentTimeEntry.setValue(entry);
+                    }
+                }
+                if(currentTimeEntry.getValue() == null){
+                    currentTimeEntry.setValue();
+                }
+            }
+
+        }
+
     }
 }
