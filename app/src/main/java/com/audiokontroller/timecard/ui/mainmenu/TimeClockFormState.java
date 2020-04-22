@@ -2,14 +2,21 @@ package com.audiokontroller.timecard.ui.mainmenu;
 
 public class TimeClockFormState {
 
+    public static final int DEFAULT_CLOCK_STATE = 0;
+    public static final boolean DEFAULT_BREAK_STATE = false;
+    public static final String DEFAULT_TOTAL_HOURS = "0";
+
+    public static final int CLOCKED_IN = 1;
+    public static final boolean ON_BREAK = true;
+
     private int clockButtonState;
     private boolean onBreak;
     private String totalHours;
 
     public TimeClockFormState(){
-        clockButtonState = 0;
-        onBreak = false;
-        totalHours = "0";
+        clockButtonState = DEFAULT_CLOCK_STATE;
+        onBreak = DEFAULT_BREAK_STATE;
+        totalHours = DEFAULT_TOTAL_HOURS;
     }
 
     public TimeClockFormState(int clockButtonState, boolean onBreak, String totalHours){

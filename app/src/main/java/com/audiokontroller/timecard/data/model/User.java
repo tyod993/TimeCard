@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -93,6 +94,9 @@ public class User implements Serializable {
     public String getLastName(){ return lastName; }
 
     public List<TimeCard> getTimeCards() {
+        if(timeCardsHolder == null){
+            timeCardsHolder = new UserTimeCardsHolder(userID, new ArrayList<>());
+        }
         return timeCardsHolder.getTimeEntries();
     }
 

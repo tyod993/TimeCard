@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 // TODO: Set up type Converters to utilize object classes for simplification code
 // TODO: Set up TimeCardID
@@ -16,9 +17,9 @@ public class TimeEntry {
 
     private final static String TAG = TimeEntry.class.getSimpleName();
 
-    private int entryID;
+    private long entryID;
 
-    private int timeCardID;
+    private long timeCardID;
 
     private Calendar entryDate;
 
@@ -49,6 +50,7 @@ public class TimeEntry {
     public TimeEntry(@NonNull Calendar entryStartTime, @Nullable Calendar entryEndTime,
                      @Nullable String jobName, @Nullable String jobNotes, boolean submitted, boolean active){
 
+        this.entryID = Calendar.getInstance().getTimeInMillis();
         entryDate = Calendar.getInstance();
         this.entryStartTime = entryStartTime;
         this.entryEndTime = entryEndTime;
@@ -60,15 +62,25 @@ public class TimeEntry {
 
     }
 
+    //This constructor should only be used in the mainClockInFragment when clocking in;
+    public TimeEntry(@NonNull TimeCard parentCard){
+        this.active = true;
+        this.entryID = Calendar.getInstance().getTimeInMillis();
+        this.timeCardID = parentCard.getCardID();
+        this.entryDate = Calendar.getInstance();
+        this.entryStartTime = Calendar.getInstance();
+
+    }
+
     //TODO:Organize me Please!!!
 
     public void setId(int id1){
         this.entryID = id1;
     }
 
-    public int getId(){return this.entryID;}
+    public long getId(){return this.entryID;}
 
-    public int getTimeCardID() {
+    public long getTimeCardID() {
         return timeCardID;
     }
 

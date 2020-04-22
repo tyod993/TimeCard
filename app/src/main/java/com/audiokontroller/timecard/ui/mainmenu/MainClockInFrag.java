@@ -48,6 +48,7 @@ public class MainClockInFrag extends Fragment {
         if(getActivity().getPreferences(Context.MODE_PRIVATE) != null){
              preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         } else {
+            //this could be fixed
             preferences.edit().putBoolean(getResources().getString(R.string.is_clocked_in_key), false).commit();
         }
 
@@ -58,12 +59,16 @@ public class MainClockInFrag extends Fragment {
         breakButton = rootView.findViewById(R.id.break_button);
 
         getStateFromPreferences();
-        //Future: Find another way of retrieving the user data then referencing the MainMenuViewModel
-        viewModel.getUserFromViewModel(new ViewModelProvider(requireActivity()).get(MainMenuViewModel.class));
 
         //Draw all of the components with existing ClockState
         clockinButton.setImageResource(buttonImageResID[clockState.getClockButtonState()]);
-        totalHoursTV.setText(clockState.getTotalHours());
+
+        if(clockState.getTotalHours() == null){
+            totalHoursTV.setText("0");
+        } else {
+            totalHoursTV.setText(clockState.getTotalHours());
+        }
+
         if(clockState.isOnBreak()){
             breakButton.setText(R.string.end_break);
         }
@@ -71,12 +76,12 @@ public class MainClockInFrag extends Fragment {
         //Observe the ClockState updating when it is changed.
         viewModel.getClockState().observe(getViewLifecycleOwner(), clockFormState ->{
 
-            clockinButton.setImageResource(clockFormState.getClockButtonState());
+            clockinButton.setImageResource(buttonImageResID[clockFormState.getClockButtonState()]);
             totalHoursTV.setText(clockFormState.getTotalHours());
             if(clockFormState.isOnBreak()) {
-                breakButton.setText(R.string.break_button);
-            } else {
                 breakButton.setText(R.string.end_break);
+            } else {
+                breakButton.setText(R.string.break_button);
             }
         });
 
@@ -87,6 +92,17 @@ public class MainClockInFrag extends Fragment {
         breakButton.setOnClickListener(view ->{
             viewModel.breakButtonPressed();
         });
+
+        //
+
+        MainMenuViewModel mainViewModel = new ViewModelProvider(getActivity()).get(MainMenuViewModel.class);
+        mainViewModel.retrieveUser().observe(getViewLifecycleOwner(), user -> {
+            if(user != null) {
+                viewModel.setUser(user);
+            }
+        });
+
+        //TODO set the Error observer
 
     }
 
@@ -109,9 +125,9 @@ public class MainClockInFrag extends Fragment {
     private void getStateFromPreferences(){
         if(preferences.getBoolean(getResources().getString(R.string.is_clocked_in_key), false)) {
             clockState = new TimeClockFormState(
-                    preferences.getInt(getResources().getString(R.string.clock_state_key), MainClockInViewModel.DEFAULT_CLOCK_STATE),
-                    preferences.getBoolean(getResources().getString(R.string.on_break_key), MainClockInViewModel.DEFAULT_BREAK_STATE),
-                    preferences.getString(getResources().getString(R.string.total_hours_key), MainClockInViewModel.DEFAULT_TOTAL_HOURS));
+                    preferences.getInt(getResources().getString(R.string.clock_state_key), TimeClockFormState.DEFAULT_CLOCK_STATE),
+                    preferences.getBoolean(getResources().getString(R.string.on_break_key), TimeClockFormState.DEFAULT_BREAK_STATE),
+                    preferences.getString(getResources().getString(R.string.total_hours_key), TimeClockFormState.DEFAULT_TOTAL_HOURS));
         } else {
             clockState = new TimeClockFormState();
         }
