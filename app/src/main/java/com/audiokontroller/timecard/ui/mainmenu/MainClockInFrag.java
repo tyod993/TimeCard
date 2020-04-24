@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.audiokontroller.timecard.R;
 
@@ -85,6 +87,12 @@ public class MainClockInFrag extends Fragment {
             }
         });
 
+        viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), timeEntry -> {
+            if(timeEntry.getEntryEndTime() != null){
+                Navigation.findNavController(rootView).navigate(R.id.action_mainClockInFrag_to_timeEntryReviewFrag);
+            }
+        });
+
         clockinButton.setOnClickListener(view ->{
             viewModel.clockButtonPressed();
         });
@@ -102,7 +110,11 @@ public class MainClockInFrag extends Fragment {
             }
         });
 
-        //TODO set the Error observer
+        viewModel.getError().observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+            error.printStackTrace();
+            Log.e(TAG, error.toString());
+        });
 
     }
 

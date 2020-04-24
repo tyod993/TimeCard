@@ -45,8 +45,8 @@
     <string name="clock_out_image">Clocked out image</string>
     <string name="total_hours_script">Hours Worked Today</string>
     <string name="required">*Required</string>
-    <string name="projects_required">*Projects:</string>
-    <string name="tasks_required">*Tasks:</string>
+    <string name="projects_required">Project:</string>
+    <string name="tasks_required">Task:</string>
     <string name="task">Task</string>
     <string name="hrs">Hrs</string>
     <string name="add_task">Add task</string>
@@ -55,6 +55,10 @@
     <string name="edit_time">Edit Time</string>
     <string name="add_task_btn">Add task button</string>
     <string name="notes_hint">Type your notes here..</string>
+    <string name="delete">Delete</string>
+    <string name="start_time">*Start Time:</string>
+    <string name="end_time">*End Time:</string>
+    <string name="edit">Edit</string>
 
 
     <!--Bottom navigation bar -->

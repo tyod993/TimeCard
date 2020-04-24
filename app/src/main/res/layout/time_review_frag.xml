@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="15dp">
+    android:background="@color/white">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="-40dp">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
             <ImageView
                 android:id="@+id/review_clock_out_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/clock_out_image"
                 android:src="@raw/clocked_out_graphic"
@@ -31,7 +25,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <view
+            <View
                 android:id="@+id/review_divider"
                 android:layout_width="300dp"
                 android:layout_height="1dp"
@@ -52,6 +46,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/review_divider" />
+
+
+
 
             <TextView
                 android:id="@+id/textView5"
@@ -77,18 +74,107 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView5" />
 
+        <TextView
+            android:id="@+id/start_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/start_time"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/end_time_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/end_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/end_time"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/start_time_tv"
+            app:layout_constraintBottom_toTopOf="@+id/projects_tv"
+            />
+
+        <TextView
+            android:id="@+id/start_time_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:textSize="15sp"
+            android:text="Test"
+            android:textColor="@color/lt_txt"
+            app:layout_constraintStart_toEndOf="@+id/start_time_tv"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintBottom_toTopOf="@+id/end_time_data_tv"/>
+
+
+        <TextView
+            android:id="@+id/end_time_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:textSize="15sp"
+            android:text="Test"
+            android:textColor="@color/lt_txt"
+            app:layout_constraintStart_toEndOf="@+id/end_time_tv"
+            app:layout_constraintTop_toBottomOf="@+id/start_time_data_tv"
+            app:layout_constraintBottom_toTopOf="@+id/projects_tv"
+            />
+
+        <Button
+            android:id="@+id/edit_start_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_corners_40dp"
+            android:backgroundTint="@color/button_orange"
+            android:text="@string/edit"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/start_time_data_tv"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/edit_end_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/round_corners_40dp"
+            android:backgroundTint="@color/button_orange"
+            android:text="@string/edit"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/end_time_data_tv"
+            app:layout_constraintTop_toBottomOf="@+id/edit_start_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/projects_tv"
+            />
+
             <TextView
                 android:id="@+id/projects_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/projects_required"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView6" />
+                app:layout_constraintTop_toBottomOf="@id/end_time_tv" />
 
             <Spinner
                 android:id="@+id/project_sp"
@@ -100,26 +186,18 @@
                 app:layout_constraintTop_toBottomOf="@id/projects_tv"
                 />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/tasks_pt1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/project_sp"
-                >
-
                 <TextView
                     android:id="@+id/required_tasks_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/nunito_bold"
                     android:text="@string/tasks_required"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/project_sp"
                     />
 
                 <Spinner
@@ -132,28 +210,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tasks_pt1"
-                app:layout_constraintTop_toBottomOf="@id/project_sp"
-                >
-
                 <TextView
                     android:id="@+id/required_task_hours_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="50dp"
                     android:fontFamily="@font/nunito_bold"
                     android:text="@string/hrs"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/required_tasks_sp"
+                    app:layout_constraintTop_toBottomOf="@id/project_sp"
                     />
 
                 <Spinner
@@ -162,19 +231,10 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner_layout"
                     android:layout_marginStart="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/required_task_hours_tv"/>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/extra_tasks_holder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tasks_pt1"
-                />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/required_tasks_sp"
+                    app:layout_constraintTop_toBottomOf="@id/required_task_hours_tv"
+                    />
 
             <TextView
                 android:id="@+id/add_task_tv"
@@ -187,7 +247,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/extra_tasks_holder"
+                app:layout_constraintTop_toBottomOf="@+id/required_tasks_sp"
                 />
 
             <ImageView
@@ -199,39 +259,7 @@
                 android:contentDescription="@string/add_task_btn"
                 android:src="@drawable/ic_add_circle_orange_24dp"
                 app:layout_constraintStart_toEndOf="@+id/add_task_tv"
-                app:layout_constraintTop_toBottomOf="@+id/extra_tasks_holder"
-                />
-
-            <TextView
-                android:id="@+id/notes_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_bold"
-                android:text="@string/notes"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_task_tv"
-                />
-
-            <EditText
-                android:id="@+id/notes_et"
-                android:layout_width="300dp"
-                android:layout_height="194dp"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:hint="@string/notes_hint"
-                android:textColorHint="@color/lt_txt"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:gravity="start"
-                android:textAlignment="gravity"
-                android:textColor="@color/black"
-                android:background="@drawable/blue_border"
-                app:layout_constraintTop_toBottomOf="@+id/notes_tv"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/required_tasks_sp"
                 />
 
             <Button
@@ -240,41 +268,45 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:paddingHorizontal="30dp"
                 android:background="@drawable/round_corners_40dp"
                 android:backgroundTint="@color/spinner_border"
-                android:text="@string/submit"
-                android:textColor="@color/black"
-                android:textAllCaps="false"
                 android:fontFamily="@font/nunito_extra_bold"
+                android:paddingHorizontal="30dp"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_border"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notes_et"
-
-                />
+                app:layout_constraintEnd_toStartOf="@+id/edit_time_btn"
+                app:layout_constraintTop_toBottomOf="@+id/add_task_btn" />
 
             <Button
                 android:id="@+id/edit_time_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginTop="30dp"
-                android:paddingHorizontal="30dp"
                 android:background="@drawable/round_corners_40dp"
                 android:backgroundTint="@color/button_orange"
-                android:text="@string/edit_time"
-                android:textColor="@color/black"
-                android:textAllCaps="false"
                 android:fontFamily="@font/nunito_extra_bold"
+                android:paddingHorizontal="30dp"
+                android:text="@string/delete"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/submit_btn"
-                app:layout_constraintTop_toBottomOf="@+id/notes_et"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/submit_btn" />
 
-                />
+        <View
+            android:id="@+id/bottom_border"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/submit_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,10 +1,8 @@
 package com.audiokontroller.timecard.ui.mainmenu;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -29,8 +27,6 @@ public class MainClockInViewModel extends ViewModel {
     private MutableLiveData<Error> currentError = new MutableLiveData<>();
 
     public MainClockInViewModel(){}
-
-    public LiveData<TimeEntry> getCurrentEntry(){return currentTimeEntry;}
 
     public void clockButtonPressed(){
         if(timeClockFormStateLiveData.getValue() == null) {
@@ -72,8 +68,6 @@ public class MainClockInViewModel extends ViewModel {
     private void clockOut(){
         if(currentTimeEntry.getValue() != null) {
             currentTimeEntry.postValue(timeFactory.clockOut(currentTimeEntry.getValue()));
-            //TODO Add Navigation Component
-            startReviewFrag(currentTimeEntry.getValue());
         } else {
             Error error = new Error("Error while clocking out. Cannot call clockOut on a null object.");
             currentError.postValue(error);
@@ -122,19 +116,16 @@ public class MainClockInViewModel extends ViewModel {
         timeClockFormStateLiveData.postValue(formState);
     }
 
-    private void startReviewFrag(TimeEntry timeEntry){
-        //This should be in the fragment class
-        //TODO: Initialize the review fragment and pass the current TimeEntry via Navigation Component
+    public LiveData<Error> getError(){return currentError;}
+
+    public LiveData<TimeEntry> getLiveTimeEntry(){
+        return currentTimeEntry;
     }
 
     public void setUser(@NonNull User newUser){
         userLiveData.postValue(newUser);
         getCurrentTimeEntry();
     }
-
-    //This should be launched as a seperate Asynch task
-    //I see a potential problem here if the user leaves on the ReviewEntryFrag and comes back.
-    //Solution bay be to set Preference
 
     private void getCurrentTimeEntry() {
         List<TimeCard> timeCards;
