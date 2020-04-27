@@ -29,7 +29,9 @@ public class TimeEntryReviewFrag extends Fragment {
     private Spinner taskHourSpinner;
     private ImageView addTaskButton;
     private Button submitButton;
-    private Button editTimeButton;
+    private Button deleteButton;
+    private Button editStartButton;
+    private Button editEndButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup container,
@@ -42,6 +44,21 @@ public class TimeEntryReviewFrag extends Fragment {
         super.onViewCreated(rootView, savedInstanceState);
 
         totalHoursTV = rootView.findViewById(R.id.review_total_hours_tv);
+        projectsSpinner = rootView.findViewById(R.id.project_sp);
+        tasksSpinner = rootView.findViewById(R.id.required_tasks_sp);
+        taskHourSpinner = rootView.findViewById(R.id.required_task_hours_sp);
+        addTaskButton = rootView.findViewById(R.id.add_task_btn);
+        submitButton = rootView.findViewById(R.id.submit_btn);
+        deleteButton = rootView.findViewById(R.id.delete_time_btn);
+        editStartButton = rootView.findViewById(R.id.edit_start_btn);
+        editEndButton = rootView.findViewById(R.id.edit_end_btn);
 
+        submitButton.setOnClickListener(view-> {
+
+        });
+
+        deleteButton.setOnClickListener(view->{
+
+        });
     }
 }

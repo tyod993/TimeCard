@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Random;
 // TODO: Set up type Converters to utilize object classes for simplification code
 // TODO: Set up TimeCardID
 
-public class TimeEntry {
+public class TimeEntry implements Serializable {
 
     private final static String TAG = TimeEntry.class.getSimpleName();
 
