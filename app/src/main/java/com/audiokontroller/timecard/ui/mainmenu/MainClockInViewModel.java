@@ -92,6 +92,10 @@ public class MainClockInViewModel extends ViewModel {
         }
     }
 
+    public void updateLiveEntry(){
+        currentTimeEntry.postValue(currentTimeEntry.getValue());
+    }
+
     public String getTotalHours(){
         if(currentTimeEntry.getValue() != null) {
             currentTimeEntry.postValue(timeFactory.calcTotalHours(currentTimeEntry.getValue()));

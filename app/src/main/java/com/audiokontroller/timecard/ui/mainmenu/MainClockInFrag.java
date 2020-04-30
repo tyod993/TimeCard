@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.audiokontroller.timecard.R;
+import com.google.gson.Gson;
 
 public class MainClockInFrag extends Fragment {
 
@@ -54,7 +55,7 @@ public class MainClockInFrag extends Fragment {
             preferences.edit().putBoolean(getResources().getString(R.string.is_clocked_in_key), false).commit();
         }
 
-        viewModel = new ViewModelProvider(this).get(MainClockInViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(MainClockInViewModel.class);
 
         totalHoursTV = rootView.findViewById(R.id.total_hours_clk_in);
         clockinButton = rootView.findViewById(R.id.clockin_button);
