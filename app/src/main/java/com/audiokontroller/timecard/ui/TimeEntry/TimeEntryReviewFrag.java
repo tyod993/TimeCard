@@ -114,6 +114,10 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
             viewModel.getLiveTimeEntry().getValue().getEntryStartTime().set(Calendar.HOUR, hourOfDay);
             viewModel.getLiveTimeEntry().getValue().getEntryStartTime().set(Calendar.MINUTE, minute);
             viewModel.updateLiveEntry();
+        } else {
+            viewModel.getLiveTimeEntry().getValue().getEntryEndTime().set(Calendar.HOUR, hourOfDay);
+            viewModel.getLiveTimeEntry().getValue().getEntryEndTime().set(Calendar.MINUTE, minute);
+            viewModel.updateLiveEntry();
         }
     }
 }
