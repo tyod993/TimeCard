@@ -1,22 +1,25 @@
 package com.audiokontroller.timecard.ui.mainmenu;
 
+import android.app.Application;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
 import com.audiokontroller.timecard.data.model.TimeCard;
 import com.audiokontroller.timecard.data.model.TimeEntry;
 import com.audiokontroller.timecard.data.model.User;
+import com.audiokontroller.timecard.data.model.UserPref;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainClockInViewModel extends ViewModel {
+public class MainClockInViewModel extends AndroidViewModel {
 
     private final String TAG = MainClockInViewModel.class.getSimpleName();
 
@@ -26,7 +29,9 @@ public class MainClockInViewModel extends ViewModel {
     private MutableLiveData<User> userLiveData = new MutableLiveData<>();
     private MutableLiveData<Error> currentError = new MutableLiveData<>();
 
-    public MainClockInViewModel(){}
+    public MainClockInViewModel(Application application){
+        super(application);
+    }
 
     public void clockButtonPressed(){
         if(timeClockFormStateLiveData.getValue() == null) {
@@ -161,4 +166,26 @@ public class MainClockInViewModel extends ViewModel {
             }
         }
     }
+
+    public ArrayAdapter<String> getSuggestions(int type){
+        if(type == UserPref.PROJECT) {
+            return new ArrayAdapter<>(
+                    getApplication().getApplicationContext(),
+                    ArrayAdapter.NO_SELECTION,
+                    userLiveData.getValue().getUserPref().getProjectSuggestions());
+        } else if(type == UserPref.TASK){
+            return new ArrayAdapter<>(
+                    getApplication().getApplicationContext(),
+                    ArrayAdapter.NO_SELECTION,
+                    userLiveData.getValue().getUserPref().getTaskSuggestions());
+        } else {
+            //TODO this should eventually be changed to suggest typical auto suggestions
+            return new ArrayAdapter<>(
+                    getApplication().getApplicationContext(),
+                    ArrayAdapter.NO_SELECTION,
+                    new ArrayList<>()
+                    );
+        }
+    }
+
 }

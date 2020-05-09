@@ -176,12 +176,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/end_time_tv" />
 
-            <Spinner
-                android:id="@+id/project_sp"
+            <AutoCompleteTextView
+                android:id="@+id/project_auto"
                 android:layout_width="293dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="@drawable/spinner_layout"
+                android:background="@drawable/blue_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/projects_tv"
                 />
@@ -197,15 +197,15 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/project_sp"
+                    app:layout_constraintTop_toBottomOf="@id/project_auto"
                     />
 
-                <Spinner
-                    android:id="@+id/required_tasks_sp"
+                <AutoCompleteTextView
+                    android:id="@+id/required_tasks_auto"
                     android:layout_width="178dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:background="@drawable/spinner_layout"
+                    android:background="@drawable/blue_border"
                     app:layout_constraintTop_toBottomOf="@id/required_tasks_tv"
                     app:layout_constraintStart_toStartOf="parent"
                     />
@@ -221,8 +221,8 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/required_tasks_sp"
-                    app:layout_constraintTop_toBottomOf="@id/project_sp"
+                    app:layout_constraintStart_toEndOf="@+id/required_tasks_auto"
+                    app:layout_constraintTop_toBottomOf="@id/project_auto"
                     />
 
                 <Spinner
@@ -232,7 +232,7 @@
                     android:background="@drawable/spinner_layout"
                     android:layout_marginStart="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/required_tasks_sp"
+                    app:layout_constraintStart_toEndOf="@+id/required_tasks_auto"
                     app:layout_constraintTop_toBottomOf="@id/required_task_hours_tv"
                     />
 
@@ -247,7 +247,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/required_tasks_sp"
+                app:layout_constraintTop_toBottomOf="@+id/required_tasks_auto"
                 />
 
             <ImageView
@@ -259,7 +259,7 @@
                 android:contentDescription="@string/add_task_btn"
                 android:src="@drawable/ic_add_circle_orange_24dp"
                 app:layout_constraintStart_toEndOf="@+id/add_task_tv"
-                app:layout_constraintTop_toBottomOf="@+id/required_tasks_sp"
+                app:layout_constraintTop_toBottomOf="@+id/required_tasks_auto"
                 />
 
             <Button

@@ -48,6 +48,9 @@ public class User implements Serializable {
     @ColumnInfo
     private UserTimeCardsHolder timeCardsHolder;
 
+    @ColumnInfo
+    private UserPref userPref;
+
     public User(@NonNull String userID, @NonNull String email,
                 String firstName, String lastName){
         this.userID = userID;
@@ -102,6 +105,29 @@ public class User implements Serializable {
 
     public void setTimeCards(List<TimeCard> timeCards) {
         timeCardsHolder.setTimeEntries(timeCards);
+    }
+
+    public void setUserPref(int type, String value){
+        if(userPref == null){
+            userPref = new UserPref(userID);
+        } else {
+            if(type == UserPref.PROJECT){
+                userPref.addProjectSuggestion(value);
+            }else if(type == UserPref.TASK){
+                userPref.addTaskSuggestion(value);
+            }
+        }
+    }
+
+    public UserPref getUserPref(){
+        if(userPref == null){
+            userPref = new UserPref(userID);
+        }
+        return userPref;
+    }
+
+    public void setUserPref(UserPref newPref){
+        this.userPref = newPref;
     }
 
     public UserTimeCardsHolder getTimeCardsHolder(){
