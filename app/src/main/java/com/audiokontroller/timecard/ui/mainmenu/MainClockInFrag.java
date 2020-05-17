@@ -15,14 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.audiokontroller.timecard.R;
-import com.google.gson.Gson;
-
-import java.util.Objects;
 
 public class MainClockInFrag extends Fragment {
 
@@ -110,6 +106,7 @@ public class MainClockInFrag extends Fragment {
         mainViewModel.retrieveUser().observe(getViewLifecycleOwner(), user -> {
             if(user != null) {
                 //TODO there is a problem here. The User is not being passed when the RX ends
+
                 viewModel.setUser(user);
                 Log.d(TAG, "User posted to UserLiveData");
             }

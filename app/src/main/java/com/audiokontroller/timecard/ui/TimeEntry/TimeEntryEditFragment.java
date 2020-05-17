@@ -116,13 +116,13 @@ public class TimeEntryEditFragment extends Fragment implements TimePickerDialog.
             });
 
             startTV.setOnClickListener(view -> {
-                DialogFragment timePickerDialog = new TimePickerFrag();
+                DialogFragment timePickerDialog = new TimePickerFrag(this);
                 timePickerDialog.show(getParentFragmentManager(), "start time picker");
                 isStartEdit = true;
             });
 
             endTV.setOnClickListener(view -> {
-                DialogFragment timePickerDialog = new TimePickerFrag();
+                DialogFragment timePickerDialog = new TimePickerFrag(this);
                 timePickerDialog.show(getParentFragmentManager(), "end time picker");
             });
 

@@ -62,13 +62,13 @@ public class BreaksEditFrag extends Fragment implements TimePickerDialog.OnTimeS
         }
 
         startTV.setOnClickListener(view -> {
-            DialogFragment timePicker = new TimePickerFrag();
+            DialogFragment timePicker = new TimePickerFrag(this);
             timePicker.show(getParentFragmentManager(), "time picker");
             isStartEdit = true;
         });
 
         endTV.setOnClickListener(view -> {
-            DialogFragment timePicker = new TimePickerFrag();
+            DialogFragment timePicker = new TimePickerFrag(this);
             timePicker.show(getParentFragmentManager(), "time_picker");
         });
 

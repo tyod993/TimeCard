@@ -28,10 +28,17 @@ import com.audiokontroller.timecard.data.model.UserPref;
 import com.audiokontroller.timecard.ui.mainmenu.MainClockInViewModel;
 import com.audiokontroller.timecard.ui.utils.TimePickerFrag;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
 public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.OnTimeSetListener {
+
+    public static final String[] hrsArray = {
+            "15min", "30min", "45min", "1hr", "2hr", "3hrs", "4hrs", "5hrs", "6hrs", "7hrs", "8hrs",
+            "9hrs", "10hrs", "11hrs", "12hrs"
+    };
 
     private MainClockInViewModel viewModel;
 
@@ -77,18 +84,24 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         //This sets the starting state of the fragment using the previous clocking state;
         updateUIState(Objects.requireNonNull(viewModel.getLiveTimeEntry().getValue()));
 
+        //these all need to be launched as a seperate asych task while waiting on user retieval
         //Setting the AutoCompleteTextViews to the liveUser UserPref.
         projectsAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.PROJECT));
         tasksAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.TASK));
-        taskHourSpinner.setAdapter(new ArrayAdapter<>(
-                getContext(),
-                ArrayAdapter.NO_SELECTION,
-                getResources().getStringArray(R.array.duration_array
-                )));
 
-        taskHourSpinner.setOnItemClickListener((parent, view, position, id) -> {
-            //TODO trying to figure out if I need to manually set text to selected value
-        });
+        //
+        // Something in here is messing causing a resource not found error
+        //
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.duration_array,
+                android.R.layout.simple_spinner_item
+                );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskHourSpinner.setAdapter(adapter);
+        //
+        //
+        //
 
         viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), this::updateUIState);
 
@@ -101,13 +114,13 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         });
 
         editStartButton.setOnClickListener(view -> {
-            DialogFragment timePickerDialog = new TimePickerFrag();
+            DialogFragment timePickerDialog = new TimePickerFrag(this);
             timePickerDialog.show(getParentFragmentManager(), "start time picker");
             isStartEdit  = true;
         });
 
         editEndButton.setOnClickListener(view -> {
-            DialogFragment timePickerDialog = new TimePickerFrag();
+            DialogFragment timePickerDialog = new TimePickerFrag(this);
             timePickerDialog.show(getParentFragmentManager(), "end time picker");
         });
 
@@ -119,17 +132,17 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
     }
 
     private void updateUIState(@NonNull TimeEntry entry){
-        totalHoursTV.setText(entry.getTotalHours() + "");
-        startTimeTV.setText(
-                entry.getEntryStartTime().get(Calendar.HOUR)+
-                        entry.getEntryStartTime().get(Calendar.MINUTE) +
-                        entry.getEntryStartTime().get(Calendar.AM_PM) + ""
-                );
-        endTimeTV.setText(
-                entry.getEntryEndTime().get(Calendar.HOUR)+
-                        entry.getEntryEndTime().get(Calendar.MINUTE)+
-                        entry.getEntryEndTime().get(Calendar.AM_PM) + ""
-        );
+        String totalHours = entry.getTotalHours() + "";
+        String startTime =
+                entry.getEntryStartTime().get(Calendar.HOUR)+ ":" +
+                entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
+                meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
+        String endTime = entry.getEntryEndTime().get(Calendar.HOUR)+ ":" +
+                entry.getEntryEndTime().get(Calendar.MINUTE)+ " " +
+                meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
+        startTimeTV.setText(startTime);
+        endTimeTV.setText(endTime);
+        totalHoursTV.setText(totalHours);
     }
 
 
@@ -138,12 +151,22 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         if(isStartEdit){
             viewModel.getLiveTimeEntry().getValue().getEntryStartTime().set(Calendar.HOUR, hourOfDay);
             viewModel.getLiveTimeEntry().getValue().getEntryStartTime().set(Calendar.MINUTE, minute);
+            viewModel.getLiveTimeEntry().getValue().calcTotalHours();
             viewModel.updateLiveEntry();
             isStartEdit = false;
         } else {
             viewModel.getLiveTimeEntry().getValue().getEntryEndTime().set(Calendar.HOUR, hourOfDay);
             viewModel.getLiveTimeEntry().getValue().getEntryEndTime().set(Calendar.MINUTE, minute);
+            viewModel.getLiveTimeEntry().getValue().calcTotalHours();
             viewModel.updateLiveEntry();
+        }
+    }
+
+    private String meridiemIntToString(int value){
+        if(value == 0){
+            return "AM";
+        }else {
+            return "PM";
         }
     }
 }

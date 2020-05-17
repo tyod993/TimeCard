@@ -2,12 +2,11 @@ package com.audiokontroller.timecard.ui.mainmenu;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.audiokontroller.timecard.data.model.TimeCard;
 import com.audiokontroller.timecard.data.model.User;
@@ -18,12 +17,16 @@ import java.util.ArrayList;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 /**
  * This class is the SINGLE SOURCE OF TRUTH for this entire application.
  *
  **/
 
 public class MainMenuViewModel extends AndroidViewModel {
+
+    private static final String TAG = MainMenuViewModel.class.getSimpleName();
 
     public static final int FIREBASE_DB = 0;
     public static final int ROOM_DB = 1;
@@ -55,7 +58,8 @@ public class MainMenuViewModel extends AndroidViewModel {
         disposable.add(userDataSource.retrieveUserData(userID, databasePreference)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(user1 -> liveUser.setValue(user1), Throwable::printStackTrace));
+                .subscribe(user1 -> liveUser.postValue(user1), Throwable::printStackTrace));
+        Log.d(TAG, "User retrieved form source");
         return liveUser;
     }
 

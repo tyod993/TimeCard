@@ -143,6 +143,13 @@ public class TimeEntry implements Serializable {
 
     public double getTotalHours(){return totalHours;}
 
+    public void calcTotalHours(){
+        if(entryEndTime != null){
+            int dif = entryStartTime.compareTo(entryEndTime);
+            totalHours = dif % 3600000;
+        }
+    }
+
     @Nullable
     public List<Task> getTasks(){return tasks;}
 
