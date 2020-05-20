@@ -91,8 +91,6 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         tasksAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.TASK));
 
         //
-        //
-        //
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.duration_array,
@@ -101,10 +99,8 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskHourSpinner.setAdapter(adapter);
         //
-        //
-        //
 
-        viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), this::updateUIState);
+        viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), entry -> updateUIState(entry));
 
         submitButton.setOnClickListener(view-> {
 
@@ -139,6 +135,7 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         String startTime;
         String endTime;
 
+        //TODO This still isn't working right.
         //Check if totalHours is a decimal and format to the second decimal place
         if(totalHours.contains("\\.")) {
             String[] totalWholeHours = totalHours.split("\\.");

@@ -193,18 +193,19 @@ public class MainClockInViewModel extends AndroidViewModel {
         }
     }
 
+    //This is called by the onTimeSet() method in the TimeEntryReviewFrag
     public void entryTimeChange(int hourOfDay, int minute, boolean isStartTime){
         if(currentTimeEntry.getValue() != null) {
             if (isStartTime) {
                 currentTimeEntry.getValue().getEntryStartTime().set(Calendar.HOUR_OF_DAY, hourOfDay);
                 currentTimeEntry.getValue().getEntryStartTime().set(Calendar.MINUTE, minute);
                 currentTimeEntry.getValue().calcTotalHours();
-                // updateLiveEntry(); This may need to be called is the UI doesnbt update on its own
+                updateLiveEntry();
             } else {
                 currentTimeEntry.getValue().getEntryEndTime().set(Calendar.HOUR_OF_DAY, hourOfDay);
                 currentTimeEntry.getValue().getEntryEndTime().set(Calendar.MINUTE, minute);
                 currentTimeEntry.getValue().calcTotalHours();
-                //updateLiveEntry();
+                updateLiveEntry();
             }
         } else {
             Error error = new Error("Cannot change time, currentTimeEntry = null");
