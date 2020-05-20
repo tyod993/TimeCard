@@ -16,9 +16,11 @@ import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.model.UserPref;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+//TODO This class is getting cumbersome. Either clean up with other classes or Organize extensively
 public class MainClockInViewModel extends AndroidViewModel {
 
     private final String TAG = MainClockInViewModel.class.getSimpleName();
@@ -61,7 +63,6 @@ public class MainClockInViewModel extends AndroidViewModel {
         }
     }
 
-    //TODO left off here, need to wrtie all logic for clock buttons as well as Callback to get timecard
     private void clockIn(){
         timeFactory = new TimeEntryHandler(null);
         //Calling timeFactory.clockIn() creates a new TimeEntry and returns it clocked in and active
@@ -76,6 +77,7 @@ public class MainClockInViewModel extends AndroidViewModel {
         } else {
             Error error = new Error("Error while clocking out. Cannot call clockOut on a null object.");
             currentError.postValue(error);
+            Log.e(TAG, error.toString());
         }
     }
 
@@ -85,6 +87,7 @@ public class MainClockInViewModel extends AndroidViewModel {
         } else {
             Error error = new Error("Error when trying to clock in. Must instantiate a new TimeEntry before calling startBreak on it.");
             currentError.postValue(error);
+            Log.e(TAG, error.toString());
         }
     }
 
@@ -94,6 +97,7 @@ public class MainClockInViewModel extends AndroidViewModel {
         } else {
             Error error = new Error("Error when trying to clock out. Cant call clock out on null object");
             currentError.postValue(error);
+            Log.e(TAG, error.toString());
         }
     }
 
@@ -167,6 +171,7 @@ public class MainClockInViewModel extends AndroidViewModel {
         }
     }
 
+
     public ArrayAdapter<String> getSuggestions(int type){
         if(type == UserPref.PROJECT) {
             return new ArrayAdapter<>(
@@ -185,6 +190,26 @@ public class MainClockInViewModel extends AndroidViewModel {
                     ArrayAdapter.NO_SELECTION,
                     new ArrayList<>()
                     );
+        }
+    }
+
+    public void entryTimeChange(int hourOfDay, int minute, boolean isStartTime){
+        if(currentTimeEntry.getValue() != null) {
+            if (isStartTime) {
+                currentTimeEntry.getValue().getEntryStartTime().set(Calendar.HOUR_OF_DAY, hourOfDay);
+                currentTimeEntry.getValue().getEntryStartTime().set(Calendar.MINUTE, minute);
+                currentTimeEntry.getValue().calcTotalHours();
+                // updateLiveEntry(); This may need to be called is the UI doesnbt update on its own
+            } else {
+                currentTimeEntry.getValue().getEntryEndTime().set(Calendar.HOUR_OF_DAY, hourOfDay);
+                currentTimeEntry.getValue().getEntryEndTime().set(Calendar.MINUTE, minute);
+                currentTimeEntry.getValue().calcTotalHours();
+                //updateLiveEntry();
+            }
+        } else {
+            Error error = new Error("Cannot change time, currentTimeEntry = null");
+            currentError.postValue(error);
+            Log.e(TAG, error.toString());
         }
     }
 

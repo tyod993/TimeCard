@@ -145,8 +145,12 @@ public class TimeEntry implements Serializable {
 
     public void calcTotalHours(){
         if(entryEndTime != null){
-            int dif = entryStartTime.compareTo(entryEndTime);
-            totalHours = dif % 3600000;
+            //Get the difference in Milliseconds
+            double dif = entryEndTime.getTimeInMillis() - entryStartTime.getTimeInMillis();
+            //Calculate the difference in hours
+            totalHours = dif / 3600000.0;
+            Log.d(TAG, "dif value = " + dif);
+            Log.d(TAG, "totalHours value = " + totalHours);
         }
     }
 

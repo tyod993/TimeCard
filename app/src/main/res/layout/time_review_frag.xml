@@ -37,8 +37,8 @@
 
             <TextView
                 android:id="@+id/review_total_hours_tv"
-                android:layout_width="39dp"
-                android:layout_height="89dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
                 android:text="8"
                 android:textColor="@color/drk_blue_txt"

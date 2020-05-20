@@ -86,11 +86,12 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
 
         //these all need to be launched as a seperate asych task while waiting on user retieval
         //Setting the AutoCompleteTextViews to the liveUser UserPref.
+        //TODO there should be a SavedPreferences check before these are set
         projectsAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.PROJECT));
         tasksAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.TASK));
 
         //
-        // Something in here is messing causing a resource not found error
+        //
         //
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -131,35 +132,51 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
 
     }
 
+    //At some time this should be optimized
     private void updateUIState(@NonNull TimeEntry entry){
+
         String totalHours = entry.getTotalHours() + "";
-        String startTime =
-                entry.getEntryStartTime().get(Calendar.HOUR)+ ":" +
-                entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
-                meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
-        String endTime = entry.getEntryEndTime().get(Calendar.HOUR)+ ":" +
-                entry.getEntryEndTime().get(Calendar.MINUTE)+ " " +
-                meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
+        String startTime;
+        String endTime;
+
+        //Check if totalHours is a decimal and format to the second decimal place
+        if(totalHours.contains("\\.")) {
+            String[] totalWholeHours = totalHours.split("\\.");
+            totalHours = totalWholeHours[0].concat(totalWholeHours[1].substring(0, 1));
+        }
+
+        //Format start time for UI
+        if(entry.getEntryStartTime().get(Calendar.MINUTE) < 10) {
+            startTime = entry.getEntryStartTime().get(Calendar.HOUR) + ":0" +
+                    entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
+                    meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
+        } else {
+            startTime = entry.getEntryStartTime().get(Calendar.HOUR) + ":" +
+                    entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
+                    meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
+        }
+
+        //Format end time for UI
+        if(entry.getEntryEndTime().get(Calendar.MINUTE) < 10) {
+            endTime = entry.getEntryEndTime().get(Calendar.HOUR) + ":0" +
+                    entry.getEntryEndTime().get(Calendar.MINUTE) + " " +
+                    meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
+        } else {
+            endTime = entry.getEntryEndTime().get(Calendar.HOUR) + ":" +
+                    entry.getEntryEndTime().get(Calendar.MINUTE) + " " +
+                    meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
+        }
+
+        //Update UI with formatted Strings
         startTimeTV.setText(startTime);
         endTimeTV.setText(endTime);
         totalHoursTV.setText(totalHours);
     }
 
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        if(isStartEdit){
-            viewModel.getLiveTimeEntry().getValue().getEntryStartTime().set(Calendar.HOUR, hourOfDay);
-            viewModel.getLiveTimeEntry().getValue().getEntryStartTime().set(Calendar.MINUTE, minute);
-            viewModel.getLiveTimeEntry().getValue().calcTotalHours();
-            viewModel.updateLiveEntry();
-            isStartEdit = false;
-        } else {
-            viewModel.getLiveTimeEntry().getValue().getEntryEndTime().set(Calendar.HOUR, hourOfDay);
-            viewModel.getLiveTimeEntry().getValue().getEntryEndTime().set(Calendar.MINUTE, minute);
-            viewModel.getLiveTimeEntry().getValue().calcTotalHours();
-            viewModel.updateLiveEntry();
-        }
+        viewModel.entryTimeChange(hourOfDay, minute, isStartEdit);
+        isStartEdit = false;
     }
 
     private String meridiemIntToString(int value){
