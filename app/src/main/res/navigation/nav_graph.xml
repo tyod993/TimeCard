@@ -22,6 +22,9 @@
         android:name="com.audiokontroller.timecard.ui.TimeEntry.TimeEntryReviewFrag"
         android:label="TimeEntryReviewFrag" >
 
+        <action
+            android:id="@+id/action_timeEntryReviewFrag_to_mainClockInFrag"
+            app:destination="@id/mainClockInFrag" />
     </fragment>
     <fragment
         android:id="@+id/historyParentFrag"

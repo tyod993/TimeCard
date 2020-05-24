@@ -180,12 +180,16 @@
                 android:id="@+id/project_auto"
                 android:layout_width="293dp"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:layout_marginStart="20dp"
+                android:textColor="@color/lt_txt"
                 android:background="@drawable/blue_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/projects_tv"
                 />
 
+        <!-- This is all here for a future Tasks feature.
                 <TextView
                     android:id="@+id/required_tasks_tv"
                     android:layout_width="wrap_content"
@@ -204,6 +208,9 @@
                     android:id="@+id/required_tasks_auto"
                     android:layout_width="178dp"
                     android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/lt_txt"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/blue_border"
                     app:layout_constraintTop_toBottomOf="@id/required_tasks_tv"
@@ -261,7 +268,7 @@
                 app:layout_constraintStart_toEndOf="@+id/add_task_tv"
                 app:layout_constraintTop_toBottomOf="@+id/required_tasks_auto"
                 />
-
+-->
             <Button
                 android:id="@+id/submit_btn"
                 android:layout_width="wrap_content"
@@ -279,7 +286,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/bottom_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/delete_time_btn"
-                app:layout_constraintTop_toBottomOf="@+id/add_task_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/project_auto" />
 
             <Button
                 android:id="@+id/delete_time_btn"

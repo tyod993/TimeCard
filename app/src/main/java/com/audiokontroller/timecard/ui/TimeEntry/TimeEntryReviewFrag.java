@@ -2,6 +2,7 @@ package com.audiokontroller.timecard.ui.TimeEntry;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
@@ -33,7 +36,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.OnTimeSetListener {
+
+    private static final String TAG = TimeEntryReviewFrag.class.getSimpleName();
 
     public static final String[] hrsArray = {
             "15min", "30min", "45min", "1hr", "2hr", "3hrs", "4hrs", "5hrs", "6hrs", "7hrs", "8hrs",
@@ -49,9 +56,6 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
     private TextView startTimeTV;
     private TextView endTimeTV;
     private AutoCompleteTextView projectsAutoComplete;
-    private AutoCompleteTextView tasksAutoComplete;
-    private Spinner taskHourSpinner;
-    private ImageView addTaskButton;
     private Button submitButton;
     private Button deleteButton;
     private Button editStartButton;
@@ -71,9 +75,6 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         startTimeTV = rootView.findViewById(R.id.start_time_data_tv);
         endTimeTV = rootView.findViewById(R.id.end_time_data_tv);
         projectsAutoComplete = rootView.findViewById(R.id.project_auto);
-        tasksAutoComplete = rootView.findViewById(R.id.required_tasks_auto);
-        taskHourSpinner = rootView.findViewById(R.id.required_task_hours_sp);
-        addTaskButton = rootView.findViewById(R.id.add_task_btn);
         submitButton = rootView.findViewById(R.id.submit_btn);
         deleteButton = rootView.findViewById(R.id.delete_time_btn);
         editStartButton = rootView.findViewById(R.id.edit_start_btn);
@@ -88,45 +89,61 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         //Setting the AutoCompleteTextViews to the liveUser UserPref.
         //TODO there should be a SavedPreferences check before these are set
         projectsAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.PROJECT));
-        tasksAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.TASK));
+
 
         //
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                requireContext(),
-                R.array.duration_array,
-                android.R.layout.simple_spinner_item
-                );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        taskHourSpinner.setAdapter(adapter);
+
         //
 
-        viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), entry -> updateUIState(entry));
+        viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), this::updateUIState);
 
         submitButton.setOnClickListener(view-> {
-
+            viewModel.submitEntry();
+            NavHostFragment.findNavController(TimeEntryReviewFrag.this).navigate(R.id.action_timeEntryReviewFrag_to_mainClockInFrag);
         });
 
         deleteButton.setOnClickListener(view->{
-
         });
 
         editStartButton.setOnClickListener(view -> {
+            isStartEdit  = true;
             DialogFragment timePickerDialog = new TimePickerFrag(this);
             timePickerDialog.show(getParentFragmentManager(), "start time picker");
-            isStartEdit  = true;
         });
 
         editEndButton.setOnClickListener(view -> {
             DialogFragment timePickerDialog = new TimePickerFrag(this);
             timePickerDialog.show(getParentFragmentManager(), "end time picker");
         });
-
-        addTaskButton.setOnClickListener(view -> {
-            //This should add new task add layout. Might need to add an empty view to the layout file
-        });
-
-
     }
+
+    /*
+        The following code is for a future feature allowing for the adding of tasks to Time Entries.
+        Code in this section may or may not work and should'nt be depended on for key functionality.
+        If you're adding to the Tasks features functionality, please confine the code that you write
+        to this section between the borders.
+         */
+
+    // <-------------------------------------------------------------------------------------->
+
+    //Things to be added to the onViewCreated method
+    /*
+        addTaskButton.setOnClickListener(view -> {});
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.duration_array,
+                R.layout.spinner_item_1
+                );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskHourSpinner.setAdapter(adapter);
+
+        tasksAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.TASK));
+
+     */
+
+
+    // <-------------------------------------------------------------------------------------->
 
     //At some time this should be optimized
     private void updateUIState(@NonNull TimeEntry entry){
@@ -135,12 +152,15 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         String startTime;
         String endTime;
 
-        //TODO This still isn't working right.
-        //Check if totalHours is a decimal and format to the second decimal place
-        if(totalHours.contains("\\.")) {
+
+        //Check if totalHours is a whole number or not
+        if(entry.getTotalHours() % 1 != 0) {
             String[] totalWholeHours = totalHours.split("\\.");
-            totalHours = totalWholeHours[0].concat(totalWholeHours[1].substring(0, 1));
+            String ending = totalWholeHours[1].substring(0, 2);
+            Log.d(TAG, totalWholeHours[0] + "sec = " + ending);
+            totalHours = totalWholeHours[0].concat("." + ending);
         }
+
 
         //Format start time for UI
         if(entry.getEntryStartTime().get(Calendar.MINUTE) < 10) {
