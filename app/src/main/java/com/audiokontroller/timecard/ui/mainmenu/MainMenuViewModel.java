@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.TimeCard;
 import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.UserDataSource;
@@ -16,8 +17,6 @@ import java.util.ArrayList;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * This class is the SINGLE SOURCE OF TRUTH for this entire application.
@@ -32,9 +31,9 @@ public class MainMenuViewModel extends AndroidViewModel {
     public static final int ROOM_DB = 1;
 
     public String userID;
-    public int databasePreference;
 
     public SharedPreferences preferences;
+    public int databasePreference;
 
     public ArrayList<TimeCard> loadedTimeCards;
     private UserDataSource userDataSource;
@@ -53,14 +52,27 @@ public class MainMenuViewModel extends AndroidViewModel {
       user it will create one and populate it with default values.
       maybe this should return live data
      */
-    public LiveData<User> retrieveUser(){
-        userDataSource = UserDataSource.getInstance(getApplication());
-        disposable.add(userDataSource.retrieveUserData(userID, databasePreference)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(user1 -> liveUser.postValue(user1), Throwable::printStackTrace));
-        Log.d(TAG, "User retrieved form source");
+    public LiveData<User> retrieveUser() {
+        if (liveUser == null) {
+            userDataSource = UserDataSource.getInstance(getApplication());
+            disposable.add(userDataSource.retrieveUserData(userID, databasePreference)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(user1 -> {
+                        if (user1 == null && databasePreference == ROOM_DB) {
+
+                        } else {
+                            liveUser.postValue(user1);
+                        }
+                    }, Throwable::printStackTrace));
+            Log.d(TAG, "User retrieved form source");
+        }
+        }
         return liveUser;
+    }
+
+    public void saveUserToRoom(User user) {
+
     }
 
     public void setUserID(String userID){this.userID = userID;}
@@ -69,5 +81,9 @@ public class MainMenuViewModel extends AndroidViewModel {
 
     public void clearDisposable(){disposable.clear();}
 
-  public void setPreferences(SharedPreferences preferences){this.preferences = preferences;}
+    public void setPreferences(SharedPreferences preferences){
+        this.preferences = preferences;
+        //For debug purposes change the default dbPreference here.
+        databasePreference = preferences.getInt(getApplication().getResources().getString(R.string.db_pref_key), ROOM_DB);
+    }
 }

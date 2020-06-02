@@ -48,6 +48,7 @@ public class FirebaseAuthHandler{
                 });
     }
 
+    //TODO Firestore data needs to be added in here somewhere
     public void registerNewUser(final String email, final String password) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(authResultTask -> {

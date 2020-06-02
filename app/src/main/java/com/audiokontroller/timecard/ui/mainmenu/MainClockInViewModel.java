@@ -214,4 +214,7 @@ public class MainClockInViewModel extends AndroidViewModel {
         }
     }
 
+    public void submitEntry(){
+
+    }
 }
