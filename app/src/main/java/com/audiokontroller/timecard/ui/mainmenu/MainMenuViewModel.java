@@ -52,21 +52,20 @@ public class MainMenuViewModel extends AndroidViewModel {
       user it will create one and populate it with default values.
       maybe this should return live data
      */
+
+    //TODO Move the consumer to the UserDataSource method and make the method return LiveData<User>.
     public LiveData<User> retrieveUser() {
         if (liveUser == null) {
-            userDataSource = UserDataSource.getInstance(getApplication());
-            disposable.add(userDataSource.retrieveUserData(userID, databasePreference)
+            userDataSource = UserDataSource.getInstance();
+            //TODO Change below to use databasePreference value!!
+            disposable.add(userDataSource.retrieveUserData(userID, ROOM_DB, getApplication())
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .subscribe(user1 -> {
-                        if (user1 == null && databasePreference == ROOM_DB) {
-
-                        } else {
                             liveUser.postValue(user1);
-                        }
+                            Log.d(TAG, user1.toString());
                     }, Throwable::printStackTrace));
             Log.d(TAG, "User retrieved form source");
-        }
         }
         return liveUser;
     }
@@ -84,6 +83,6 @@ public class MainMenuViewModel extends AndroidViewModel {
     public void setPreferences(SharedPreferences preferences){
         this.preferences = preferences;
         //For debug purposes change the default dbPreference here.
-        databasePreference = preferences.getInt(getApplication().getResources().getString(R.string.db_pref_key), ROOM_DB);
+        databasePreference = preferences.getInt(getApplication().getResources().getString(R.string.db_pref_key), FIREBASE_DB);
     }
 }

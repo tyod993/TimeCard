@@ -88,7 +88,7 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
         //these all need to be launched as a seperate asych task while waiting on user retieval
         //Setting the AutoCompleteTextViews to the liveUser UserPref.
         //TODO there should be a SavedPreferences check before these are set
-        projectsAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.PROJECT));
+        //projectsAutoComplete.setAdapter(viewModel.getSuggestions(UserPref.PROJECT));
 
 
         //

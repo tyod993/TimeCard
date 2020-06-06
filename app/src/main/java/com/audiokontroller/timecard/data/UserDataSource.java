@@ -10,11 +10,9 @@ import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.room.UserDao;
 import com.audiokontroller.timecard.data.room.UserDatabase;
 import com.audiokontroller.timecard.ui.mainmenu.MainMenuViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import io.reactivex.Flowable;
-import io.reactivex.SingleObserver;
 
 /**
  * Create an observable of dbPreference
@@ -30,34 +28,36 @@ public class UserDataSource {
     private FirebaseAuthHandler firebaseAuthHandler;
     public FirebaseUser firebaseUser;
 
-    private Context context;
-
     private Flowable<User> reactiveUserData;
 
     public UserDao mUserDao;
 
-    public UserDataSource(@NonNull Context context){
-        this.context = context;
+    public UserDataSource(){
         firebaseAuthHandler = new FirebaseAuthHandler();
         firebaseUser = firebaseAuthHandler.getFirebaseUser();
     }
 
-    public static UserDataSource getInstance(@NonNull Context context){
+    public static UserDataSource getInstance(){
         if(instance == null){
-            instance = new UserDataSource(context);
+            instance = new UserDataSource();
+            Log.d(TAG, "New UserDataSource instance created.");
         }
+        Log.d(TAG, "UseDataSource instance returned");
         return instance;
     }
 
     //This method holds the majority of the data logic
-    public Flowable<User> retrieveUserData(@NonNull String userID, int dbPreference){
-        //This is going to have problems if the roomDB does'nt exist yet.
-        //TODO: Solve the NullPointerException
+    public Flowable<User> retrieveUserData(@NonNull String userID, int dbPreference, @NonNull Context context){
+
+        //TODO This now needs to return LiveData
+
         if(reactiveUserData == null) {
             if (dbPreference == MainMenuViewModel.ROOM_DB) {
                 UserDatabase database = UserDatabase.getInstance(context);
                 mUserDao = database.userDao();
                 reactiveUserData = mUserDao.getUser(userID);
+                Log.d(TAG, "UserDataSource mUserDao.getUser() called");
+
                 //if the Room query returns null get the data from firebase
                 if(reactiveUserData.isEmpty().blockingGet()){
                     dataSourceManager = new UserDataSourceManager(UserDataSource.this);
@@ -65,11 +65,18 @@ public class UserDataSource {
                     getDataFromFirebase(userID);
                     Log.d(TAG, "Room is empty, retrieving data from Firebase");
                 }
+
             } else if (dbPreference == MainMenuViewModel.FIREBASE_DB) {
+
                 getDataFromFirebase(userID);
+                Log.d(TAG, "Retrieving data from Firestore");
+
             }
+
             return reactiveUserData;
+
         }else return reactiveUserData;
+
     }
 
     public Flowable<User> getUserFromRoom(@NonNull String userID) {
