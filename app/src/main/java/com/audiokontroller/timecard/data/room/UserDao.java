@@ -10,7 +10,7 @@ import androidx.room.Update;
 import com.audiokontroller.timecard.data.model.User;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface UserDao {
@@ -25,5 +25,5 @@ public interface UserDao {
     Completable delete(User user);
 
     @Query("SELECT * FROM user_data WHERE userID = :ID")
-    Flowable<User> getUser(String ID);
+    Single<User> getUser(String ID);
 }

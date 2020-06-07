@@ -27,6 +27,7 @@ public class FirebaseAuthHandler{
 
     public FirebaseAuthHandler() {
         firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
     }
 
 
@@ -74,6 +75,7 @@ public class FirebaseAuthHandler{
 
     public boolean isUserLoggedIn() {
         currentUser = firebaseAuth.getCurrentUser();
+        Log.d(TAG, "firebaseUser = " + currentUser.getUid());
         return currentUser != null;
     }
 

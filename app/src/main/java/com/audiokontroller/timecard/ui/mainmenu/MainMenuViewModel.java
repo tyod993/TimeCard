@@ -15,9 +15,6 @@ import com.audiokontroller.timecard.data.UserDataSource;
 
 import java.util.ArrayList;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * This class is the SINGLE SOURCE OF TRUTH for this entire application.
  *
@@ -37,7 +34,7 @@ public class MainMenuViewModel extends AndroidViewModel {
 
     public ArrayList<TimeCard> loadedTimeCards;
     private UserDataSource userDataSource;
-    private CompositeDisposable disposable = new CompositeDisposable();
+
     public MutableLiveData<User> liveUser = new MutableLiveData<>();
 
     public User activeUser;
@@ -52,33 +49,16 @@ public class MainMenuViewModel extends AndroidViewModel {
       user it will create one and populate it with default values.
       maybe this should return live data
      */
-
-    //TODO Move the consumer to the UserDataSource method and make the method return LiveData<User>.
     public LiveData<User> retrieveUser() {
-        if (liveUser == null) {
-            userDataSource = UserDataSource.getInstance();
-            //TODO Change below to use databasePreference value!!
-            disposable.add(userDataSource.retrieveUserData(userID, ROOM_DB, getApplication())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(user1 -> {
-                            liveUser.postValue(user1);
-                            Log.d(TAG, user1.toString());
-                    }, Throwable::printStackTrace));
-            Log.d(TAG, "User retrieved form source");
-        }
-        return liveUser;
-    }
-
-    public void saveUserToRoom(User user) {
-
+        userDataSource = UserDataSource.getInstance();
+        return userDataSource.retrieveUserData(databasePreference, getApplication());
     }
 
     public void setUserID(String userID){this.userID = userID;}
 
     public ArrayList<TimeCard> getLoadedTimeCards(){ return loadedTimeCards;}
 
-    public void clearDisposable(){disposable.clear();}
+    public void clearDisposable(){userDataSource.clearDisposable();}
 
     public void setPreferences(SharedPreferences preferences){
         this.preferences = preferences;

@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -32,16 +33,19 @@ public class UserDataSourceManager {
     public void populateRoomFromFirebase(){
         User localUser = new User(user.getUid(), user.getEmail(), null, null);
         try {
+            //THis is obviousy the problem.
             Map<String, Object> userDataMap =
             db.collection(Collections.USERS)
                     .whereEqualTo("userID", user.getUid())
                     .get()
-                    .getResult()
-                    .getDocuments()
-                    .get(0)
-                    .getData();
+                    .addOnCompleteListener(listener ->{
+                        if(listener.getResult() != null){
+                            listener.getResult().getDocuments().get(0).getData();
+                        }
+                    });
 
-            if(userDataMap.size() > 2){
+
+            if(userDataMap.get().size() > 2){
                 Log.d(TAG, "UserDataSourceManager.userDataMap = " + userDataMap);
                 //TODO Iterate over the map to set values of user to be saved in room
 

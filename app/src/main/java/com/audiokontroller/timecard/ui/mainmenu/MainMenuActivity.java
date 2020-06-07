@@ -39,11 +39,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottom_navigation_view);
 
-        //Navigation
-        navController = Navigation.findNavController(this, R.id.home_nav_host_fragment);
-        AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(bottomNav, navController);
-
         //Sending the userID to the ViewModel for Data retrieval
         try {mainMenuViewModel.setUserID(getIntent().getExtras().getString(getResources().getString(R.string.user_id_key)));}
         catch (NullPointerException e){
@@ -59,6 +54,10 @@ public class MainMenuActivity extends AppCompatActivity {
         //This needs to be moved to the first navigation fragment inflation
         mainMenuViewModel.retrieveUser();
 
+        //Navigation
+        navController = Navigation.findNavController(this, R.id.home_nav_host_fragment);
+        AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupWithNavController(bottomNav, navController);
 
         Log.d(TAG, ".onCreate.success");
     }
