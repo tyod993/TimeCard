@@ -15,6 +15,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 
 //TODO Make sure that when saving user data to firestore for the first time to save the entire user class
+//TODO VERY IMPORTANT CHANGE THE FIRESTORE PERMISSIONS IN SECURITY
 public class UserDataSourceManager {
 
     private static final String TAG = UserDataSource.class.getSimpleName();
@@ -33,19 +34,9 @@ public class UserDataSourceManager {
     public void populateRoomFromFirebase(){
         User localUser = new User(user.getUid(), user.getEmail(), null, null);
         try {
-            //THis is obviousy the problem.
-            Map<String, Object> userDataMap =
-            db.collection(Collections.USERS)
-                    .whereEqualTo("userID", user.getUid())
-                    .get()
-                    .addOnCompleteListener(listener ->{
-                        if(listener.getResult() != null){
-                            listener.getResult().getDocuments().get(0).getData();
-                        }
-                    });
+         Map<String, Object> userDataMap = null;//Todo, change from null
 
-
-            if(userDataMap.get().size() > 2){
+            if(userDataMap.size() > 2){
                 Log.d(TAG, "UserDataSourceManager.userDataMap = " + userDataMap);
                 //TODO Iterate over the map to set values of user to be saved in room
 
@@ -69,7 +60,7 @@ public class UserDataSourceManager {
         } catch(NullPointerException e){
             e.printStackTrace();
             Log.e(TAG, "NullPointerException in populateFromFirestore method, adding new user data to Firestore");
-            popFirestoreWithNewUser();
+           // popFirestoreWithNewUser();
         }
     }
 
@@ -78,5 +69,16 @@ public class UserDataSourceManager {
                 .addOnCompleteListener(task -> {
                     populateRoomFromFirebase();
                 });
+    }
+
+    private void getDataMapFromFirestore(){//TODO THis should return Map<sString, Object>
+         db.collection(Collections.USERS)
+                .whereEqualTo("userID", user.getUid())
+                .get()
+                .addOnCompleteListener(listener ->{
+                        Log.d(TAG, "current user data structure" + listener.getResult().getDocuments().get(0).getData().toString());
+
+                });
+
     }
 }

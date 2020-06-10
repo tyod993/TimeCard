@@ -13,8 +13,13 @@ import com.audiokontroller.timecard.data.room.UserDao;
 import com.audiokontroller.timecard.data.room.UserDatabase;
 import com.audiokontroller.timecard.ui.mainmenu.MainMenuViewModel;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
+
+import java.util.Map;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -119,24 +124,30 @@ public class UserDataSource {
            FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
             User user = new User(userID, firebaseUser.getEmail(), null, null);
             firestoreDB.collection("users")
-                    .whereEqualTo("user_ID", firebaseUser.getUid())
+                    .whereEqualTo("userID", firebaseUser.getUid())
                     .get()
-                    .addOnCompleteListener(listener -> {
-                        QuerySnapshot querySnapshot = listener.getResult();
-                        if(querySnapshot != null) {
-                            querySnapshot.getDocuments();
-                            //TODO: Get the rest of the data from Firestore
-                        } else {
-                            firestoreDB.collection("users")
-                                    .add(user)
-                                    .addOnCompleteListener(listener2 -> {
-                                        Log.d(TAG, "New User added to Firestore(user) collection. userID= " + firebaseUser.getUid());
-                                            }
-                                    ).addOnFailureListener( listener3 -> {
-                                        Log.e(TAG, "There was a problem adding the user to Firestore!");
-                            });
-                            User newUser = new User(firebaseUser.getUid(), firebaseUser.getEmail(), null, null);
-                            liveUserData.postValue(newUser);
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful() && task.isComplete()) {//This is registering as 7 reads and needs to be fixed
+                            QuerySnapshot querySnapshot = task.getResult();//TODO there needs to be permissions added to firestore
+                            if (querySnapshot != null) {
+                                DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                                Map<String, Object> dataMap = document.getData();
+                                //TODO this needs to expand to include all the other fields
+                                User newUser = new User((String)dataMap.get("userID"), (String)dataMap.get("email"), null, null);
+                                liveUserData.postValue(newUser);
+                                Log.d(TAG, dataMap.toString());
+                            } else {
+                                firestoreDB.collection("users")
+                                        .add(user)
+                                        .addOnCompleteListener(listener2 -> {
+                                                    Log.d(TAG, "New User added to Firestore(user) collection. userID= " + firebaseUser.getUid());
+                                                }
+                                        ).addOnFailureListener(listener3 -> {
+                                    Log.e(TAG, "There was a problem adding the user to Firestore!");
+                                });
+                                User newUser = new User(firebaseUser.getUid(), firebaseUser.getEmail(), null, null);
+                                liveUserData.postValue(newUser);
+                            }
                         }
             });
         }
