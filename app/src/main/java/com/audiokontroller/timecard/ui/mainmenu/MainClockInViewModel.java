@@ -136,33 +136,46 @@ public class MainClockInViewModel extends AndroidViewModel {
     }
 
     public void setUser(@NonNull User newUser){
-        userLiveData.postValue(newUser);
+        userLiveData.setValue(newUser);// change to none asych
         getCurrentTimeEntry();
     }
 
+    //TODO In the future this should be optimized
     private void getCurrentTimeEntry() {
         List<TimeCard> timeCards;
         TimeCard currentCard;
         ArrayList<TimeEntry> timeEntries;
         if (userLiveData.getValue() != null) {
             timeCards = userLiveData.getValue().getTimeCards();
-            currentCard = timeCards.get(timeCards.size() - 1);
-            timeEntries = currentCard.getEntries();
+            if(timeCards.size() > 0) {
+                currentCard = timeCards.get(timeCards.size() - 1); // array out of bounds
+                timeEntries = currentCard.getEntries();
 
-            if (Objects.requireNonNull(timeClockFormStateLiveData.getValue()).getClockButtonState() != TimeClockFormState.DEFAULT_CLOCK_STATE) {
-                TimeEntry tempEntry = timeEntries.get(timeEntries.size() - 1);
 
-                if (tempEntry.isActive()) {
-                    currentTimeEntry.postValue(tempEntry);
+                if (Objects.requireNonNull(timeClockFormStateLiveData.getValue()).getClockButtonState() != TimeClockFormState.DEFAULT_CLOCK_STATE) {
+                    TimeEntry tempEntry = timeEntries.get(timeEntries.size() - 1);
 
-                }
-            } else {
-                for (TimeEntry entry : timeEntries) {
-                    if (entry.isActive()) {
-                        currentTimeEntry.postValue(entry);
+                    if (tempEntry.isActive()) {
+                        currentTimeEntry.postValue(tempEntry);
+
+                    }
+                } else {
+                    for (TimeEntry entry : timeEntries) {
+                        if (entry.isActive()) {
+                            currentTimeEntry.postValue(entry);
+                        }
+                    }
+                    //If the above for loop doesnt find an active TimeEntry currentTimeEntry should be null.
+                    //Setting the current time entry to a new timeEntry for faster button response
+                    //When the user closes the app without pressing the clock in button the Persistence layer
+                    //checks to see if the currentTimeEntry is active and saves it if so.
+                    if (currentTimeEntry.getValue() == null) {
+                        currentTimeEntry.postValue(new TimeEntry(currentCard));
+                        currentCard.getEntries().add(currentTimeEntry.getValue());
                     }
                 }
-                //If the above for loop doesnt find an active TimeEntry currentTimeEntry should be null.
+            } else {
+                currentCard = new TimeCard(userLiveData.getValue().getUserID(), new ArrayList<>());
                 if (currentTimeEntry.getValue() == null) {
                     currentTimeEntry.postValue(new TimeEntry(currentCard));
                     currentCard.getEntries().add(currentTimeEntry.getValue());

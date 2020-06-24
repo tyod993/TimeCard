@@ -10,7 +10,7 @@ import java.util.Calendar;
 
 public class TimeCard {
 
-    public final long userID;
+    public final String userID;
 
     public final long cardID = Calendar.getInstance().getTimeInMillis();
 
@@ -19,12 +19,12 @@ public class TimeCard {
     private Calendar periodEnd;
     private ArrayList<TimeEntry> entries;
 
-    public TimeCard(long userID, @NonNull ArrayList<TimeEntry> timeEntryArrayList) {
+    public TimeCard(String userID, @NonNull ArrayList<TimeEntry> timeEntryArrayList) {
         this.userID = userID;
         this.entries = timeEntryArrayList;
     }
 
-    public long getUserID() {
+    public String getUserID() {
         return userID;
     }
 

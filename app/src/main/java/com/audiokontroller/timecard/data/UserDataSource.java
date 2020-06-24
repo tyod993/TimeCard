@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,9 +16,6 @@ import com.audiokontroller.timecard.ui.mainmenu.MainMenuViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Document;
 
 import java.util.Map;
 
@@ -34,6 +32,7 @@ public class UserDataSource {
     private static final String TAG = UserDataSource.class.getSimpleName();
 
     private static volatile UserDataSource instance;
+
     private UserDataSourceManager dataSourceManager;
 
     private FirebaseAuthHandler firebaseAuthHandler;
@@ -41,6 +40,8 @@ public class UserDataSource {
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<User> liveUserData = new MutableLiveData<>();
+
+    public boolean isRoomPopulated = true;
 
     public UserDao mUserDao;
 
@@ -99,8 +100,7 @@ public class UserDataSource {
                             liveUserData.postValue(user);
                         } else { //if the Room query returns null get the data from firebase
                             getDataFromFirebase(userID);
-                            dataSourceManager = new UserDataSourceManager(UserDataSource.this);
-                            dataSourceManager.populateRoomFromFirebase();
+                            isRoomPopulated = false;
                             Log.d(TAG, "Room is empty, retrieving data from Firebase");
                         }
                     }
@@ -108,51 +108,73 @@ public class UserDataSource {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        isRoomPopulated = false;
                         getDataFromFirebase(userID);
-                        dataSourceManager = new UserDataSourceManager(UserDataSource.this);
-                        dataSourceManager.populateRoomFromFirebase();
-                        Log.d(TAG, "Room is empty, retrieving data from Firebase");
+                        Log.d(TAG, "Room is empty and threw error, retrieving data from Firebase");
                     }
                 }));
     }
 
 
 
-    private void getDataFromFirebase(@NonNull String userID){
+    private void getDataFromFirebase(@NonNull String userID) {
         Log.d(TAG, "Attempting to get data from Firestore");
 
-           FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
-            User user = new User(userID, firebaseUser.getEmail(), null, null);
-            firestoreDB.collection("users")
-                    .whereEqualTo("userID", firebaseUser.getUid())
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful() && task.isComplete()) {//This is registering as 7 reads and needs to be fixed
-                            QuerySnapshot querySnapshot = task.getResult();//TODO there needs to be permissions added to firestore
-                            if (querySnapshot != null) {
-                                DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-                                Map<String, Object> dataMap = document.getData();
-                                //TODO this needs to expand to include all the other fields
-                                User newUser = new User((String)dataMap.get("userID"), (String)dataMap.get("email"), null, null);
-                                liveUserData.postValue(newUser);
-                                Log.d(TAG, dataMap.toString());
+        FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+
+        firestoreDB.collection("users")
+                .whereEqualTo("userID", firebaseUser.getUid())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {// This is still getting called twice
+
+                    if (e != null) {
+                        Log.e(TAG, e.toString());
+                        //TODO Handle exception
+                    }
+
+                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                        Map<String, Object> dataMap = document.getData();
+
+                        if (dataMap != null) {
+                            liveUserData.postValue(dataMapToUser(dataMap));
+                        }
+
+                        if(!isRoomPopulated){
+                            if(dataSourceManager == null) {
+                                dataSourceManager = new UserDataSourceManager(UserDataSource.this);
+                            }
+                            if(dataMap != null) {
+                                dataSourceManager.populateRoom(dataMapToUser(dataMap));
                             } else {
-                                firestoreDB.collection("users")
-                                        .add(user)
-                                        .addOnCompleteListener(listener2 -> {
-                                                    Log.d(TAG, "New User added to Firestore(user) collection. userID= " + firebaseUser.getUid());
-                                                }
-                                        ).addOnFailureListener(listener3 -> {
-                                    Log.e(TAG, "There was a problem adding the user to Firestore!");
-                                });
-                                User newUser = new User(firebaseUser.getUid(), firebaseUser.getEmail(), null, null);
-                                liveUserData.postValue(newUser);
+                                dataSourceManager.popFirestoreWithNewUser(null);
                             }
                         }
-            });
-        }
+
+                        Log.d(TAG, "liveUserData set.");
+
+                    } else {
+
+                        User user = new User(userID, firebaseUser.getEmail(), null, null);
+                        if(dataSourceManager == null) {
+                            dataSourceManager = new UserDataSourceManager(UserDataSource.this);
+                        }
+                            dataSourceManager.popFirestoreWithNewUser(user);
+
+                        liveUserData.postValue(user);
+                    }
+                });
+    }
+
 
     public void clearDisposable(){
         disposable.clear();
+    }
+
+    //TODO Get userPreferences and TimeEntries
+    private User dataMapToUser(@NonNull Map<String, Object> dataMap){
+        User newUser = new User((String)dataMap.get("userID"), (String)dataMap.get("email"), (String)dataMap.get("firstName"), (String)dataMap.get("lastName"));
+        newUser.setBirthday((String)dataMap.get("birthday"));
+        newUser.setCompanyName((String)dataMap.get("companyName"));
+        return newUser;
     }
 }
