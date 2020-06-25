@@ -148,46 +148,48 @@ public class TimeEntryReviewFrag extends Fragment implements TimePickerDialog.On
     //At some time this should be optimized
     private void updateUIState(@NonNull TimeEntry entry){
 
-        String totalHours = entry.getTotalHours() + "";
-        String startTime;
-        String endTime;
+        if(entry != null) {//entry is somehow null when the user submits their entry. This is temp fix
+            String totalHours = entry.getTotalHours() + "";
+            String startTime;
+            String endTime;
+
+            //Check if totalHours is a whole number or not
+            if (entry.getTotalHours() % 1 != 0) {
+                String[] totalWholeHours = totalHours.split("\\.");
+                String ending = totalWholeHours[1].substring(0, 2);
+                Log.d(TAG, totalWholeHours[0] + "sec = " + ending);
+                totalHours = totalWholeHours[0].concat("." + ending);
+            }
 
 
-        //Check if totalHours is a whole number or not
-        if(entry.getTotalHours() % 1 != 0) {
-            String[] totalWholeHours = totalHours.split("\\.");
-            String ending = totalWholeHours[1].substring(0, 2);
-            Log.d(TAG, totalWholeHours[0] + "sec = " + ending);
-            totalHours = totalWholeHours[0].concat("." + ending);
+            //Format start time for UI
+            if (entry.getEntryStartTime().get(Calendar.MINUTE) < 10) {
+                startTime = entry.getEntryStartTime().get(Calendar.HOUR) + ":0" +
+                        entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
+                        meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
+            } else {
+                startTime = entry.getEntryStartTime().get(Calendar.HOUR) + ":" +
+                        entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
+                        meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
+            }
+
+            //Format end time for UI
+            if (entry.getEntryEndTime().get(Calendar.MINUTE) < 10) {
+                endTime = entry.getEntryEndTime().get(Calendar.HOUR) + ":0" +
+                        entry.getEntryEndTime().get(Calendar.MINUTE) + " " +
+                        meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
+            } else {
+                endTime = entry.getEntryEndTime().get(Calendar.HOUR) + ":" +
+                        entry.getEntryEndTime().get(Calendar.MINUTE) + " " +
+                        meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
+            }
+
+
+            //Update UI with formatted Strings
+            startTimeTV.setText(startTime);
+            endTimeTV.setText(endTime);
+            totalHoursTV.setText(totalHours);
         }
-
-
-        //Format start time for UI
-        if(entry.getEntryStartTime().get(Calendar.MINUTE) < 10) {
-            startTime = entry.getEntryStartTime().get(Calendar.HOUR) + ":0" +
-                    entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
-                    meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
-        } else {
-            startTime = entry.getEntryStartTime().get(Calendar.HOUR) + ":" +
-                    entry.getEntryStartTime().get(Calendar.MINUTE) + " " +
-                    meridiemIntToString(entry.getEntryStartTime().get(Calendar.AM_PM));
-        }
-
-        //Format end time for UI
-        if(entry.getEntryEndTime().get(Calendar.MINUTE) < 10) {
-            endTime = entry.getEntryEndTime().get(Calendar.HOUR) + ":0" +
-                    entry.getEntryEndTime().get(Calendar.MINUTE) + " " +
-                    meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
-        } else {
-            endTime = entry.getEntryEndTime().get(Calendar.HOUR) + ":" +
-                    entry.getEntryEndTime().get(Calendar.MINUTE) + " " +
-                    meridiemIntToString(entry.getEntryEndTime().get(Calendar.AM_PM));
-        }
-
-        //Update UI with formatted Strings
-        startTimeTV.setText(startTime);
-        endTimeTV.setText(endTime);
-        totalHoursTV.setText(totalHours);
     }
 
     @Override

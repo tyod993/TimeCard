@@ -54,6 +54,10 @@ public class MainMenuViewModel extends AndroidViewModel {
         return userDataSource.retrieveUserData(databasePreference, getApplication());
     }
 
+    public void savePersistentData(){
+
+    }
+
     public void setUserID(String userID){this.userID = userID;}
 
     public ArrayList<TimeCard> getLoadedTimeCards(){ return loadedTimeCards;}

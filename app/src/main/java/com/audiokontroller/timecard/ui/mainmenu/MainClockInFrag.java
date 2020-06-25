@@ -87,8 +87,10 @@ public class MainClockInFrag extends Fragment {
         });
 
         viewModel.getLiveTimeEntry().observe(getViewLifecycleOwner(), timeEntry -> {
-            if(timeEntry.getEntryEndTime() != null){
-                Navigation.findNavController(rootView).navigate(R.id.action_mainClockInFrag_to_timeEntryReviewFrag);
+            if(timeEntry != null) {
+                if (timeEntry.getEntryEndTime() != null) {
+                    Navigation.findNavController(rootView).navigate(R.id.action_mainClockInFrag_to_timeEntryReviewFrag);
+                }
             }
         });
 
@@ -133,6 +135,13 @@ public class MainClockInFrag extends Fragment {
             editor.putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
             editor.apply();
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        //TODO//Handle the saving of existing data state
     }
 
 

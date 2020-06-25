@@ -62,10 +62,11 @@ public class MainMenuActivity extends AppCompatActivity {
         Log.d(TAG, ".onCreate.success");
     }
 
+    //TODO Set up work manager to update Firebase with user data every night
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //TODO Set up work manager to update firebase with new user data
+        mainMenuViewModel.savePersistentData();
         mainMenuViewModel.clearDisposable();
     }
 

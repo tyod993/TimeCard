@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -27,6 +28,7 @@ public class UserDataSourceManager {
     private UserDataSource dataSource;
     private FirebaseUser user;
     private FirebaseFirestore db;
+    private CompositeDisposable allDisposables = new CompositeDisposable();
 
     //This should manage all of the updates and initialization of the database 
     public UserDataSourceManager(@NonNull UserDataSource dataSource){
@@ -37,7 +39,7 @@ public class UserDataSourceManager {
 
     public void populateRoom(User userData){
         if(userData != null) {
-            Disposable disposable = dataSource.mUserDao.insert(userData)
+            allDisposables.add(dataSource.mUserDao.insert(userData)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .subscribeWith(new DisposableCompletableObserver() {
@@ -52,43 +54,11 @@ public class UserDataSourceManager {
                             e.printStackTrace();
                             Log.d(TAG, "There was a problem populating Room with user data provided");
                         }
-                    });
+                    }));
             dataSource.isRoomPopulated = true;
         } else {
             Log.e(TAG, "User object passed to UserDataSourceManger.populateRoom() == null.");
 
-        }
-    }
-
-    public void populateRoomFromFirebase(){ // this may be deleted
-        User localUser = new User(user.getUid(), user.getEmail(), null, null);
-        try {
-         Map<String, Object> userDataMap = null;//Todo, change from null
-
-            if(userDataMap.size() > 2){
-                Log.d(TAG, "UserDataSourceManager.userDataMap = " + userDataMap);
-                //TODO Iterate over the map to set values of user to be saved in room
-
-            } else {
-                Disposable disposable = dataSource.mUserDao.insert(new User(user.getUid(), user.getEmail(), null, null))
-                        .subscribeWith(new DisposableCompletableObserver() {
-
-                            @Override
-                            public void onComplete() {
-                                Log.d(TAG,"room.insert() call completed for user " + user.getEmail());
-                                this.dispose();
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                e.printStackTrace();;
-                                Log.e(TAG, e.toString());
-                            }
-                        });
-            }
-        } catch(NullPointerException e){
-            e.printStackTrace();
-            Log.e(TAG, "NullPointerException in populateFromFirestore method, adding new user data to Firestore");
         }
     }
 
@@ -107,15 +77,7 @@ public class UserDataSourceManager {
                 Log.e(TAG, "There was a problem adding user to room");
         });
     }
-
-    private void getDataMapFromFirestore(){//TODO THis should return Map<String, Object>, this method also does'nt need to exist
-         db.collection(Collections.USERS)
-                .whereEqualTo("userID", user.getUid())
-                .get()
-                .addOnCompleteListener(listener ->{
-                        Log.d(TAG, "current user data structure" + listener.getResult().getDocuments().get(0).getData().toString());
-
-                });
-
+    public void clearDisposables(){
+        allDisposables.dispose();
     }
 }

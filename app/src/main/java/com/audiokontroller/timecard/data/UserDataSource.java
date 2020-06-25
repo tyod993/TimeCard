@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -168,6 +167,9 @@ public class UserDataSource {
 
     public void clearDisposable(){
         disposable.clear();
+        if(dataSourceManager != null){
+            dataSourceManager.clearDisposables();
+        }
     }
 
     //TODO Get userPreferences and TimeEntries

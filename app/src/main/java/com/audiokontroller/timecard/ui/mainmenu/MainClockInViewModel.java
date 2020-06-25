@@ -107,7 +107,7 @@ public class MainClockInViewModel extends AndroidViewModel {
 
     public String getTotalHours(){
         if(currentTimeEntry.getValue() != null) {
-            currentTimeEntry.postValue(timeFactory.calcTotalHours(currentTimeEntry.getValue()));
+            currentTimeEntry.postValue(timeFactory.calcTotalHours(currentTimeEntry.getValue()));//TODO This is where you left off
             return currentTimeEntry.getValue().getTotalHours() + "";
         } else {
             return TimeClockFormState.DEFAULT_TOTAL_HOURS;
@@ -176,10 +176,7 @@ public class MainClockInViewModel extends AndroidViewModel {
                 }
             } else {
                 currentCard = new TimeCard(userLiveData.getValue().getUserID(), new ArrayList<>());
-                if (currentTimeEntry.getValue() == null) {
-                    currentTimeEntry.postValue(new TimeEntry(currentCard));
-                    currentCard.getEntries().add(currentTimeEntry.getValue());
-                }
+                userLiveData.getValue().getTimeCardsHolder().getTimeEntries().add(currentCard);
             }
         }
     }
@@ -227,7 +224,30 @@ public class MainClockInViewModel extends AndroidViewModel {
         }
     }
 
-    public void submitEntry(){
 
+    public void submitEntry(){
+        if(userLiveData.getValue() != null) {
+            int currentIndex = 0;
+            int timeCardIndex = userLiveData.getValue().getTimeCardsHolder().getTimeEntries().size() - 1;
+            TimeCard currentTimeCard = userLiveData.getValue().getTimeCardsHolder().getTimeEntries()
+                    .get(timeCardIndex);
+            ArrayList<TimeEntry> timeCards = currentTimeCard.getEntries();
+            if(timeCards.size() > 0) {
+                for (TimeEntry entry : timeCards) { //Search the existing time cards for the active timecard to update.
+                    if (entry.isActive() && entry.getId() == Objects.requireNonNull(currentTimeEntry.getValue()).getId()) {
+                        break;
+                    }
+                    currentIndex++;
+                }
+                userLiveData.getValue().getTimeCardsHolder().getTimeEntries()
+                        .get(timeCardIndex).getEntries().add(currentIndex, currentTimeEntry.getValue());
+            }else {
+                userLiveData.getValue().getTimeCardsHolder().getTimeEntries()
+                        .get(timeCardIndex).getEntries().add(currentTimeEntry.getValue());
+            }
+            currentTimeEntry.postValue(null);
+        } else {
+            Log.e(TAG, "There was a problem adding new TimeEntry to TImeCard because current user == null;");
+        }
     }
 }
