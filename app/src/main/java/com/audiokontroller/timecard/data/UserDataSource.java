@@ -30,6 +30,8 @@ public class UserDataSource {
 
     private static final String TAG = UserDataSource.class.getSimpleName();
 
+    private String firebaseDocID;
+
     private static volatile UserDataSource instance;
 
     private UserDataSourceManager dataSourceManager;
@@ -164,6 +166,10 @@ public class UserDataSource {
                 });
     }
 
+    public void updateSource(@NonNull User userData){
+        dataSourceManager.updateRoom(userData);
+    }
+
 
     public void clearDisposable(){
         disposable.clear();
@@ -179,4 +185,5 @@ public class UserDataSource {
         newUser.setCompanyName((String)dataMap.get("companyName"));
         return newUser;
     }
+
 }

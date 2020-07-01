@@ -14,6 +14,7 @@ import com.audiokontroller.timecard.data.model.User;
 import com.audiokontroller.timecard.data.UserDataSource;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class is the SINGLE SOURCE OF TRUTH for this entire application.
@@ -35,7 +36,7 @@ public class MainMenuViewModel extends AndroidViewModel {
     public ArrayList<TimeCard> loadedTimeCards;
     private UserDataSource userDataSource;
 
-    public MutableLiveData<User> liveUser = new MutableLiveData<>();
+    public LiveData<User> liveUser = new MutableLiveData<>();
 
     public User activeUser;
 
@@ -51,11 +52,12 @@ public class MainMenuViewModel extends AndroidViewModel {
      */
     public LiveData<User> retrieveUser() {
         userDataSource = UserDataSource.getInstance();
-        return userDataSource.retrieveUserData(databasePreference, getApplication());
+        liveUser = userDataSource.retrieveUserData(databasePreference, getApplication());
+        return liveUser;
     }
 
     public void savePersistentData(){
-
+        userDataSource.updateSource(Objects.requireNonNull(liveUser.getValue()));
     }
 
     public void setUserID(String userID){this.userID = userID;}
