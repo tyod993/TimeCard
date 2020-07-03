@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.audiokontroller.timecard.data.TimeEntry.TimeEntryHandler;
 import com.audiokontroller.timecard.data.model.TimeCard;
@@ -157,12 +158,14 @@ public class MainClockInViewModel extends AndroidViewModel {
 
                     if (tempEntry.isActive()) {
                         currentTimeEntry.postValue(tempEntry);
+                        updateClockFormState(tempEntry);
 
                     }
                 } else {
                     for (TimeEntry entry : timeEntries) {
                         if (entry.isActive()) {
                             currentTimeEntry.postValue(entry);
+                            updateClockFormState(entry);
                         }
                     }
                     //If the above for loop doesnt find an active TimeEntry currentTimeEntry should be null.
@@ -225,7 +228,7 @@ public class MainClockInViewModel extends AndroidViewModel {
     }
 
 
-    public void submitEntry(){
+    public void submitEntry(){ //TODO set the timeEntry to active = false before saving
         if(userLiveData.getValue() != null) {
             int currentIndex = 0;
             int timeCardIndex = userLiveData.getValue().getTimeCardsHolder().getTimeEntries().size() - 1;
@@ -250,4 +253,35 @@ public class MainClockInViewModel extends AndroidViewModel {
             Log.e(TAG, "There was a problem adding new TimeEntry to TImeCard because current user == null;");
         }
     }
+
+    private void updateClockFormState(@NonNull TimeEntry timeEntry){
+        if(timeClockFormStateLiveData.getValue() != null) {
+            //All TimeEntries have a Start Time.
+            timeClockFormStateLiveData.getValue().setClockButtonState(TimeClockFormState.CLOCKED_IN);
+            timeClockFormStateLiveData.getValue().setTotalHours(timeEntry.getTotalHours() + "");
+            if (timeEntry.getBreaks() != null) {
+                if (timeEntry.getBreaks().get(timeEntry.getBreaks().size() - 1).isActive()){
+                    timeClockFormStateLiveData.getValue().setOnBreak(true);
+                } else {
+                    timeClockFormStateLiveData.getValue().setOnBreak(false);
+                }
+
+            }
+        }
+    }
+
+    //Saves the current TimeEntry to the liveUser in MainMenuViewModel
+    public void validateTimeEntry(MainMenuViewModel mainMenuViewModel){
+        if(currentTimeEntry.getValue() != null){
+            if(currentTimeEntry.getValue().isActive()){
+                if (mainMenuViewModel.liveUser.getValue() != null) {
+                    mainMenuViewModel.liveUser.getValue().getTimeCardsHolder().getTimeEntries()
+                            .get(mainMenuViewModel.liveUser.getValue().getTimeCardsHolder().getTimeEntries().size()-1)
+                            .getEntries()
+                            .add(currentTimeEntry.getValue());
+                }
+            }
+        }
+    }
+
 }

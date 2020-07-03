@@ -107,7 +107,7 @@ public class MainClockInFrag extends Fragment {
         MainMenuViewModel mainViewModel = new ViewModelProvider(getActivity()).get(MainMenuViewModel.class);
         mainViewModel.retrieveUser().observe(getViewLifecycleOwner(), user -> {
             if(user != null) {
-                //TODO there is a problem here. The User is not being passed when the RX ends
+                //TODO there is a problem here. The User is not being passed when the RX ends??
 
                 viewModel.setUser(user);
                 Log.d(TAG, "User posted to UserLiveData");
@@ -125,23 +125,16 @@ public class MainClockInFrag extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        saveStateToPref();
 
-        // In the future change this to cache the data until onDestroy is called for better performance
-        TimeClockFormState formState = viewModel.getClockState().getValue();
-        if(formState != null) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState());
-            editor.putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak());
-            editor.putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
-            editor.apply();
-        }
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-
-        //TODO//Handle the saving of existing data state
+        saveStateToPref();
+        MainMenuViewModel mainMenuViewModel = new ViewModelProvider(getActivity()).get(MainMenuViewModel.class);
+        viewModel.validateTimeEntry(mainMenuViewModel);
     }
 
 
@@ -153,6 +146,18 @@ public class MainClockInFrag extends Fragment {
                     preferences.getString(getResources().getString(R.string.total_hours_key), TimeClockFormState.DEFAULT_TOTAL_HOURS));
         } else {
             clockState = new TimeClockFormState();
+        }
+    }
+
+    // In the future change this to cache the data until onDestroy is called for better performance
+    private void saveStateToPref(){
+        TimeClockFormState formState = viewModel.getClockState().getValue();
+        if(formState != null) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState());
+            editor.putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak());
+            editor.putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
+            editor.apply();
         }
     }
 }

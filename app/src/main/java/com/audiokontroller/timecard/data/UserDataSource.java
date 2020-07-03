@@ -167,6 +167,9 @@ public class UserDataSource {
     }
 
     public void updateSource(@NonNull User userData){
+        if (dataSourceManager == null) {
+            dataSourceManager = new UserDataSourceManager(instance);
+        }
         dataSourceManager.updateRoom(userData);
     }
 
