@@ -30,8 +30,7 @@ public class FirebaseAuthHandler{
         currentUser = firebaseAuth.getCurrentUser();
     }
 
-
-    //TODO Use the same observableAuthResult to observer the AsychTask Call of signInWithEmailAndPassword
+    //Im pretty sure this needs to update the observableAuthResult to trigger the Intent in activity
     public void loginWithFirebase(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
@@ -39,24 +38,26 @@ public class FirebaseAuthHandler{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmailAndPassword.successful");
+                            currentUser = firebaseAuth.getCurrentUser();
+                            observableAuthResult.postValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
                             authSuccess = true;
                         } else {
                             Log.w(TAG, "signInWithEmailAndPassword.failure");
                             currentUser = null;
+                            observableAuthResult.postValue(new Result.Error(new Exception(task.getException())));
                             authSuccess = false;
                         }
                     }
                 });
     }
 
-    //TODO Firestore data needs to be added in here somewhere
     public void registerNewUser(final String email, final String password) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(authResultTask -> {
                         if(authResultTask.isSuccessful()){
-                            observableAuthResult.setValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
+                            observableAuthResult.postValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
                         } else {
-                            observableAuthResult.setValue(new Result.Error(new Exception(authResultTask.getException())));
+                            observableAuthResult.postValue(new Result.Error(new Exception(authResultTask.getException())));
                         }
                     });
 
@@ -75,7 +76,6 @@ public class FirebaseAuthHandler{
 
     public boolean isUserLoggedIn() {
         currentUser = firebaseAuth.getCurrentUser();
-        Log.d(TAG, "firebaseUser = " + currentUser.getUid());
         return currentUser != null;
     }
 

@@ -28,8 +28,6 @@ public class MainClockInFrag extends Fragment {
 
     public SharedPreferences preferences;
 
-    private TimeClockFormState clockState;
-
     private TextView totalHoursTV;
     private ImageView clockinButton;
     private Button breakButton;
@@ -59,10 +57,12 @@ public class MainClockInFrag extends Fragment {
         clockinButton = rootView.findViewById(R.id.clockin_button);
         breakButton = rootView.findViewById(R.id.break_button);
 
-        getStateFromPreferences();
+        viewModel.setClockState(getStateFromPreferences());
 
         //Draw all of the components with existing ClockState
-        clockinButton.setImageResource(buttonImageResID[clockState.getClockButtonState()]);
+        TimeClockFormState clockState = viewModel.getClockState().getValue();//This value is only used once to avoid more method calls
+        Log.d(TAG, "Current clock state: ButtonState = " + clockState.getClockButtonState() + " TotalHours = " + clockState.getTotalHours() + " Break State = " + clockState.isOnBreak());
+        clockinButton.setImageResource(buttonImageResID[clockState.getClockButtonState()]);//Ignore this error. line 62 sets the value so it cant be null
 
         if(clockState.getTotalHours() == null){
             totalHoursTV.setText("0");
@@ -130,6 +130,12 @@ public class MainClockInFrag extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        checkClockStateManually();
+    }
+
+    @Override
     public void onDestroy(){
         super.onDestroy();
         saveStateToPref();
@@ -138,14 +144,14 @@ public class MainClockInFrag extends Fragment {
     }
 
 
-    private void getStateFromPreferences(){
+    private TimeClockFormState getStateFromPreferences(){
         if(preferences.getBoolean(getResources().getString(R.string.is_clocked_in_key), false)) {
-            clockState = new TimeClockFormState(
+            return new TimeClockFormState(
                     preferences.getInt(getResources().getString(R.string.clock_state_key), TimeClockFormState.DEFAULT_CLOCK_STATE),
                     preferences.getBoolean(getResources().getString(R.string.on_break_key), TimeClockFormState.DEFAULT_BREAK_STATE),
                     preferences.getString(getResources().getString(R.string.total_hours_key), TimeClockFormState.DEFAULT_TOTAL_HOURS));
         } else {
-            clockState = new TimeClockFormState();
+            return new TimeClockFormState();
         }
     }
 
@@ -158,6 +164,19 @@ public class MainClockInFrag extends Fragment {
             editor.putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak());
             editor.putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
             editor.apply();
+        }
+    }
+
+    private void checkClockStateManually(){
+        TimeClockFormState formState = viewModel.getClockState().getValue();
+        if (formState != null) {
+            totalHoursTV.setText(formState.getTotalHours());
+            clockinButton.setImageResource(formState.getClockButtonState());
+            if(formState.isOnBreak()) {
+                breakButton.setText(R.string.end_break);
+            } else{
+                breakButton.setText(R.string.break_button);
+            }
         }
     }
 }

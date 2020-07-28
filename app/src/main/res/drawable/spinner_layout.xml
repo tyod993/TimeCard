@@ -9,5 +9,8 @@
                 android:left="3dp" android:top="3dp"/>
         </shape>
         </item>
+        <item>
+            <bitmap android:src="@drawable/app_logo"  android:gravity="center_vertical|right" />
+        </item>
     </layer-list></item>
 </selector>

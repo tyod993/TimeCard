@@ -15,6 +15,7 @@ import com.audiokontroller.timecard.ui.mainmenu.MainMenuViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.Map;
 
@@ -96,8 +97,9 @@ public class UserDataSource {
                 .subscribeWith(new DisposableSingleObserver<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        if (user != null) { //This method isn't being called
-                            Log.d(TAG, user.toString());
+                        if (user != null) {
+                            Gson gson = new Gson();
+                            Log.d(TAG, "User " + user.getUserID() + " was retrieved from Room. User object = " + gson.toJson(user));
                             liveUserData.postValue(user);
                         } else { //if the Room query returns null get the data from firebase
                             getDataFromFirebase(userID);

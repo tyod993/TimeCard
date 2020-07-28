@@ -72,7 +72,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         //Format validation
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
-            if (loginFormState == null|| loginFormState.isDataValid()) {
+            if (loginFormState == null|| !loginFormState.isDataValid()) {
                 loginButton.setEnabled(false);
                 return;
             }

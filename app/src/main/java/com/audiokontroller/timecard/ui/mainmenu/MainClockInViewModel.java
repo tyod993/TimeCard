@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -143,6 +144,7 @@ public class MainClockInViewModel extends AndroidViewModel {
 
     //TODO In the future this should be optimized
     private void getCurrentTimeEntry() {
+        Log.d(TAG, "retrieving current TimeEntry from user =" + userLiveData.getValue().getUserID());//Ignore error
         List<TimeCard> timeCards;
         TimeCard currentCard;
         ArrayList<TimeEntry> timeEntries;
@@ -235,6 +237,7 @@ public class MainClockInViewModel extends AndroidViewModel {
             TimeCard currentTimeCard = userLiveData.getValue().getTimeCardsHolder().getTimeEntries()
                     .get(timeCardIndex);
             ArrayList<TimeEntry> timeCards = currentTimeCard.getEntries();
+            // Log.d(TAG, "timeCards array list length = " + timeCards.size());
             if(timeCards.size() > 0) {
                 for (TimeEntry entry : timeCards) { //Search the existing time cards for the active timecard to update.
                     if (entry.isActive() && entry.getId() == Objects.requireNonNull(currentTimeEntry.getValue()).getId()) {
@@ -242,30 +245,38 @@ public class MainClockInViewModel extends AndroidViewModel {
                     }
                     currentIndex++;
                 }
+                currentTimeEntry.getValue().setSubmitted(true);
                 userLiveData.getValue().getTimeCardsHolder().getTimeEntries()
                         .get(timeCardIndex).getEntries().add(currentIndex, currentTimeEntry.getValue());
             }else {
+                currentTimeEntry.getValue().setSubmitted(true);
                 userLiveData.getValue().getTimeCardsHolder().getTimeEntries()
                         .get(timeCardIndex).getEntries().add(currentTimeEntry.getValue());
             }
-            currentTimeEntry.postValue(null);
+            currentTimeEntry.setValue(null);
+            updateClockFormState(currentTimeEntry.getValue());
         } else {
             Log.e(TAG, "There was a problem adding new TimeEntry to TImeCard because current user == null;");
         }
     }
 
-    private void updateClockFormState(@NonNull TimeEntry timeEntry){
+    private void updateClockFormState(@Nullable TimeEntry timeEntry){
         if(timeClockFormStateLiveData.getValue() != null) {
             //All TimeEntries have a Start Time.
-            timeClockFormStateLiveData.getValue().setClockButtonState(TimeClockFormState.CLOCKED_IN);
-            timeClockFormStateLiveData.getValue().setTotalHours(timeEntry.getTotalHours() + "");
-            if (timeEntry.getBreaks() != null) {
-                if (timeEntry.getBreaks().get(timeEntry.getBreaks().size() - 1).isActive()){
-                    timeClockFormStateLiveData.getValue().setOnBreak(true);
-                } else {
-                    timeClockFormStateLiveData.getValue().setOnBreak(false);
-                }
+            if(timeEntry != null) {
+                timeClockFormStateLiveData.getValue().setClockButtonState(TimeClockFormState.CLOCKED_IN);
+                timeClockFormStateLiveData.getValue().setTotalHours(timeEntry.getTotalHours() + "");
+                if (timeEntry.getBreaks() != null) {
+                    if (timeEntry.getBreaks().get(timeEntry.getBreaks().size() - 1).isActive()) {
+                        timeClockFormStateLiveData.getValue().setOnBreak(true);
+                    } else {
+                        timeClockFormStateLiveData.getValue().setOnBreak(false);
+                    }
 
+                }
+                timeClockFormStateLiveData.postValue(timeClockFormStateLiveData.getValue());
+            } else {
+                timeClockFormStateLiveData.postValue(new TimeClockFormState());
             }
         }
     }
