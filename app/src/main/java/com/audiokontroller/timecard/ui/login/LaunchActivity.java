@@ -27,9 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.audiokontroller.timecard.authentication.Result;
+import com.audiokontroller.timecard.authentication.firebase.FirebaseAuthHandler;
 import com.audiokontroller.timecard.ui.mainmenu.MainMenuActivity;
 import com.audiokontroller.timecard.R;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 //TODO The resource layout for this activity needs to be flattened
@@ -139,6 +142,17 @@ public class LaunchActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(view ->{
+           FirebaseAuth auth = FirebaseAuth.getInstance();
+           auth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString()).addOnCompleteListener(listener -> {
+               if(listener.isComplete() && listener.isSuccessful()){
+                   FirebaseUser user = auth.getCurrentUser();
+                   updateUiWithUser(new LoggedInUser(user.getUid(), user.getEmail(), null,null));
+                   Log.d(TAG, "Login was successful");
+               } else {
+                   Log.w(TAG, "something went wrong when logging in");
+               }
+           });
+            /*
             if(loginViewModel.getLoginFormState().getValue() == null){
                 loginViewModel.loginDataChanged(emailEditText.getText().toString(), passwordEditText.getText().toString());
             }else {
@@ -147,6 +161,8 @@ public class LaunchActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
 
             }
+
+             */
         });
 
         createAccountTextView.setOnClickListener(view ->{

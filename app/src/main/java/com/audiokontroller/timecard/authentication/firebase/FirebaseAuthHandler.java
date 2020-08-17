@@ -2,15 +2,11 @@ package com.audiokontroller.timecard.authentication.firebase;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.audiokontroller.timecard.authentication.Result;
 import com.audiokontroller.timecard.data.model.LoggedInUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,7 +18,7 @@ public class FirebaseAuthHandler{
     private LoggedInUser loggedInUser;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
-    private MutableLiveData<Result> observableAuthResult = new MutableLiveData<>();
+    private MutableLiveData<Result<Object>> observableAuthResult = new MutableLiveData<>();
 
 
     public FirebaseAuthHandler() {
@@ -33,21 +29,18 @@ public class FirebaseAuthHandler{
     //Im pretty sure this needs to update the observableAuthResult to trigger the Intent in activity
     public void loginWithFirebase(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                .addOnCompleteListener(listener -> {
+                        if (listener.isComplete() && listener.isSuccessful()) {
                             Log.d(TAG, "signInWithEmailAndPassword.successful");
                             currentUser = firebaseAuth.getCurrentUser();
-                            observableAuthResult.postValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
+                            observableAuthResult.setValue(new Result.Success<>(currentUser));
                             authSuccess = true;
                         } else {
                             Log.w(TAG, "signInWithEmailAndPassword.failure");
                             currentUser = null;
-                            observableAuthResult.postValue(new Result.Error(new Exception(task.getException())));
+                            observableAuthResult.setValue(new Result.Error(new Exception(listener.getException())));
                             authSuccess = false;
                         }
-                    }
                 });
     }
 
@@ -85,5 +78,5 @@ public class FirebaseAuthHandler{
 
     public FirebaseUser getFirebaseUser(){return currentUser;}
 
-    public LiveData<Result> getObservableAuthResult(){return observableAuthResult;}
+    public LiveData<Result<Object>> getObservableAuthResult(){return observableAuthResult;}
 }
