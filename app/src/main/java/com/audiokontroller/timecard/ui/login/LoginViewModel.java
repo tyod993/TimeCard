@@ -32,6 +32,8 @@ public class LoginViewModel extends ViewModel {
     private FirebaseAuthHandler firebaseAuthHandler = new FirebaseAuthHandler();
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private MutableLiveData<Boolean> authResult = new MutableLiveData<>();
+    private MutableLiveData<Error> currentError = new MutableLiveData<>();
 
     public LoginViewModel() {}
 
@@ -43,7 +45,12 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public void login(String email, String password) {
+
+        firebaseAuthHandler.loginWithFirebase(email, password);
+        authResult.setValue(firebaseAuthHandler.getLoginSuccess());
+
+        /*
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
@@ -55,6 +62,8 @@ public class LoginViewModel extends ViewModel {
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
+
+         */
     }
 
     public void loginDataChanged(String username, String password) {
@@ -124,5 +133,7 @@ public class LoginViewModel extends ViewModel {
     public String getFirebaseUserID(){
        return firebaseAuthHandler.getFirebaseUser().getUid();
     }
+
+    public LiveData<Boolean> getAuthResult(){return authResult;}
 
 }

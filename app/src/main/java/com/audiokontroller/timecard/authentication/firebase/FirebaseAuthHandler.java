@@ -14,11 +14,12 @@ public class FirebaseAuthHandler{
 
     private final String TAG = FirebaseAuthHandler.class.getSimpleName();
 
-    private boolean authSuccess;
+    private Boolean authSuccess = null;
     private LoggedInUser loggedInUser;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
-    private MutableLiveData<Result<Object>> observableAuthResult = new MutableLiveData<>();
+    private Error currentError;
+    private MutableLiveData<Result> observableAuthResult = new MutableLiveData<>(); //TODO Register method needs to be fixed removing this dependancy
 
 
     public FirebaseAuthHandler() {
@@ -32,14 +33,15 @@ public class FirebaseAuthHandler{
                 .addOnCompleteListener(listener -> {
                         if (listener.isComplete() && listener.isSuccessful()) {
                             Log.d(TAG, "signInWithEmailAndPassword.successful");
-                            currentUser = firebaseAuth.getCurrentUser();
-                            observableAuthResult.setValue(new Result.Success<>(currentUser));
+                            currentUser = listener.getResult().getUser();
+                            //observableAuthResult.setValue(new Result.Success<>(currentUser));
                             authSuccess = true;
                         } else {
                             Log.w(TAG, "signInWithEmailAndPassword.failure");
                             currentUser = null;
-                            observableAuthResult.setValue(new Result.Error(new Exception(listener.getException())));
+                            //observableAuthResult.setValue(new Result.Error(new Exception(listener.getException())));
                             authSuccess = false;
+
                         }
                 });
     }
@@ -48,9 +50,12 @@ public class FirebaseAuthHandler{
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(authResultTask -> {
                         if(authResultTask.isSuccessful()){
-                            observableAuthResult.postValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
+                            authSuccess = true;
+                            currentUser = firebaseAuth.getCurrentUser();
+                            //observableAuthResult.postValue(new Result.Success<>(firebaseAuth.getCurrentUser()));
                         } else {
-                            observableAuthResult.postValue(new Result.Error(new Exception(authResultTask.getException())));
+                            authSuccess = false;
+                            //observableAuthResult.postValue(new Result.Error(new Exception(authResultTask.getException())));
                         }
                     });
 
@@ -72,11 +77,11 @@ public class FirebaseAuthHandler{
         return currentUser != null;
     }
 
-    public boolean getLoginSuccess() {
+    public Boolean getLoginSuccess() {
         return authSuccess;
     }
 
     public FirebaseUser getFirebaseUser(){return currentUser;}
 
-    public LiveData<Result<Object>> getObservableAuthResult(){return observableAuthResult;}
+    public LiveData<Result> getObservableAuthResult(){return observableAuthResult;}
 }

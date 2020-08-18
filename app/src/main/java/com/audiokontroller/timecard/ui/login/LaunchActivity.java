@@ -35,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-//TODO The resource layout for this activity needs to be flattened
 public class LaunchActivity extends AppCompatActivity {
 
     private final String TAG = LaunchActivity.class.getSimpleName();
@@ -45,7 +44,6 @@ public class LaunchActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private CardView loginButton;
-    private TextView createAccountTextView;
     private ProgressBar loadingProgressBar;
     private FrameLayout fragmentContainer;
 
@@ -60,7 +58,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         //Check if Firebase user is already logged in before any initialization.
         if (loginViewModel.isFirebaseUserLoggedIn()){
-            updateUiWithUser((loginViewModel.getLoggedInUser()));
+            updateUiWithUser();
         }
         //
 
@@ -69,7 +67,7 @@ public class LaunchActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password_text);
         emailEditText = findViewById(R.id.username_text);
         loginButton = findViewById(R.id.login);
-        createAccountTextView = findViewById(R.id.createAccount);
+        TextView createAccountTextView = findViewById(R.id.createAccount);
         loadingProgressBar = findViewById(R.id.loading);
         //
 
@@ -89,6 +87,7 @@ public class LaunchActivity extends AppCompatActivity {
         });
         //
 
+        //TODO this all may need ot be deleted if the simpler architecture works.
         //Let's get down to business
         loginViewModel.getLoginResult().observe(this, loginResult ->{
                 if (loginResult == null) {
@@ -99,7 +98,7 @@ public class LaunchActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    updateUiWithUser();
                     finish();
                 }
                 setResult(Activity.RESULT_OK);
@@ -142,27 +141,26 @@ public class LaunchActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(view ->{
-           FirebaseAuth auth = FirebaseAuth.getInstance();
-           auth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString()).addOnCompleteListener(listener -> {
-               if(listener.isComplete() && listener.isSuccessful()){
-                   FirebaseUser user = auth.getCurrentUser();
-                   updateUiWithUser(new LoggedInUser(user.getUid(), user.getEmail(), null,null));
-                   Log.d(TAG, "Login was successful");
-               } else {
-                   Log.w(TAG, "something went wrong when logging in");
-               }
-           });
-            /*
             if(loginViewModel.getLoginFormState().getValue() == null){
                 loginViewModel.loginDataChanged(emailEditText.getText().toString(), passwordEditText.getText().toString());
             }else {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
-
+                loginViewModel.getAuthResult().observe(this, observer ->{
+                    if(loginViewModel != null) {
+                        if (loginViewModel.getAuthResult().getValue().booleanValue()) {
+                            updateUiWithUser();
+                            finish();
+                        } else {
+                            //TODO handle errors.
+                        }
+                    } else {
+                        Log.d(TAG,"authResult is == null");
+                    }
+                });
             }
 
-             */
         });
 
         createAccountTextView.setOnClickListener(view ->{
@@ -173,8 +171,8 @@ public class LaunchActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUiWithUser(LoggedInUser model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+    private void updateUiWithUser() {
+        String welcome = getString(R.string.welcome);
         Intent intent = new Intent(LaunchActivity.this, MainMenuActivity.class);
         intent.putExtra(getResources().getString(R.string.user_id_key), loginViewModel.getFirebaseUserID());
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
