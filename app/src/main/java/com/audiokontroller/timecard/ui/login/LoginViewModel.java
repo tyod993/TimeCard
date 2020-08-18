@@ -48,7 +48,7 @@ public class LoginViewModel extends ViewModel {
     public void login(String email, String password) {
 
         firebaseAuthHandler.loginWithFirebase(email, password);
-        authResult.setValue(firebaseAuthHandler.getLoginSuccess());
+        authResult.postValue(firebaseAuthHandler.authSuccess);
 
         /*
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());

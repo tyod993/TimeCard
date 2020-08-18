@@ -14,7 +14,7 @@ public class FirebaseAuthHandler{
 
     private final String TAG = FirebaseAuthHandler.class.getSimpleName();
 
-    private Boolean authSuccess = null;
+    public Boolean authSuccess = null;
     private LoggedInUser loggedInUser;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;

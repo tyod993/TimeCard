@@ -147,13 +147,14 @@ public class LaunchActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                loginViewModel.getAuthResult().observe(this, observer ->{
-                    if(loginViewModel != null) {
-                        if (loginViewModel.getAuthResult().getValue().booleanValue()) {
+                loginViewModel.getAuthResult().observe(this, result -> {
+                    if(result != null) {
+                        if (result) {
                             updateUiWithUser();
                             finish();
                         } else {
-                            //TODO handle errors.
+                            Log.d(TAG, "There was a problem, result == null");
+                            //TODO handle errors. AND FIX ALL LIVE DATA< YOU MADE A STUPID MISTAKE!!!!!!
                         }
                     } else {
                         Log.d(TAG,"authResult is == null");
