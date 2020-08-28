@@ -48,7 +48,7 @@ public class MainClockInFrag extends Fragment {
              preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         } else {
             //this could be fixed
-            preferences.edit().putBoolean(getResources().getString(R.string.is_clocked_in_key), false).commit();
+            preferences.edit().putBoolean(getResources().getString(R.string.is_clocked_in_key), false).apply();
         }
 
         viewModel = new ViewModelProvider(requireActivity()).get(MainClockInViewModel.class);
@@ -159,17 +159,15 @@ public class MainClockInFrag extends Fragment {
     private void saveStateToPref(){
         TimeClockFormState formState = viewModel.getClockState().getValue();
         if(formState != null) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState());
-            editor.putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak());
-            editor.putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours());
-            editor.apply();
+            preferences.edit().putInt(getResources().getString(R.string.clock_state_key), formState.getClockButtonState()).apply();
+            preferences.edit().putBoolean(getResources().getString(R.string.on_break_key), formState.isOnBreak()).apply();
+            preferences.edit().putString(getResources().getString(R.string.total_hours_key), formState.getTotalHours()).apply();
+
         }
     }
 
     private void checkClockStateManually(){
-        TimeClockFormState formState = viewModel.getClockState().getValue();
-        if (formState != null) {
+        TimeClockFormState formState = getStateFromPreferences();
             totalHoursTV.setText(formState.getTotalHours());
             clockinButton.setImageResource(formState.getClockButtonState());
             if(formState.isOnBreak()) {
@@ -177,6 +175,6 @@ public class MainClockInFrag extends Fragment {
             } else{
                 breakButton.setText(R.string.break_button);
             }
-        }
+
     }
 }

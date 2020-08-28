@@ -69,6 +69,6 @@ public class MainMenuViewModel extends AndroidViewModel {
     public void setPreferences(SharedPreferences preferences){
         this.preferences = preferences;
         //For debug purposes change the default dbPreference here.
-        databasePreference = preferences.getInt(getApplication().getResources().getString(R.string.db_pref_key), FIREBASE_DB);
+        databasePreference = preferences.getInt(getApplication().getResources().getString(R.string.db_pref_key), ROOM_DB);
     }
 }

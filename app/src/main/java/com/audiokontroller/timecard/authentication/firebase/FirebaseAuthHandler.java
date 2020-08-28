@@ -41,7 +41,7 @@ public class FirebaseAuthHandler{
                             currentUser = null;
                             //observableAuthResult.setValue(new Result.Error(new Exception(listener.getException())));
                             authSuccess = false;
-
+                            String word = "this";
                         }
                 });
     }

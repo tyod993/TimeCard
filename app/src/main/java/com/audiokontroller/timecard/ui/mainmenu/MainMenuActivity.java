@@ -66,6 +66,8 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //TODO: This needs to be fixed to change the source dynamically
+        getPreferences(Context.MODE_PRIVATE).edit().putInt("database_used", MainMenuViewModel.ROOM_DB).apply();
         mainMenuViewModel.savePersistentData();
         mainMenuViewModel.clearDisposable();
     }
